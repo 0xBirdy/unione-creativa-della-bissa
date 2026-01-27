@@ -1,80 +1,142 @@
-/* Reset & Base */
-* { margin:0; padding:0; box-sizing:border-box; }
+/* =========================================
+   RESET & BASE 
+   ========================================= */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
 body { 
-    font-family: 'Segoe UI', sans-serif; 
-    background:#0a0a0a; 
-    color:#e0e0e0; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background: #0a0a0a; 
+    color: #e0e0e0; 
+    line-height: 1.6;
     overflow-x: hidden;
 }
 
-/* Header & Animazioni */
+/* =========================================
+   HEADER & NAVBAR
+   ========================================= */
 header { 
-    text-align:center; 
-    padding:3rem 1rem; 
-    background: radial-gradient(circle at top, #00ff0033 0%, #0a0a0a 100%); 
-    color:#fff; 
-}
-header h1.glow { font-size:3rem; animation: glow 2s infinite alternate; color: #0f0; }
-@keyframes glow { 
-    from { text-shadow:0 0 10px #0f0; } 
-    to { text-shadow:0 0 20px #0f0, 0 0 40px #0f0; } 
+    text-align: center; 
+    padding: 4rem 1rem; 
+    background: radial-gradient(circle at top, rgba(0, 255, 0, 0.15) 0%, #0a0a0a 100%); 
 }
 
-/* Navbar */
-.navbar { display:flex; justify-content:center; gap:2rem; padding:1.5rem; background:#111; border-bottom: 1px solid #0f0; }
-.navbar a { font-weight:bold; color:#0f0; text-decoration:none; transition: 0.3s; }
-.navbar a:hover { text-shadow: 0 0 10px #0f0; }
+header h1.glow { 
+    font-size: 3.5rem; 
+    color: #0f0; 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: glow-animation 2s infinite alternate; 
+}
 
-/* Griglia dei Meme */
+.subtitle { 
+    font-size: 1.2rem; 
+    color: #0f0; 
+    opacity: 0.8; 
+}
+
+@keyframes glow-animation { 
+    from { text-shadow: 0 0 10px #0f0; } 
+    to { text-shadow: 0 0 20px #0f0, 0 0 40px #0f0; } 
+}
+
+.navbar { 
+    display: flex; 
+    justify-content: center; 
+    gap: 2rem; 
+    padding: 1.5rem; 
+    background: #111; 
+    border-bottom: 2px solid #0f0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar a { 
+    font-weight: bold; 
+    color: #0f0; 
+    text-decoration: none; 
+    transition: 0.3s; 
+}
+
+.navbar a:hover { 
+    text-shadow: 0 0 10px #0f0;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   GRID DEI MEME (CARDS)
+   ========================================= */
 .cards { 
     display: flex; 
     flex-wrap: wrap; 
     justify-content: center; 
-    gap: 1.5rem; 
-    padding: 3rem 1rem; 
+    gap: 25px; 
+    padding: 40px 20px; 
 }
 
-/* Singolo Box Meme */
+/* Il Box (Risolve il problema dei bordi) */
 .card { 
     background: #111; 
-    padding: 1rem; 
     border-radius: 15px; 
-    width: 260px; /* Dimensione fissa per farli stare vicini */
+    width: 280px; 
+    height: 400px; /* Altezza fissa per uniformità */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Corretto l'errore del carattere cinese */
-    border: 1px solid #0f0;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); 
-    text-align: center; 
-    transition: all 0.3s ease;
+    border: 2px solid #0f0;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+    overflow: hidden; /* TAGLIA tutto ciò che prova a uscire */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .card:hover { 
-    transform: translateY(-10px); 
-    box-shadow: 0 0 25px #0f0; 
+    transform: translateY(-10px) scale(1.02); 
+    box-shadow: 0 0 30px #0f0; 
+    border-color: #fff;
 }
 
-/* L'Immagine: Qui risolviamo il problema del contenimento */
+/* L'Immagine (Risolve il problema del "Content Not Available" visivo) */
 .card img { 
     width: 100%; 
-    height: 200px; /* Altezza identica per tutti */
-    object-fit: cover; /* Ritaglia l'immagine per riempire il box senza deformarla */
-    border-radius: 10px; 
-    margin-bottom: 1rem; 
+    height: 70%; /* Occupa il 70% del box */
+    object-fit: cover; /* Riempie lo spazio senza deformarsi */
     display: block;
+    background: #000; /* Sfondo nero se l'immagine non carica */
 }
 
+/* Il Testo */
 .card p { 
-    font-size: 1rem; 
-    color: #0f0; 
+    height: 30%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    color: #0f0;
     font-weight: bold;
+    text-align: center;
+    background: #111;
+    border-top: 1px solid rgba(0, 255, 0, 0.3);
 }
 
-/* Footer */
-footer { text-align:center; padding:2rem; opacity:0.6; color: #0f0; }
+/* =========================================
+   FOOTER
+   ========================================= */
+footer { 
+    text-align: center; 
+    padding: 3rem; 
+    color: #0f0; 
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
 
-/* Responsive: per il cellulare */
-@media(max-width:600px) {
-    header h1.glow { font-size: 2rem; }
-    .card { width: 100%; max-width: 300px; }
+/* =========================================
+   RESPONSIVE (Per Mobile)
+   ========================================= */
+@media (max-width: 600px) {
+    header h1.glow { font-size: 2.2rem; }
+    .card { width: 100%; max-width: 320px; }
+    .navbar { gap: 1rem; }
 }
