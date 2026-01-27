@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Tessera della Bissa</title>
+  <style>
+    body { background:#111; color:#0f0; font-family: monospace; }
+    .card { border:2px solid #0f0; padding:20px; width:300px; }
+    button { margin-top:10px; }
+  </style>
+</head>
+<body>
+
+<h1>🎴 Tessera Ufficiale della Bissa</h1>
+
+<div class="card" id="card"></div>
+
+<button onclick="generate()">🎲 Genera Tessera</button>
+
+<script>
+const nomi = ["Fratello", "Custode", "Adepto", "Maestro", "Errante"];
+const titoli = ["della Nebbia", "del Faro", "della Bissa Sacra", "della Cenere"];
+const ruoli = ["Fumatore Mistico", "Scriba", "Guardiano", "Predicatore"];
+const livelli = ["I", "II", "III", "IV", "V", "X"];
+
+function generate() {
+  const tessera = {
+    nome: nomi[rand(nomi)] + " " + titoli[rand(titoli)],
+    ruolo: ruoli[rand(ruoli)],
+    livello: livelli[rand(livelli)],
+    sigillo: Math.floor(Math.random() * 9999)
+  };
+
+  localStorage.setItem("tesseraBissa", JSON.stringify(tessera));
+  render(tessera);
+}
+
+function render(t) {
+  document.getElementById("card").innerHTML = `
+    <strong>Nome:</strong> ${t.nome}<br>
+    <strong>Ruolo:</strong> ${t.ruolo}<br>
+    <strong>Livello:</strong> ${t.livello}<br>
+    <strong>Sigillo:</strong> #${t.sigillo}
+  `;
+}
+
+function rand(arr){ return Math.floor(Math.random() * arr.length); }
+
+const saved = localStorage.getItem("tesseraBissa");
+if (saved) render(JSON.parse(saved));
+</script>
+
+</body>
+</html>
