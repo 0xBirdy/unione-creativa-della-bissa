@@ -2,244 +2,311 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Tessera della Bissa - Special Edition</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tessera della Bissa V2 - Apocalypse</title>
 
 <style>
-body{
-  background:radial-gradient(circle,#071207,#000);
-  color:#9aff9a;
-  font-family:monospace;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:30px;
+:root {
+  --neon-green: #0f0;
+  --neon-glow: rgba(0, 255, 0, 0.4);
+  --bg-dark: #050a05;
+  --card-bg: rgba(0, 20, 0, 0.9);
 }
 
-h1{ text-shadow:0 0 20px #0f0; text-align:center; }
+* { box-sizing: border-box; }
 
-.card{
-  width:420px;
-  padding:20px;
-  border-radius:18px;
-  background:linear-gradient(160deg,#020,#010);
-  border:2px solid #0f0;
-  box-shadow:0 0 30px rgba(0,255,0,.5);
-  position:relative;
-  overflow:hidden;
+body {
+  background: radial-gradient(circle at center, #0a1a0a 0%, #000 100%);
+  color: #9aff9a;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
-/* Effetto speciale per il Bissomane */
-.card.bissomane { border:2px solid #ff00ff; box-shadow:0 0 40px #ff00ff; }
-
-.row{ margin:6px 0; }
-.bonus-section { color: #fff700; font-size: 0.9em; border: 1px dashed #fff700; padding: 5px; margin-top: 10px; }
-
-hr{
-  border:0;
-  height:1px;
-  background:linear-gradient(to right,transparent,#0f0,transparent);
-  margin:12px 0;
+h1 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 15px var(--neon-green);
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 1.8rem;
 }
 
-canvas, img{ display:block; margin:10px auto; }
-
-button{
-  margin:14px 5px;
-  padding:10px 20px;
-  background:#020;
-  border:2px solid #0f0;
-  color:#0f0;
-  border-radius:10px;
-  cursor:pointer;
+.subtitle {
+  font-size: 0.8rem;
+  color: var(--neon-green);
+  opacity: 0.7;
+  margin-bottom: 20px;
 }
-button:hover{ background:#0f0; color:#000; }
-#slot{ opacity:.7; font-style:italic; height:20px; margin-bottom: 10px; }
+
+/* CONTAINER TESSERA ADATTIVO */
+.card-container {
+  width: 100%;
+  max-width: 500px; /* Più grande su desktop */
+  perspective: 1000px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 2px solid var(--neon-green);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 0 25px var(--neon-glow), inset 0 0 15px rgba(0,255,0,0.1);
+  position: relative;
+  transition: all 0.5s ease;
+}
+
+/* EFFETTO BISSOMANE */
+.card.bissomane {
+  border-color: #ff00ff;
+  box-shadow: 0 0 40px rgba(255, 0, 255, 0.6);
+  background: linear-gradient(145deg, #1a001a, #050005);
+}
+.bissomane #role-text { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-weight: bold; }
+
+.sigillo-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+canvas {
+  max-width: 180px;
+  height: auto;
+  filter: drop-shadow(0 0 10px var(--neon-green));
+}
+
+.info-grid {
+  display: grid;
+  gap: 12px;
+  font-size: 1rem;
+}
+
+.row-label { color: var(--neon-green); font-weight: bold; font-size: 0.85rem; text-transform: uppercase; }
+.row-value { color: #fff; font-size: 1.1rem; }
+
+.bonus-box {
+  background: rgba(255, 255, 0, 0.05);
+  border: 1px dashed #fff700;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: rgba(0,0,0,0.3);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.stat-item { font-size: 0.85rem; border-bottom: 1px solid rgba(0,255,0,0.1); padding: 2px 0; }
+
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+  margin: 20px 0;
+}
+
+.qr-box { text-align: center; margin-top: 15px; }
+#qr { width: 100px; border: 1px solid var(--neon-green); padding: 5px; background: #000; }
+
+.btn-group {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+button {
+  background: transparent;
+  border: 1px solid var(--neon-green);
+  color: var(--neon-green);
+  padding: 12px 25px;
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+button:hover {
+  background: var(--neon-green);
+  color: #000;
+  box-shadow: 0 0 20px var(--neon-green);
+}
+
+#status-log {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  height: 20px;
+  color: #fff700;
+}
+
+@media (max-width: 480px) {
+  .card { padding: 15px; }
+  .stats-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
-
 <body>
 
-<h1>🎴 Tessera Ufficiale della Bissa <br><small style="font-size: 0.5em; color: #0f0;">V2.0 - Apocalisse & Peccato</small></h1>
+<h1>🎴 Tessera Bissa</h1>
+<div class="subtitle">Protocollo: Peccati, Comandamenti e Apocalisse</div>
 
-<div class="card" id="card">
-  <canvas id="sigillo" width="160" height="160"></canvas>
-  <div id="info"></div>
-  <div id="slot"></div>
-  <img id="qr">
+<div class="card-container">
+  <div class="card" id="card">
+    <div class="sigillo-box">
+      <canvas id="sigillo" width="200" height="200"></canvas>
+    </div>
+
+    <div class="info-grid" id="main-info">
+      </div>
+
+    <div id="status-log"></div>
+
+    <div class="qr-box">
+      <img id="qr">
+    </div>
+  </div>
 </div>
 
-<div class="controls">
-    <button onclick="startGeneration()">🎲 Genera Tessera</button>
-    <button onclick="downloadPNG()">⬇️ Scarica PNG</button>
+<div class="btn-group">
+  <button onclick="startGeneration()">🎲 Genera Nuova</button>
+  <button onclick="downloadPNG()">💾 Salva PNG</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
-// ───────────────── DATA ─────────────────
+// --- DATASET ESTESI ---
 const nomi = ["Fratello","Custode","Errante","Adepto","Testimone","Archivista"];
 const essenze = ["Nebbia","Fumo","Cenere","Radice","Eco","Spirale"];
 const titoli = ["della Bissa","del Faro","del Collasso","della Veglia"];
-const ruoliBase = ["Osservatore","Agitatore","Mediatore","Custode del Cerchio","Riflessivo"];
+const ruoliBase = ["Osservatore","Agitatore","Mediatore","Custode","Riflessivo"];
 
-// --- NUOVI DATASET ---
-const peccati = ["Superbia", "Avarizia", "Lussuria", "Invidia", "Gola", "Ira", "Accidia"];
+const peccati = ["Superbia 👑", "Avarizia 💰", "Lussuria ❤️", "Invidia 🐍", "Gola 🍷", "Ira 🗡️", "Accidia ☁️"];
 const comandamenti = [
-    "I: Non avrai altra Bissa all'infuori di me", "II: Non nominare il nome della Bissa invano",
-    "III: Ricordati di santificare le pause", "IV: Onora il silenzio e la parola",
-    "V: Non uccidere l'entusiasmo", "VI: Non commettere atti impuri di noia",
-    "VII: Non rubare l'attenzione", "VIII: Non dire falsa testimonianza nel cerchio",
-    "IX: Non desiderare la bissa d'altri", "X: Non desiderare la roba d'altri"
+  "Non avrai altra Bissa all'infuori di me",
+  "Ricordati di santificare le pause",
+  "Non uccidere l'entusiasmo",
+  "Non rubare l'attenzione",
+  "Onora il silenzio e la parola"
 ];
 const cavalieri = ["Morte 💀", "Guerra ⚔️", "Carestia ⚖️", "Conquista 🏹"];
 
 const rarita = [
- {nome:"Comune",mod:0,prob:40},
- {nome:"Non Comune",mod:1,prob:30},
- {nome:"Rara",mod:2,prob:15},
- {nome:"Epica",mod:4,prob:10},
- {nome:"Leggendaria",mod:6,prob:4},
- {nome:"TRASCENDENTE",mod:10,prob:1} // Per il Bissomane
+ {n:"Comune", m:0, p:40}, {n:"Non Comune", m:1, p:30},
+ {n:"Rara", m:2, p:15}, {n:"Epica", m:4, p:9},
+ {n:"Leggendaria", m:6, p:5}, {n:"TRASCENDENTE", m:10, p:1}
 ];
 
-const backstories = [
-"Ha visto la fine del mondo e ha deciso che era il momento giusto per un'ultima bissa.",
-"Portatore di un vizio capitale, lo usa per comprendere le debolezze altrui.",
-"Segue i 10 comandamenti della Bissa con un fervore quasi religioso.",
-"Un tempo era un uomo normale, ora vaga come spettro del Bissomane.",
-"Predica l'apocalisse tra una risata e l'altra."
-];
-
-// ───────────────── UTILS ─────────────────
 function r(a){ return a[Math.floor(Math.random()*a.length)]; }
 
-function rollRarity(){
- let roll=Math.random()*100, sum=0;
- for(const rar of rarita){ sum+=rar.prob; if(roll<=sum) return rar; }
+function startGeneration() {
+  const log = document.getElementById("status-log");
+  let i = 0;
+  const interval = setInterval(() => {
+    log.textContent = "Sincronizzando con il piano astrale... " + r(peccati);
+    if(i++ > 12) { clearInterval(interval); log.textContent = ""; generate(); }
+  }, 80);
 }
 
-function stat(base){ return Math.min(10,Math.max(1,base+Math.floor(Math.random()*5)-2)); }
+function generate() {
+  const seed = Math.random().toString(16).slice(2, 10);
+  let roll = Math.random() * 100, sum = 0, rar = rarita[0];
+  for(let x of rarita){ sum += x.p; if(roll <= sum){ rar = x; break; } }
 
-// ───────────────── GENERATION ─────────────────
-function startGeneration(){
- let i=0;
- const slot=document.getElementById("slot");
- const t=setInterval(()=>{
-   slot.textContent="Invocando potenze arcane... "+r(peccati)+"…";
-   if(++i>15){ clearInterval(t); generate(); }
- },70);
+  const isBissomane = rar.n === "TRASCENDENTE";
+  const data = {
+    id: seed,
+    nome: `${r(nomi)} ${r(essenze)} ${r(titoli)}`,
+    ruolo: isBissomane ? "🌀 IL BISSOMANE" : r(ruoliBase),
+    rar: rar.n,
+    style: isBissomane ? "bissomane" : "",
+    peccato: r(peccati),
+    comandamento: r(comandamenti),
+    cavaliere: r(cavalieri),
+    stats: {
+      sagg: 5 + rar.m + Math.floor(Math.random()*3),
+      eloq: 5 + rar.m + Math.floor(Math.random()*3),
+      iron: 5 + rar.m + Math.floor(Math.random()*3),
+      toll: 5 + rar.m + Math.floor(Math.random()*3)
+    },
+    data: new Date().toLocaleDateString('it-IT')
+  };
+
+  render(data);
+  drawSigillo(seed, isBissomane);
+  document.getElementById("qr").src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=BISSA-${seed}&color=0f0&bgcolor=000`;
 }
 
-function generate(){
- const seed=crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
- const rar=rollRarity();
- const mod=rar.mod;
- 
- // Logica Bissomane (1% di probabilità se Trascendente)
- let ruoloScelto = r(ruoliBase);
- let extraStyle = "";
- if(rar.nome === "TRASCENDENTE") {
-     ruoloScelto = "🌀 IL BISSOMANE";
-     extraStyle = "bissomane";
- }
+function render(t) {
+  const card = document.getElementById("card");
+  card.className = "card " + t.style;
+  
+  document.getElementById("main-info").innerHTML = `
+    <div><span class="row-label">Identità</span><br><span class="row-value">${t.nome}</span></div>
+    <div><span class="row-label">Rango</span><br><span class="row-value" id="role-text">${t.ruolo} (${t.rar})</span></div>
+    
+    <div class="bonus-box">
+      <div style="color:#fff700; margin-bottom:5px; font-weight:bold;">💠 ATTRIBUTI DIVINI</div>
+      • Peccato: ${t.peccato}<br>
+      • Verbo: ${t.comandamento}<br>
+      • Presagio: ${t.cavaliere}
+    </div>
 
- const data={
-   nome:`${r(nomi)} ${r(essenze)} ${r(titoli)}`,
-   ruolo: ruoloScelto,
-   rarita: rar.nome,
-   extraStyle: extraStyle,
-   backstory: r(backstories),
-   peccato: r(peccati),
-   comandamento: r(comandamenti),
-   cavaliere: r(cavalieri),
-   stats:{
-     saggezza:stat(5+mod),
-     eloquenza:stat(5+mod),
-     resistenza:stat(5+mod),
-     ironia:stat(5+mod),
-     tolleranza:stat(5+mod)
-   },
-   sigillo:seed,
-   data:new Date().toLocaleDateString()
- };
+    <div class="stats-grid">
+      <div class="stat-item">Saggezza: ${t.stats.sagg}</div>
+      <div class="stat-item">Eloquenza: ${t.stats.eloq}</div>
+      <div class="stat-item">Ironia: ${t.stats.iron}</div>
+      <div class="stat-item">Tolleranza: ${t.stats.toll}</div>
+    </div>
 
- localStorage.setItem("tesseraBissa",JSON.stringify(data));
- render(data);
- drawSigillo(seed);
- drawQR(seed);
+    <div style="font-size:0.7rem; opacity:0.5; margin-top:10px;">
+      Codice: #${t.id} | Data: ${t.data}
+    </div>
+  `;
 }
 
-// ───────────────── RENDER ─────────────────
-function render(t){
- const card = document.getElementById("card");
- card.className = "card " + (t.extraStyle || "");
- 
- document.getElementById("info").innerHTML=`
- <div class="row"><b>Nome:</b> ${t.nome}</div>
- <div class="row"><b>Ruolo:</b> <span style="color:${t.extraStyle?'#ff00ff':'#0f0'}">${t.ruolo}</span></div>
- <div class="row"><b>Rarità:</b> ${t.rarita}</div>
-
- <hr>
-
- <div class="bonus-section">
-    <b>✦ Bonus Divini & Oscuri ✦</b><br>
-    Vizio: ${t.peccato}<br>
-    Verbo: ${t.comandamento}<br>
-    Presagio: Cavaliere della ${t.cavaliere}
- </div>
-
- <hr>
-
- <div class="row"><b>Statistiche</b></div>
- Saggezza 🌿: ${t.stats.saggezza} | Eloquenza 💬: ${t.stats.eloquenza}<br>
- Resistenza 🍂: ${t.stats.resistenza} | Ironia 😏: ${t.stats.ironia}<br>
- Tolleranza 🍃: ${t.stats.tolleranza}
-
- <hr>
- <div class="row" style="font-size:0.8em; opacity:0.8 italic;">"${t.backstory}"</div>
- <hr>
-
- <div class="row"><b>Sigillo:</b> #${t.sigillo}</div>
- <div class="row"><b>Emessa:</b> ${t.data}</div>
- `;
+function drawSigillo(seed, special) {
+  const canvas = document.getElementById("sigillo");
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0,0,200,200);
+  const color = special ? "#ff00ff" : "#0f0";
+  
+  for(let i=0; i<12; i++) {
+    ctx.strokeStyle = color;
+    ctx.globalAlpha = 0.8 - (i*0.05);
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(100, 100, 10 + i*7, 0, Math.PI * (i%2 ? 2 : 1.5));
+    ctx.stroke();
+  }
 }
 
-// ───────────────── SIGILLO ─────────────────
-function drawSigillo(seed){
- const c=document.getElementById("sigillo");
- const x=c.getContext("2d");
- x.clearRect(0,0,160,160);
- for(let i=0;i<10;i++){
-   x.strokeStyle= i > 7 ? "#ff00ff" : `hsl(${(parseInt(seed,16)+i*35)%360},100%,50%)`;
-   x.lineWidth = 2;
-   x.beginPath();
-   x.arc(80,80,10+i*7,0,Math.PI*(i%2?2:1.5));
-   x.stroke();
- }
+function downloadPNG() {
+  html2canvas(document.getElementById("card"), { backgroundColor: null }).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "tessera-bissa.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
 }
 
-// ───────────────── QR ─────────────────
-function drawQR(seed){
- document.getElementById("qr").src=
- `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=BISSA://${seed}&color=0f0&bgcolor=020`;
-}
-
-// ───────────────── PNG ─────────────────
-function downloadPNG(){
- html2canvas(document.getElementById("card")).then(c=>{
-   const a=document.createElement("a");
-   a.href=c.toDataURL();
-   a.download="tessera_bissa_bonus.png";
-   a.click();
- });
-}
-
-// ───────────────── LOAD ─────────────────
-const saved=localStorage.getItem("tesseraBissa");
-if(saved){
- const t=JSON.parse(saved);
- render(t); drawSigillo(t.sigillo); drawQR(t.sigillo);
-}
+// Inizializza
+generate();
 </script>
 
 </body>
