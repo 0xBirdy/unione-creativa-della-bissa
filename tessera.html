@@ -3,520 +3,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tessera Bissa V3 - Cyber-Occulto</title>
+<title>Archivio Bissa - Terminale Smeraldo</title>
 
 <style>
 :root {
-  --neon-green: #00ffcc; /* Cyan brillante */
-  --neon-purple: #ff00ff; /* Viola magenta */
-  --neon-glow-green: rgba(0, 255, 204, 0.6);
-  --neon-glow-purple: rgba(255, 0, 255, 0.6);
-  --bg-dark: #0a0a0c;
-  --card-bg: rgba(10, 0, 20, 0.8);
-  --font-mono: 'Space Mono', 'Courier New', Courier, monospace;
+  --neon-green: #00ff41; 
+  --neon-glow: rgba(0, 255, 65, 0.5);
+  --bg-dark: #020502;
 }
 
-/* Importa un font più futuristico (es. Google Fonts) */
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
 
 * { box-sizing: border-box; }
 
 body {
-  background: radial-gradient(circle at center, #1a0033 0%, #000 100%);
-  color: #e0e0e0;
-  font-family: var(--font-mono);
+  background-color: black;
+  color: var(--neon-green);
+  font-family: 'Fira Code', monospace;
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
   padding: 20px;
-  overflow: hidden; /* Nasconde l'overflow delle animazioni */
-  position: relative;
+  overflow-x: hidden;
 }
 
-/* Sfondo Animato */
-body::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: repeating-linear-gradient(
-    45deg,
-    rgba(0, 255, 204, 0.05) 0,
-    rgba(0, 255, 204, 0.05) 2px,
-    transparent 2px,
-    transparent 10px
-  ), repeating-linear-gradient(
-    -45deg,
-    rgba(255, 0, 255, 0.05) 0,
-    rgba(255, 0, 255, 0.05) 2px,
-    transparent 2px,
-    transparent 10px
-  );
-  animation: bg-pan 60s linear infinite;
-  z-index: -1;
+/* Animazione di sfarfallio e scanlines per rendere la UI "viva" */
+body::after {
+  content: " ";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 255, 65, 0.03) 50%);
+  background-size: 100% 4px;
+  z-index: 1000;
+  pointer-events: none;
 }
 
-@keyframes bg-pan {
-  from { background-position: 0% 0%; }
-  to { background-position: 100% 100%; }
-}
-
-/* Animazioni Neon Pulse */
-@keyframes neon-pulse-green {
-  0% { box-shadow: 0 0 10px var(--neon-glow-green); }
-  50% { box-shadow: 0 0 25px var(--neon-glow-green), 0 0 50px var(--neon-glow-green); }
-  100% { box-shadow: 0 0 10px var(--neon-glow-green); }
-}
-
-@keyframes neon-pulse-purple {
-  0% { box-shadow: 0 0 10px var(--neon-glow-purple); }
-  50% { box-shadow: 0 0 25px var(--neon-glow-purple), 0 0 50px var(--neon-glow-purple); }
-  100% { box-shadow: 0 0 10px var(--neon-glow-purple); }
-}
-
-@keyframes glitch {
-    0% { transform: translate(0); text-shadow: 0 0 5px var(--neon-purple); }
-    20% { transform: translate(-2px, 2px); text-shadow: 2px -2px 5px var(--neon-green); }
-    40% { transform: translate(-2px, -2px); text-shadow: -2px 2px 5px var(--neon-purple); }
-    60% { transform: translate(2px, 2px); text-shadow: 2px -2px 5px var(--neon-green); }
-    80% { transform: translate(2px, -2px); text-shadow: -2px 2px 5px var(--neon-purple); }
-    100% { transform: translate(0); text-shadow: 0 0 5px var(--neon-purple); }
-}
-
-h1 {
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  text-shadow: 0 0 20px var(--neon-green), 0 0 40px var(--neon-glow-green);
-  margin-bottom: 25px;
-  text-align: center;
-  font-size: 2.2rem;
-  color: var(--neon-green);
+@keyframes pulse-border {
+  0% { box-shadow: 0 0 15px var(--neon-glow); }
+  100% { box-shadow: 0 0 35px var(--neon-glow), inset 0 0 15px var(--neon-glow); }
 }
 
 .card-container {
   width: 100%;
-  max-width: 600px; /* leggermente più grande */
-  position: relative;
-  border-radius: 20px;
-  padding: 3px; /* Per l'effetto bordo animato */
-  background: linear-gradient(45deg, var(--neon-green), var(--neon-purple));
-  animation: neon-pulse-green 2s infinite alternate;
+  max-width: 600px;
+  margin-top: 20px;
 }
 
 .card {
-  background: var(--card-bg);
-  border: 1px solid #1a1a1a; /* Bordo interno sottile per contrasto */
-  border-radius: 18px;
-  padding: 30px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.card.bissomane {
-  animation: neon-pulse-purple 2s infinite alternate;
-  background: linear-gradient(160deg, rgba(30, 0, 60, 0.9) 0%, rgba(5, 0, 10, 1) 100%);
-}
-.card.bissomane .card-container { background: linear-gradient(45deg, var(--neon-purple), var(--neon-green)); }
-.card.bissomane h1 { text-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-glow-purple); color: var(--neon-purple); }
-.card.bissomane .sigillo-box canvas { filter: drop-shadow(0 0 10px var(--neon-purple)); }
-.card.bissomane .profile-img { border-color: var(--neon-purple); box-shadow: 0 0 15px var(--neon-glow-purple); }
-.card.bissomane .bonus-box { border-color: var(--neon-purple); background: rgba(255, 0, 255, 0.05); }
-.card.bissomane .backstory-text { border-color: var(--neon-purple); }
-.card.bissomane .stat-item { color: var(--neon-purple); }
-.card.bissomane #role-value { color: var(--neon-purple); animation: glitch 1.5s infinite; }
-.card.bissomane button { border-color: var(--neon-purple); color: var(--neon-purple); }
-.card.bissomane button:hover { background: var(--neon-purple); color: var(--bg-dark); box-shadow: 0 0 20px var(--neon-purple); }
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.sigillo-box { flex-shrink: 0; }
-canvas { max-width: 120px; height: auto; filter: drop-shadow(0 0 10px var(--neon-green)); }
-
-.header-text { text-align: right; }
-.header-text h2 {
-    font-size: 1.8rem;
-    color: var(--neon-green);
-    letter-spacing: 2px;
-    margin: 0;
-    text-shadow: 0 0 10px var(--neon-glow-green);
-}
-.header-text p {
-    font-size: 0.9rem;
-    color: #aaa;
-    margin: 5px 0 0;
-}
-
-.profile-section {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-}
-
-.profile-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    border: 2px solid var(--neon-green);
-    object-fit: cover;
-    flex-shrink: 0;
-    box-shadow: 0 0 10px var(--neon-glow-green);
-    background: #000; /* Fallback */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    color: var(--neon-green);
-}
-
-.profile-details { flex-grow: 1; }
-.detail-row { margin-bottom: 10px; }
-.row-label {
-    color: var(--neon-green);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    display: block;
-    margin-bottom: 3px;
-}
-.row-value {
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: bold;
-}
-
-#role-value { color: var(--neon-green); }
-
-.backstory-text {
-  font-style: italic;
-  font-size: 0.9rem;
-  color: #ccc;
-  line-height: 1.4;
-  border-left: 3px solid var(--neon-green);
-  padding-left: 15px;
-  margin: 15px 0 20px;
-}
-
-.bonus-box {
-  background: rgba(0, 255, 204, 0.05);
-  border: 1px solid var(--neon-green);
-  padding: 15px;
+  background: rgba(0, 10, 0, 0.9);
+  border: 2px solid var(--neon-green);
   border-radius: 10px;
-  font-size: 0.85rem;
-  color: #c0ffee;
-  line-height: 1.5;
+  padding: 30px;
+  animation: pulse-border 2s infinite alternate;
+  position: relative;
 }
-.bonus-box b { color: var(--neon-green); text-shadow: 0 0 5px rgba(0,255,204,0.5); }
 
+/* Header stile terminale */
+.header {
+  border-bottom: 1px solid var(--neon-green);
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  background: rgba(0, 255, 204, 0.02);
+.profile-area {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+/* Avatar generato casualmente */
+.avatar-box {
+  width: 140px;
+  height: 140px;
+  border: 1px solid var(--neon-green);
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px var(--neon-glow);
+}
+
+.details { flex-grow: 1; }
+.label { font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; display: block; }
+.value { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; display: block; color: #fff; text-shadow: 0 0 5px var(--neon-green); }
+
+.backstory-box {
+  background: rgba(0, 255, 65, 0.05);
+  border: 1px dashed var(--neon-green);
   padding: 15px;
-  border-radius: 8px;
-  border: 1px dashed rgba(0, 255, 204, 0.2);
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+  line-height: 1.4;
 }
 
-.stat-item {
-    font-size: 0.9rem;
-    color: #c0ffee;
+.bonus-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-.qr-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 25px;
-    border-top: 1px dotted rgba(255,255,255,0.1);
-    padding-top: 20px;
-}
-.qr-box { flex-shrink: 0; }
-#qr {
-    width: 90px;
-    height: 90px;
-    border: 1px solid var(--neon-green);
-    padding: 3px;
-    background: #000;
-    box-shadow: 0 0 8px rgba(0,255,204,0.5);
-}
-
-.id-data {
-    font-size: 0.75rem;
-    color: #888;
-    text-align: left;
-    line-height: 1.4;
-}
-.id-data strong { color: #fff; }
-
-#status-log {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  height: 25px;
-  color: #fff700;
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  background: rgba(0, 255, 65, 0.1);
+  padding: 10px;
   text-align: center;
-  text-shadow: 0 0 10px rgba(255,255,0,0.5);
+  font-size: 0.75rem;
 }
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+canvas#sigillo { width: 90px; height: 90px; filter: drop-shadow(0 0 5px var(--neon-green)); }
+img#qr { width: 90px; filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%); }
 
 .btn-group {
-  margin-top: 35px;
+  margin-top: 30px;
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
+  gap: 15px;
 }
 
 button {
-  background: var(--bg-dark);
+  background: transparent;
   border: 1px solid var(--neon-green);
   color: var(--neon-green);
-  padding: 14px 30px;
-  font-family: var(--font-mono);
-  cursor: pointer;
-  border-radius: 8px;
-  transition: 0.3s ease;
-  text-transform: uppercase;
+  padding: 12px 25px;
+  font-family: inherit;
   font-weight: bold;
-  letter-spacing: 1px;
-  box-shadow: 0 0 8px rgba(0,255,204,0.3);
+  cursor: pointer;
+  transition: 0.3s;
+  text-transform: uppercase;
 }
 
 button:hover {
   background: var(--neon-green);
-  color: var(--bg-dark);
-  box-shadow: 0 0 25px var(--neon-green);
+  color: black;
+  box-shadow: 0 0 20px var(--neon-green);
 }
 
-/* Responsive */
-@media (max-width: 500px) {
-  h1 { font-size: 1.5rem; }
-  .card { padding: 20px; }
-  .profile-section { flex-direction: column; align-items: center; text-align: center; }
-  .profile-details { width: 100%; }
-  .header-text h2 { font-size: 1.5rem; }
-  .sigillo-box canvas { max-width: 100px; }
-  .qr-info { flex-direction: column; align-items: center; gap: 15px; }
-  .id-data { text-align: center; }
-}
+#status { height: 20px; margin-top: 15px; font-size: 0.8rem; }
 </style>
 </head>
 <body>
 
-<h1>🎴 Archivio Bissa</h1>
+<h1 style="text-shadow: 0 0 20px var(--neon-green);">> ARCHIVIO_BISSA.EXE</h1>
 
-<div class="card-container" id="card-container">
+<div class="card-container">
   <div class="card" id="card">
-    <div class="card-header">
-        <div class="sigillo-box">
-            <canvas id="sigillo" width="200" height="200"></canvas>
-        </div>
-        <div class="header-text">
-            <h2>TESSERA UFFICIALE</h2>
-            <p>DELA BISSA</p>
-        </div>
+    <div class="header">
+      <span>SYSTEM_ID: <span id="id-val">#0000</span></span>
+      <span>STATUS: OPERATIVO</span>
     </div>
 
-    <div class="profile-section">
-        <img id="profile-image" class="profile-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0a0c'/%3E%3Ccircle cx='50' cy='40' r='20' fill='%2300ffcc'/%3E%3Cpath d='M20 90 Q50 60 80 90' stroke='%23ff00ff' stroke-width='5' fill='none'/%3E%3C/svg%3E" alt="Profilo">
-        <div class="profile-details">
-            <div class="detail-row">
-                <span class="row-label">Nome Operativo</span>
-                <span class="row-value" id="nome-operativo"></span>
-            </div>
-            <div class="detail-row">
-                <span class="row-label">Rango / Funzione</span>
-                <span class="row-value" id="role-value"></span>
-            </div>
-        </div>
+    <div class="profile-area">
+      <div class="avatar-box" id="avatar-container"></div>
+      <div class="details">
+        <span class="label">Identità</span>
+        <span class="value" id="nome-val">...</span>
+        <span class="label">Ruolo Gerarchico</span>
+        <span class="value" id="ruolo-val" style="color: var(--neon-green);">...</span>
+      </div>
     </div>
 
-    <div class="backstory-text" id="backstory-content"></div>
+    <div class="backstory-box" id="backstory-val"></div>
 
-    <div class="bonus-box">
-      <b>[PARAMETRI METAFISICI]</b><br>
-      • Vizio Primario: <span id="peccato-value"></span><br>
-      • Verbo del Cerchio: <span id="comandamento-value"></span><br>
-      • Presagio Apocalittico: <span id="cavaliere-value"></span>
+    <div class="bonus-section">
+      <div><span class="label">Vizio:</span><br><span id="peccato-val"></span></div>
+      <div><span class="label">Presagio:</span><br><span id="cavaliere-val"></span></div>
+      <div style="grid-column: span 2;"><span class="label">Codice Condotta:</span><br><span id="verbo-val"></span></div>
     </div>
 
-    <div class="stats-grid" id="stats-content"></div>
+    <div class="stat-row" id="stats-val"></div>
 
-    <div class="qr-info">
-        <div class="id-data">
-            <strong>ID Tessera:</strong> <span id="id-value"></span><br>
-            <strong>Data Emissione:</strong> <span id="data-emissione"></span><br>
-            <span id="riservato-status"></span>
-        </div>
-        <div class="qr-box">
-            <img id="qr">
-        </div>
+    <div class="footer">
+      <canvas id="sigillo" width="100" height="100"></canvas>
+      <img id="qr">
     </div>
   </div>
 </div>
 
-<div id="status-log">Invocando potenze arcane...</div>
+<div id="status"></div>
 
 <div class="btn-group">
-  <button onclick="startGeneration()">🎲 Genera Nuova</button>
-  <button onclick="downloadPNG()">💾 Scarica PNG</button>
+  <button onclick="generate()">GENERA_PG</button>
+  <button onclick="download()">ESPORTA_DATI</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
-// --- DATASET ESTESI ---
-const nomi = ["Fratello","Custode","Errante","Adepto","Testimone","Archivista", "Guardiano"];
-const essenze = ["Nebbia","Fumo","Cenere","Radice","Eco","Spirale", "Ombra"];
-const titoli = ["della Bissa","del Faro","del Collasso","della Veglia", "del Silenzio"];
-const ruoliBase = ["Osservatore","Agitatore","Mediatore","Custode Silente","Riflessivo", "Cronomante"];
-
+const nomi = ["Fratello","Custode","Errante","Adepto","Testimone","Archivista"];
+const essenze = ["Nebbia","Fumo","Cenere","Radice","Eco","Spirale"];
+const titoli = ["della Bissa","del Faro","del Collasso","della Veglia"];
 const backstories = [
-  "Nato durante una discussione degenerata in risata collettiva, ha imparato che l’ironia è l’unico scudo contro il vuoto interiore.",
-  "Un tempo serviva l'ordine cosmico, ora vaga tra le rovine del buonsenso cercando la Bissa perfetta e dimenticata.",
-  "Ha visto i Grandi Antichi annoiarsi a morte e ha deciso di non fare la stessa fine, portando il caos controllato.",
-  "Custodisce un segreto che solo i veri Bissomani possono comprendere: il silenzio è la risposta a tutte le domande.",
-  "Ex archivista del Collasso, ora scrive la sua storia sulle pareti della realtà, alterando la percezione del tempo.",
-  "Un'eco di un futuro dimenticato, è stato inviato per prevenire un'apocalisse di noia incombente."
+  "Nato in un glitch temporale, ride del vuoto cosmico mentre compila file corrotti.",
+  "Un tempo serviva l'ordine, ora vaga cercando la frequenza della Bissa Suprema.",
+  "Custode di segreti che farebbero impazzire un processore quantistico.",
+  "Ha trasformato la propria noia in un'arma di distorsione della realtà."
 ];
-
-const peccati = ["Superbia 👑", "Avarizia 💰", "Lussuria ❤️", "Invidia 🐍", "Gola 🍷", "Ira 🗡️", "Accidia ☁️"];
-const comandamenti = [
-    "I: Non avrai altra Bissa al di fuori di Me",
-    "II: Onora il silenzio, fonte di ogni bissa",
-    "III: Santifica la pausa, il momento del distacco",
-    "IV: Non annoiare, causa di ogni dimenticanza",
-    "V: Rispetta il cerchio, la geometria della bissa"
-];
-const cavalieri = ["Morte 💀", "Guerra ⚔️", "Carestia ⚖️", "Conquista 🏹"];
+const peccati = ["Superbia", "Avarizia", "Lussuria", "Invidia", "Gola", "Ira", "Accidia"];
+const cavalieri = ["Morte", "Guerra", "Carestia", "Conquista"];
 
 function r(a){ return a[Math.floor(Math.random()*a.length)]; }
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// Funzione per generare un'immagine casuale (placeholder SVG)
-function generateProfileImage(isBissomane) {
-    const baseColor = isBissomane ? '#ff00ff' : '#00ffcc';
-    const secondaryColor = isBissomane ? '#00ffcc' : '#ff00ff';
-    const bgColor = '#0a0a0c';
-
-    // Disegna una forma astratta o un glifo
-    const svgContent = encodeURIComponent(`
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-            <rect width='100' height='100' fill='${bgColor}'/>
-            <circle cx='50' cy='50' r='${getRandomInt(20, 40)}' fill='${baseColor}' opacity='0.7'/>
-            <path d='M${getRandomInt(10,30)} ${getRandomInt(10,30)} Q50 ${getRandomInt(30,70)} ${getRandomInt(70,90)} ${getRandomInt(10,30)} L${getRandomInt(70,90)} ${getRandomInt(70,90)} Q50 ${getRandomInt(30,70)} ${getRandomInt(10,30)} ${getRandomInt(70,90)} Z' fill='${secondaryColor}' opacity='0.5'/>
-            <text x='50' y='55' font-family='monospace' font-size='30' fill='#fff' text-anchor='middle'>${r(['Ø', '∆', 'Ω', 'Ξ'])}</text>
-        </svg>
-    `);
-    return `data:image/svg+xml,${svgContent}`;
-}
-
-
-function startGeneration() {
-  const log = document.getElementById("status-log");
-  let i = 0;
-  const interval = setInterval(() => {
-    log.textContent = `Sincronizzando con il piano astrale... ${r(peccati.map(p => p.split(' ')[0]))}`;
-    if(i++ > 15) { clearInterval(interval); log.textContent = ""; generate(); }
-  }, 70);
-}
-
 function generate() {
-  const isBissomane = Math.random() < 0.05; // 5% chance
-  const seed = Math.random().toString(16).slice(2, 10).toUpperCase();
+  const isBissomane = Math.random() < 0.05;
+  const seed = Math.random().toString(16).slice(2, 6).toUpperCase();
   
-  const data = {
-    nome: `${r(nomi)} ${r(essenze)} ${r(titoli)}`,
-    ruolo: isBissomane ? "🌀 IL BISSOMANE" : r(ruoliBase),
-    style: isBissomane ? "bissomane" : "",
-    backstory: r(backstories),
-    peccato: r(peccati),
-    cmd: r(comandamenti),
-    cav: r(cavalieri),
-    stats: { s: getRandomInt(6, 10), e: getRandomInt(6, 10), i: getRandomInt(6, 10), t: getRandomInt(6, 10) },
-    id: `BISSA-${seed}`,
-    dataEmissione: new Date().toLocaleDateString('it-IT'),
-    riservato: isBissomane ? "Livello: ALPHA-OMEGA" : "Livello: Segreto"
-  };
+  // Immagine Casuale Astratta Verde
+  const svg = `<svg width="140" height="140" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="black"/>
+    <circle cx="50" cy="50" r="${r([15,25,35])}" stroke="#00ff41" stroke-width="1" fill="none" opacity="0.6"/>
+    <path d="M${r([10,40])} ${r([10,40])} L${r([60,90])} ${r([60,90])} M10 90 L90 10" stroke="#00ff41" stroke-width="1"/>
+    <text x="50" y="55" font-family="monospace" font-size="20" fill="#00ff41" text-anchor="middle" opacity="0.8">${isBissomane?'Ω':'Σ'}</text>
+  </svg>`;
 
-  const cardContainer = document.getElementById("card-container");
-  const card = document.getElementById("card");
-  cardContainer.className = "card-container"; // Reset first
-  card.className = "card"; // Reset first
-
-  if (data.style) {
-      cardContainer.classList.add(data.style);
-      card.classList.add(data.style);
-  }
-
-  // Aggiorna l'immagine profilo
-  document.getElementById("profile-image").src = generateProfileImage(isBissomane);
-
-  // Aggiorna i testi
-  document.getElementById("nome-operativo").textContent = data.nome;
-  document.getElementById("role-value").textContent = data.ruolo;
-  document.getElementById("backstory-content").textContent = data.backstory;
-  document.getElementById("peccato-value").textContent = data.peccato;
-  document.getElementById("comandamento-value").textContent = data.cmd;
-  document.getElementById("cavaliere-value").textContent = data.cav;
-
-  const statsHtml = `
-    <div class="stat-item">Saggezza: ${data.stats.s}</div>
-    <div class="stat-item">Eloquenza: ${data.stats.e}</div>
-    <div class="stat-item">Ironia: ${data.stats.i}</div>
-    <div class="stat-item">Tolleranza: ${data.stats.t}</div>
+  document.getElementById("avatar-container").innerHTML = svg;
+  document.getElementById("id-val").textContent = "#" + seed;
+  document.getElementById("nome-val").textContent = `${r(nomi)} ${r(essenze)} ${r(titoli)}`;
+  document.getElementById("ruolo-val").textContent = isBissomane ? "!!! IL BISSOMANE !!!" : r(["Osservatore", "Mediatore", "Agitatore"]);
+  document.getElementById("backstory-val").textContent = `"${r(backstories)}"`;
+  document.getElementById("peccato-val").textContent = r(peccati);
+  document.getElementById("cavaliere-val").textContent = "Cavaliere della " + r(cavalieri);
+  document.getElementById("verbo-val").textContent = r(["Non avrai altra Bissa", "Onora il silenzio", "Santifica la pausa"]);
+  
+  document.getElementById("stats-val").innerHTML = `
+    <div>SAG:${r([6,7,8,9,10])}</div><div>ELO:${r([6,7,8,9,10])}</div>
+    <div>IRO:${r([6,7,8,9,10])}</div><div>TOL:${r([6,7,8,9,10])}</div>
   `;
-  document.getElementById("stats-content").innerHTML = statsHtml;
 
-  document.getElementById("id-value").textContent = data.id;
-  document.getElementById("data-emissione").textContent = data.dataEmissione;
-  document.getElementById("riservato-status").textContent = data.riservato;
-
-  drawSigillo(seed, isBissomane);
-  document.getElementById("qr").src = `https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=${data.id}&color=${isBissomane?'ff00ff':'00ffcc'}&bgcolor=0a0a0c`;
+  drawSigillo(seed);
+  document.getElementById("qr").src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=BISSA-${seed}&color=00ff41&bgcolor=000000`;
 }
 
-function drawSigillo(seed, special) {
-  const canvas = document.getElementById("sigillo");
-  const ctx = canvas.getContext("2d");
-  ctx.clearRect(0,0,200,200);
-  ctx.strokeStyle = special ? "#ff00ff" : "#00ffcc";
-  ctx.lineWidth = 3;
-  ctx.globalAlpha = 0.8;
-
-  for(let i=0; i<10; i++) {
-    ctx.beginPath();
-    ctx.arc(100, 100, 10 + i*8, 0, Math.PI * (i%3==0 ? 1.5 : 2));
-    ctx.stroke();
+function drawSigillo(seed) {
+  const ctx = document.getElementById("sigillo").getContext("2d");
+  ctx.clearRect(0,0,100,100); ctx.strokeStyle = "#00ff41";
+  for(let i=0; i<8; i++) {
+    ctx.beginPath(); ctx.arc(50, 50, 5 + i*5, 0, Math.PI * (i%2?1.2:2)); ctx.stroke();
   }
 }
 
-function downloadPNG() {
-  html2canvas(document.getElementById("card-container"), {backgroundColor:null, scale:2}).then(canvas => {
+function download() {
+  html2canvas(document.getElementById("card"), {backgroundColor: '#000'}).then(canvas => {
     const a = document.createElement("a");
     a.href = canvas.toDataURL();
-    a.download = "tessera_bissa_cyber.png";
+    a.download = "Bissa_Log.png";
     a.click();
   });
 }
 
-// Inizializza al caricamento
-startGeneration();
+generate();
 </script>
 </body>
 </html>
