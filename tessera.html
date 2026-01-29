@@ -6,44 +6,56 @@
 
 <style>
 body{
-  background:radial-gradient(circle at top,#0b130b,#000);
+  background:radial-gradient(circle,#071207,#000);
   color:#9aff9a;
-  font-family: monospace;
+  font-family:monospace;
   display:flex;
   flex-direction:column;
   align-items:center;
   padding:30px;
 }
 
-h1{ text-shadow:0 0 15px #0f0; }
-
-.card{
-  width:380px;
-  padding:20px;
-  border-radius:18px;
-  background:linear-gradient(145deg,#020,#010);
-  border:2px solid #0f0;
-  box-shadow:0 0 30px rgba(0,255,0,.6);
+h1{
+  text-shadow:0 0 20px #0f0;
 }
 
-canvas{ display:block; margin:12px auto; }
+.card{
+  width:420px;
+  padding:20px;
+  border-radius:18px;
+  background:linear-gradient(160deg,#020,#010);
+  border:2px solid #0f0;
+  box-shadow:0 0 30px rgba(0,255,0,.5);
+}
 
 .row{ margin:6px 0; }
 
+hr{
+  border:0;
+  height:1px;
+  background:linear-gradient(to right,transparent,#0f0,transparent);
+  margin:12px 0;
+}
+
+canvas, img{
+  display:block;
+  margin:10px auto;
+}
+
 button{
   margin-top:14px;
-  padding:10px 18px;
+  padding:10px 20px;
   background:#020;
   border:2px solid #0f0;
   color:#0f0;
-  border-radius:8px;
+  border-radius:10px;
   cursor:pointer;
 }
-button:hover{ background:#0f0; color:#000; }
-
-#slot{ font-style:italic; opacity:.7; height:18px; }
-
-img{ display:block; margin:10px auto; }
+button:hover{
+  background:#0f0;
+  color:#000;
+}
+#slot{ opacity:.7; font-style:italic; height:20px; }
 </style>
 </head>
 
@@ -55,112 +67,165 @@ img{ display:block; margin:10px auto; }
   <canvas id="sigillo" width="160" height="160"></canvas>
   <div id="info"></div>
   <div id="slot"></div>
-  <img id="qr" />
+  <img id="qr">
 </div>
 
 <button onclick="startGeneration()">🎲 Genera Tessera</button>
 <button onclick="downloadPNG()">⬇️ Scarica PNG</button>
 
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
 <script>
-// DATA
-const nomi=["Fratello","Custode","Errante","Adepto"];
-const essenze=["Nebbia","Fumo","Cenere","Radice","Eco"];
-const titoli=["della Bissa","del Collasso","del Faro"];
-const ruoli=["Osservatore","Archivista","Guardiano","Agitatore"];
-const tratti=[
-  "incline alla riflessione lenta",
-  "ironico sotto pressione",
-  "ostinato nel dialogo",
-  "lucido nel caos",
-  "mutevole ma coerente"
-];
-const ambienti=[
-  "ambienti saturi di discussione",
-  "luoghi densi di fumo",
-  "cerchi informali",
-  "situazioni di collasso leggero"
+// ───────────────── DATA ─────────────────
+const nomi = ["Fratello","Custode","Errante","Adepto","Testimone","Archivista"];
+const essenze = ["Nebbia","Fumo","Cenere","Radice","Eco","Spirale"];
+const titoli = ["della Bissa","del Faro","del Collasso","della Veglia"];
+const ruoli = ["Osservatore","Agitatore","Mediatore","Custode del Cerchio","Riflessivo"];
+
+const rarita = [
+ {nome:"Comune",mod:0,prob:45},
+ {nome:"Non Comune",mod:1,prob:30},
+ {nome:"Rara",mod:2,prob:15},
+ {nome:"Epica",mod:4,prob:8},
+ {nome:"Leggendaria",mod:6,prob:2}
 ];
 
+// 20 BACKSTORY PG
+const backstories = [
+"Nato durante una discussione degenerata in risata collettiva, ha imparato presto che l’ironia è uno scudo sociale.",
+"Cresciuto tra osservatori silenziosi, parla poco ma ogni parola pesa più del rumore.",
+"Ha visto strutture crollare per eccesso di serietà e ne ha fatto una dottrina personale.",
+"Usa la bissa come catalizzatore di dialogo, mai come fuga dal confronto.",
+"Un tempo rigido, è stato piegato dagli eventi e ora preferisce curve lente.",
+"Ha perso più amicizie per silenzi che per parole.",
+"Abituato ai margini, osserva il centro senza mai abitarlo davvero.",
+"Ha imparato a rallentare quando tutto spingeva ad accelerare.",
+"Ha fatto dell’ambiguità una forma di difesa.",
+"Crede che ogni collasso sia una lezione mancata.",
+"Si fida dei cerchi informali più delle strutture ufficiali.",
+"Sa riconoscere quando una discussione è morta e quando sta solo respirando.",
+"Porta rispetto ai rituali, ma solo se sono condivisi.",
+"Diffida delle verità urlate.",
+"È sopravvissuto a più conversazioni tossiche che conflitti reali.",
+"Preferisce osservare prima di agire, sempre.",
+"Ha smesso di convincere: ora ascolta.",
+"Crede che l’ironia salvi più relazioni della ragione.",
+"Ha imparato che il silenzio è una risposta.",
+"Non cerca consenso, cerca comprensione."
+];
+
+// ───────────────── UTILS ─────────────────
 function r(a){ return a[Math.floor(Math.random()*a.length)]; }
 
-// SLOT ANIMATION
+function rollRarity(){
+ let roll=Math.random()*100, sum=0;
+ for(const r of rarita){ sum+=r.prob; if(roll<=sum) return r; }
+}
+
+function stat(base){
+ return Math.min(10,Math.max(1,base+Math.floor(Math.random()*5)-2));
+}
+
+// ───────────────── GENERATION ─────────────────
 function startGeneration(){
-  let i=0;
-  const slot=document.getElementById("slot");
-  const t=setInterval(()=>{
-    slot.textContent=`Invocazione: ${r(nomi)} ${r(essenze)}...`;
-    i++;
-    if(i>12){ clearInterval(t); generate(); }
-  },80);
+ let i=0;
+ const slot=document.getElementById("slot");
+ const t=setInterval(()=>{
+   slot.textContent="Invocazione: "+r(nomi)+" "+r(essenze)+"…";
+   if(++i>15){ clearInterval(t); generate(); }
+ },70);
 }
 
 function generate(){
-  const seed=crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
+ const seed=crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
+ const rar=rollRarity();
+ const mod=rar.mod;
 
-  const data={
-    nome:`${r(nomi)} ${r(essenze)} ${r(titoli)}`,
-    ruolo:r(ruoli),
-    descrizione:`Soggetto ${r(tratti)}, attivo in ${r(ambienti)}.`,
-    sigillo:seed,
-    data:new Date().toLocaleDateString()
-  };
+ const data={
+   nome:`${r(nomi)} ${r(essenze)} ${r(titoli)}`,
+   ruolo:r(ruoli),
+   rarita:rar.nome,
+   backstory:r(backstories),
+   stats:{
+     saggezza:stat(5+mod),
+     eloquenza:stat(5+mod),
+     resistenza:stat(5+mod),
+     ironia:stat(5+mod),
+     tolleranza:stat(5+mod)
+   },
+   sigillo:seed,
+   data:new Date().toLocaleDateString()
+ };
 
-  localStorage.setItem("tesseraBissa",JSON.stringify(data));
-  render(data);
-  drawSigillo(seed);
-  drawQR(seed);
+ localStorage.setItem("tesseraBissa",JSON.stringify(data));
+ render(data);
+ drawSigillo(seed);
+ drawQR(seed);
 }
 
+// ───────────────── RENDER ─────────────────
 function render(t){
-  document.getElementById("info").innerHTML=`
-    <div class="row"><b>Nome:</b> ${t.nome}</div>
-    <div class="row"><b>Ruolo:</b> ${t.ruolo}</div>
-    <div class="row"><b>Descrizione:</b><br>${t.descrizione}</div>
-    <div class="row"><b>Sigillo:</b> #${t.sigillo}</div>
-    <div class="row"><b>Emessa:</b> ${t.data}</div>
-  `;
+ document.getElementById("info").innerHTML=`
+ <div class="row"><b>Nome:</b> ${t.nome}</div>
+ <div class="row"><b>Ruolo:</b> ${t.ruolo}</div>
+ <div class="row"><b>Rarità:</b> ${t.rarita}</div>
+
+ <hr>
+
+ <div class="row"><b>Backstory:</b><br>${t.backstory}</div>
+
+ <hr>
+
+ <div class="row"><b>Statistiche</b></div>
+ Saggezza 🌿: ${t.stats.saggezza}<br>
+ Eloquenza 💬: ${t.stats.eloquenza}<br>
+ Resistenza 🍂: ${t.stats.resistenza}<br>
+ Ironia 😏: ${t.stats.ironia}<br>
+ Tolleranza 🍃: ${t.stats.tolleranza}
+
+ <hr>
+
+ <div class="row"><b>Sigillo:</b> #${t.sigillo}</div>
+ <div class="row"><b>Emessa:</b> ${t.data}</div>
+ `;
 }
 
-// SIGILLO
+// ───────────────── SIGILLO ─────────────────
 function drawSigillo(seed){
-  const c=document.getElementById("sigillo");
-  const x=c.getContext("2d");
-  x.clearRect(0,0,160,160);
-  for(let i=0;i<10;i++){
-    x.strokeStyle=`hsl(${(parseInt(seed,16)+i*40)%360},100%,50%)`;
-    x.beginPath();
-    x.arc(80,80,20+i*5,0,Math.PI*(i%2?2:1));
-    x.stroke();
-  }
+ const c=document.getElementById("sigillo");
+ const x=c.getContext("2d");
+ x.clearRect(0,0,160,160);
+ for(let i=0;i<8;i++){
+   x.strokeStyle=`hsl(${(parseInt(seed,16)+i*45)%360},100%,50%)`;
+   x.beginPath();
+   x.arc(80,80,20+i*6,0,Math.PI*(i%2?2:1));
+   x.stroke();
+ }
 }
 
-// QR
+// ───────────────── QR ─────────────────
 function drawQR(seed){
-  const data=`BISSA://sigillo=${seed}`;
-  document.getElementById("qr").src=
-    `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(data)}`;
+ document.getElementById("qr").src=
+ `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=BISSA://${seed}`;
 }
 
-// DOWNLOAD
+// ───────────────── PNG ─────────────────
 function downloadPNG(){
-  html2canvas(document.getElementById("card")).then(c=>{
-    const a=document.createElement("a");
-    a.href=c.toDataURL();
-    a.download="tessera_bissa.png";
-    a.click();
-  });
+ html2canvas(document.getElementById("card")).then(c=>{
+   const a=document.createElement("a");
+   a.href=c.toDataURL();
+   a.download="tessera_bissa.png";
+   a.click();
+ });
 }
 
-// LOAD
+// ───────────────── LOAD ─────────────────
 const saved=localStorage.getItem("tesseraBissa");
 if(saved){
-  const t=JSON.parse(saved);
-  render(t); drawSigillo(t.sigillo); drawQR(t.sigillo);
+ const t=JSON.parse(saved);
+ render(t); drawSigillo(t.sigillo); drawQR(t.sigillo);
 }
 </script>
-
-<!-- lib per download PNG -->
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 </body>
 </html>
