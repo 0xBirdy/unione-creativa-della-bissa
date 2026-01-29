@@ -151,3 +151,86 @@ a, a:visited, a:active, a:hover {
     80%  { transform: translate(1px, 1px) rotate(-0.3deg); }
     100% { transform: translate(0px, 0px) rotate(0deg); }
 }
+
+/* =========================================
+   GRID MEME GIGANTI E CENTRATI
+   ========================================= */
+.main-content { 
+    max-width: 1400px; 
+    margin: 0 auto; 
+    padding: 3rem 2rem; 
+}
+
+.cards { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); 
+    gap: 40px; 
+    justify-content: center;
+    justify-items: center;
+}
+
+.card { 
+    background: #000; 
+    border: 1px solid #1a1a1a; 
+    transition: 0.4s; 
+    cursor: pointer; 
+    width: 100%;
+}
+
+.card img { 
+    width: 100%; 
+    height: 500px; 
+    object-fit: cover; 
+    filter: grayscale(100%); 
+    transition: 0.5s; 
+}
+
+.card:hover img { 
+    filter: grayscale(0%);
+}
+
+.card p { 
+    padding: 20px; 
+    color: #0f0; 
+    text-align: center; 
+    font-weight: bold; 
+    font-size: 1.2rem;
+    border-top: 1px solid #1a1a1a; 
+    text-transform: uppercase;
+}
+
+/* =========================================
+   POPUP BISSA TUTTO
+   ========================================= */
+#bissa-popup {
+    position: fixed; 
+    top: 50%; left: 50%; 
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 9999; 
+    background: #000; 
+    border: 5px solid #0f0;
+    padding: 60px; 
+    opacity: 0; 
+    pointer-events: none;
+    transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 100px rgba(0,0,0,0.9), 0 0 40px rgba(0,255,0,0.4);
+}
+
+#bissa-popup.active { 
+    transform: translate(-50%, -50%) scale(1); 
+    opacity: 1; 
+}
+
+#bissa-text { 
+    font-size: 5rem; 
+    color: #0f0; 
+    font-weight: 900; 
+    text-shadow: 3px 0 red, -3px 0 cyan;
+    animation: shake 0.1s infinite; 
+}
+
+@keyframes shake { 
+    0% {transform: translate(1px,1px)} 
+    50% {transform: translate(-1px,-2px)} 
+    100% {transform: translate(1px,1px)} 
+}
