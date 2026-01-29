@@ -1,5 +1,5 @@
 /* =========================================
-   CORE & RESET - Allineamento Garantito
+   CORE & RESET
    ========================================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -8,26 +8,31 @@ body {
     background: #030303; 
     color: #fff; 
     line-height: 1.6;
-    /* Grid di sfondo più sottile */
     background-image: linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px), 
                       linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
     background-size: 30px 30px;
     overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
 
-/* NAVBAR - Centrata e Rigida */
+/* NAVBAR */
 .navbar { 
-    display: flex; justify-content: center; gap: 2rem; padding: 1.5rem;
-    background: rgba(0,0,0,0.98); border-bottom: 2px solid #0f0;
-    position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px);
+    display: flex; 
+    justify-content: center; 
+    gap: 2rem; 
+    padding: 1.5rem;
+    background: rgba(0,0,0,0.98); 
+    border-bottom: 2px solid #0f0;
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+    backdrop-filter: blur(10px);
 }
 
-a, a:visited, a:active { 
+/* LINK */
+a, a:visited, a:active, a:hover { 
     color: #0f0 !important; 
     text-decoration: none !important; 
+    font-weight: bold; 
     text-transform: uppercase; 
     transition: 0.3s;
     letter-spacing: 2px;
@@ -36,42 +41,51 @@ a, a:visited, a:active {
 .navbar a { font-size: 0.9rem; opacity: 0.7; }
 .navbar a:hover { opacity: 1; text-shadow: 0 0 15px #0f0; color: #fff !important; }
 
-/* HERO - Centratura Verticale e Orizzontale */
-.hero, .hero-small { 
-    padding: 8rem 2rem 4rem;
+/* HERO (solo se serve) */
+.hero { 
+    padding: 12rem 2rem 6rem;
     text-align: center; 
     display: flex; 
     flex-direction: column; 
     align-items: center;
-    justify-content: center;
 }
 
-.glow-title { 
-    font-size: clamp(2rem, 8vw, 5rem); 
+.glow { /* corretto da glow-title a glow */
+    font-size: clamp(2.5rem, 10vw, 5.5rem); 
     text-transform: uppercase; 
     line-height: 1.1;
     margin-bottom: 25px;
-    /* Glitch coordinato */
-    text-shadow: 3px 0 #f00, -3px 0 #0ff;
-    color: #fff;
+    text-shadow: 3px 0 #f00, -3px 0 #0f0;
 }
 
-/* GRID MEME - Centratura risolta */
-.main-content { 
-    width: 100%;
-    max-width: 1400px; 
-    margin: 0 auto; 
-    padding: 2rem;
-    flex-grow: 1; /* Spinge il footer in basso */
+.hero-links { 
+    margin-top: 50px; 
+    display: flex; 
+    gap: 30px; 
+    flex-wrap: wrap; 
+    justify-content: center;
 }
+
+.hero-links a { 
+    font-size: 1.1rem; 
+    border: 1px solid #0f0; 
+    padding: 12px 25px; 
+    background: rgba(0, 255, 0, 0.05);
+}
+
+.hero-links a:hover { 
+    background: #0f0; 
+    color: #000 !important; 
+    box-shadow: 0 0 20px #0f0;
+}
+
+/* GRID MEME */
+.main-content { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
 
 .cards { 
     display: grid; 
-    /* Ridotto il minmax per evitare che le card "scappino" */
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-    gap: 30px; 
-    justify-content: center; /* Centra le colonne nella grid */
-    justify-items: center;   /* Centra il contenuto nelle celle */
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); 
+    gap: 40px; 
 }
 
 .card { 
@@ -79,20 +93,13 @@ a, a:visited, a:active {
     border: 1px solid #1a1a1a; 
     transition: 0.4s; 
     cursor: pointer; 
-    width: 100%;
-    max-width: 450px; /* Limite massimo per non farle giganti */
-}
-
-.card:hover {
-    border-color: #0f0;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
 }
 
 .card img { 
     width: 100%; 
-    height: 350px; /* Altezza fissa per uniformità */
+    height: 500px; 
     object-fit: cover; 
-    filter: grayscale(100%) contrast(1.2); 
+    filter: grayscale(100%); 
     transition: 0.5s; 
 }
 
@@ -103,38 +110,23 @@ a, a:visited, a:active {
     color: #0f0; 
     text-align: center; 
     font-weight: bold; 
-    border-top: 1px solid #1a1a1a;
-    letter-spacing: 1px;
+    border-top: 1px solid #1a1a1a; 
 }
 
-/* I 5 PILASTRI - Sezione specifica */
-.pilastri-container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Forza i 5 pilastri in riga */
-    gap: 10px;
-    margin-top: 50px;
-    border-top: 1px double #0f0;
-    padding-top: 20px;
-}
-
-@media (max-width: 900px) {
-    .pilastri-container { grid-template-columns: 1fr; } /* Stack verticale su mobile */
-    .cards { grid-template-columns: 1fr; }
-}
-
-/* POPUP CENTRALE - Fix allineamento */
+/* POPUP CENTRALE */
 #bissa-popup {
     position: fixed; 
-    top: 50%; left: 50%; 
+    top: 50%; 
+    left: 50%; 
     transform: translate(-50%, -50%) scale(0);
     z-index: 9999; 
     background: #000; 
-    border: 3px solid #0f0;
+    border: 5px solid #0f0;
     padding: 40px; 
     opacity: 0; 
     pointer-events: none;
-    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    text-align: center;
+    transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 100px rgba(0,0,0,0.9), 0 0 40px rgba(0,255,0,0.4);
 }
 
 #bissa-popup.active { 
@@ -142,11 +134,15 @@ a, a:visited, a:active {
     opacity: 1; 
 }
 
-/* FOOTER */
-footer {
-    padding: 2rem;
-    text-align: center;
-    border-top: 1px solid #1a1a1a;
-    color: #444;
-    font-size: 0.8rem;
+#bissa-text { 
+    font-size: 4rem; 
+    color: #0f0; 
+    font-weight: 900; 
+    animation: shake 0.1s infinite; 
+}
+
+@keyframes shake { 
+    0% { transform: translate(1px, 1px); } 
+    50% { transform: translate(-1px, -2px); } 
+    100% { transform: translate(1px, 1px); } 
 }
