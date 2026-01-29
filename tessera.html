@@ -240,9 +240,11 @@ button:disabled{
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
-const nomi=["Fratello","Errante","Custode","Archivista","Testimone","Vegliatore"];
-const essenze=["Fumo","Nebbia","Cenere","Eco","Radice","Spirale","Vuoto","Nodo"];
-const titoli=["della Bissa","del Faro","del Collasso","della Veglia","del Rallentamento"];
+const nomi=["Fratello","Errante","Custode","Archivista","Testimone","Vegliatore","Sentinella","Navigatore","Esule","Cronista","Decifratore","Osservatore","Mediatore","Risonante","Silente","Trascrittore","Guardiano","Collezionista","Frammento","Eco","Queer","Dissidente","Sovversivo","Apostata","Eretico","Degenerato"];
+
+const essenze=["Fumo","Nebbia","Cenere","Eco","Radice","Spirale","Vuoto","Nodo","Ombra","Glitch","Pixel","Frequenza","Ritardo","Deriva","Stasi","Rumore","Latenza","Cache","Buffer","Sincope","Degrado","Entropy","Fluido","Basato","Cringe"];
+
+const titoli=["della Bissa","del Faro","del Collasso","della Veglia","del Rallentamento","dell'Intervallo","della Pausa","del Margine","dell'Attrito","del Riflusso","della Disconnessione","del Blackout","della Nebulosa","del Loop","dell'Errore 404","del Pride","della Rivoluzione","del Meme Bannato","dell'Estremismo","della Radicalizzazione","del Dogwhistle","della Shitpost","del Cancel","della Decadenza"];
 
 const origini=[
 "Infrastruttura collassata",
@@ -250,7 +252,42 @@ const origini=[
 "Zona grigia algoritmica",
 "Militanza ironica",
 "Errore di sistema",
-"Archivio mai chiuso"
+"Archivio mai chiuso",
+"Chat abbandonata",
+"Server in limbo",
+"Community dissolta",
+"Blog post-attivo",
+"Thread infinito",
+"Mailing list fantasma",
+"Wiki orfana",
+"Repository archiviato",
+"BBS dismessa",
+"IRC channel vuoto",
+"Newsgroup silente",
+"Podcast interrotto",
+"Webring spezzato",
+"Torrent senza seed",
+"Subreddit quarantinato",
+"Discord banned",
+"4chan /pol/ thread",
+"Tumblr pre-purge",
+"Twitter pre-Elon",
+"OnlyFans leakato",
+"Grindr ghosting",
+"Parler shutdown",
+"8kun board",
+"Kiwi Farms mirror",
+"Encyclopedia Dramatica",
+"Something Awful paywall",
+"Livejournal russo",
+"MySpace Tom",
+"Geocities perduta",
+"Alt-right pipeline",
+"Breadtube commentary",
+"Incel forum",
+"Femcel discorso",
+"Transmaxxing guide",
+"Nazbol gang meme"
 ];
 
 const eventi=[
@@ -259,7 +296,50 @@ const eventi=[
 "Silenzio imposto",
 "Meme proibito",
 "Reset di identità",
-"Fuga dal feed"
+"Fuga dal feed",
+"Ban permanente",
+"Shadowban scoperto",
+"Doxing evitato",
+"Flame war conclusa",
+"Thread locked",
+"Account sospeso",
+"Deplatforming",
+"Ratio cosmico",
+"Viral negato",
+"Screenshot fatale",
+"Cancellazione volontaria",
+"Lurk definitivo",
+"Touch grass",
+"Log out finale",
+"Coming out digitale",
+"Pronomi nel bio",
+"Trans rights spam",
+"Redpill ingerita",
+"Blackpill accettata",
+"Groomer accusato",
+"Nazi punched",
+"Antifa dox",
+"Cope and seethe",
+"Dilate moment",
+"Based and redpilled",
+"Cringe compilation",
+"Ratio + L + didn't ask",
+"Ywnbaw postato",
+"41% reference",
+"1488 dogwhistle",
+"Triple parentesi",
+"Ok groomer",
+"Chud called out",
+"Fash bashed",
+"Commie owned",
+"Libertarian moment",
+"Anarcho tiranny",
+"Accelerazionismo",
+"Collasso desiderato",
+"Femboy Friday",
+"Tomboy Tuesday",
+"Gooning session",
+"Coomer defeated"
 ];
 
 const visioni=[
@@ -268,7 +348,51 @@ const visioni=[
 "Nessuna opinione è urgente",
 "Il caos va osservato",
 "Ridurre è resistere",
-"Il meme è verità compressa"
+"Il meme è verità compressa",
+"Il silenzio amplifica",
+"L'ironia protegge",
+"Non tutto va documentato",
+"Il ritardo è saggezza",
+"L'anonimato libera",
+"Il lurking insegna",
+"La frammentazione rivela",
+"Il glitch è messaggio",
+"L'assenza parla",
+"Il logout è cura",
+"La cache ricorda",
+"L'errore orienta",
+"Il margine è centro",
+"L'attrito rallenta",
+"La latenza medita",
+"Il buffer protegge",
+"Lo spam contiene",
+"Il ban purifica",
+"L'archivio dimentica",
+"Il degrado è estetica",
+"L'estremismo è sincerità",
+"La provocazione educa",
+"Il tabù va infranto",
+"La radicalità è onestà",
+"Il cringe è autenticità",
+"La shitpost è filosofia",
+"Il based trascende",
+"La fluidità destabilizza",
+"Il dogma va sovvertito",
+"La norma va violata",
+"Il limite è illusione",
+"La decadenza è libertà",
+"Il goon mode è meditazione",
+"La pipeline è viaggio",
+"Il femboy è futuro",
+"La blackpill è pace",
+"Il nazbol è sintesi",
+"L'accelerazione è inevitabile",
+"Il collasso è rinascita",
+"La terza via esiste",
+"Il post-left libera",
+"La contradizione è forza",
+"Il caos è ordine",
+"La schizoposting è saggezza"
 ];
 
 const peccati=["Superbia","Avarizia","Lussuria","Invidia","Gola","Ira","Accidia"];
@@ -337,13 +461,467 @@ function generate(){
   };
   qrImg.src=`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=BISSA-${seed}&color=00ff41&bgcolor=000000`;
 
-  // Avatar SVG migliorato
-  const symbol = bissomane ? "&#937;" : "&#931;"; // Omega e Sigma come entity HTML
+  // Avatar procedurale ULTRA DETTAGLIATO con fattezze umane
+  const avatarSeed = parseInt(seed.slice(0,4), 16);
+  const isBissomane = bissomane;
+  
+  // MEME FACES - 10% chance di faccia meme
+  const memeChance = (avatarSeed % 100) < 10;
+  const memeType = (avatarSeed * 7) % 8;
+  
+  if(memeChance) {
+    let memeFace = '';
+    const memeNames = ['PEPE','WOJAK','CHAD','DOGE','TROLLFACE','RICK','TRUMP','GIGACHAD'];
+    const memeName = memeNames[memeType];
+    
+    if(memeType === 0) { // PEPE
+      memeFace = `
+        <ellipse cx="60" cy="65" rx="28" ry="32" fill="#3d9140" stroke="#00ff41" stroke-width="2"/>
+        <ellipse cx="50" cy="55" rx="8" ry="12" fill="white" stroke="#00ff41" stroke-width="1"/>
+        <ellipse cx="70" cy="55" rx="8" ry="12" fill="white" stroke="#00ff41" stroke-width="1"/>
+        <circle cx="50" cy="57" r="3" fill="black"/>
+        <circle cx="70" cy="57" r="3" fill="black"/>
+        <path d="M 45 75 Q 60 78 75 75" stroke="#00ff41" fill="none" stroke-width="2"/>
+        <text x="60" y="95" font-size="8" fill="#00ff41" text-anchor="middle">FEELS GOOD</text>`;
+    } else if(memeType === 1) { // WOJAK
+      memeFace = `
+        <ellipse cx="60" cy="60" rx="22" ry="28" fill="#ffd4a3" stroke="#00ff41" stroke-width="2"/>
+        <circle cx="52" cy="55" r="2" fill="black"/>
+        <circle cx="68" cy="55" r="2" fill="black"/>
+        <path d="M 50 60 Q 60 58 70 60" stroke="black" fill="none" stroke-width="1"/>
+        <path d="M 50 72 Q 60 70 70 72" stroke="black" fill="none" stroke-width="2"/>
+        <line x1="50" y1="52" x2="46" y2="48" stroke="black" stroke-width="2"/>
+        <line x1="70" y1="52" x2="74" y2="48" stroke="black" stroke-width="2"/>
+        <text x="60" y="95" font-size="7" fill="#00ff41" text-anchor="middle">I KNOW THAT FEEL</text>`;
+    } else if(memeType === 2) { // CHAD
+      memeFace = `
+        <path d="M 40 45 Q 45 35 60 35 Q 75 35 80 45 L 80 75 Q 70 85 60 85 Q 50 85 40 75 Z" 
+              fill="#ffcc99" stroke="#00ff41" stroke-width="2"/>
+        <rect x="48" y="50" width="4" height="3" fill="black"/>
+        <rect x="68" y="50" width="4" height="3" fill="black"/>
+        <rect x="45" y="45" width="12" height="3" fill="#8b4513"/>
+        <rect x="63" y="45" width="12" height="3" fill="#8b4513"/>
+        <path d="M 50 68 L 70 68" stroke="black" stroke-width="3"/>
+        <polygon points="60,35 55,25 65,25" fill="#8b4513"/>
+        <text x="60" y="95" font-size="8" fill="#00ff41" text-anchor="middle">YES.</text>`;
+    } else if(memeType === 3) { // DOGE
+      memeFace = `
+        <ellipse cx="60" cy="60" rx="28" ry="26" fill="#d4a574" stroke="#00ff41" stroke-width="2"/>
+        <circle cx="52" cy="55" r="6" fill="black"/>
+        <circle cx="68" cy="55" r="6" fill="black"/>
+        <circle cx="52" cy="55" r="2" fill="white"/>
+        <circle cx="68" cy="55" r="2" fill="white"/>
+        <ellipse cx="44" cy="48" rx="10" ry="12" fill="#d4a574" stroke="#00ff41" stroke-width="2"/>
+        <ellipse cx="76" cy="48" rx="10" ry="12" fill="#d4a574" stroke="#00ff41" stroke-width="2"/>
+        <ellipse cx="60" cy="68" rx="6" ry="8" fill="black"/>
+        <path d="M 45 75 Q 60 80 75 75" stroke="black" fill="none" stroke-width="2"/>
+        <text x="60" y="95" font-size="7" fill="#00ff41" text-anchor="middle">WOW SUCH BISSA</text>`;
+    } else if(memeType === 4) { // TROLLFACE
+      memeFace = `
+        <path d="M 35 50 Q 40 35 60 35 Q 80 35 85 50 Q 85 75 60 85 Q 35 75 35 50" 
+              fill="white" stroke="#00ff41" stroke-width="2"/>
+        <ellipse cx="48" cy="52" rx="6" ry="8" fill="black"/>
+        <ellipse cx="72" cy="52" rx="6" ry="8" fill="black"/>
+        <path d="M 40 70 Q 60 82 80 70" stroke="black" fill="none" stroke-width="3"/>
+        <text x="60" y="95" font-size="8" fill="#00ff41" text-anchor="middle">PROBLEM?</text>`;
+    } else if(memeType === 5) { // RICK ASTLEY
+      memeFace = `
+        <ellipse cx="60" cy="60" rx="24" ry="28" fill="#ffcc99" stroke="#00ff41" stroke-width="2"/>
+        <path d="M 45 40 Q 50 30 60 28 Q 70 30 75 40" fill="#8b0000" stroke="#00ff41" stroke-width="1"/>
+        <rect x="48" y="52" width="4" height="6" rx="2" fill="black"/>
+        <rect x="68" y="52" width="4" height="6" rx="2" fill="black"/>
+        <path d="M 50 70 Q 60 75 70 70" stroke="black" fill="none" stroke-width="2"/>
+        <text x="60" y="95" font-size="6" fill="#00ff41" text-anchor="middle">NEVER GONNA GIVE YOU UP</text>`;
+    } else if(memeType === 6) { // TRUMP
+      memeFace = `
+        <ellipse cx="60" cy="62" rx="26" ry="30" fill="#ffa500" stroke="#00ff41" stroke-width="2"/>
+        <path d="M 40 35 Q 50 25 70 28 Q 75 30 78 38" fill="#ffb347" stroke="#00ff41" stroke-width="1.5"/>
+        <rect x="48" y="54" width="5" height="4" fill="black"/>
+        <rect x="67" y="54" width="5" height="4" fill="black"/>
+        <ellipse cx="60" cy="68" rx="3" ry="4" fill="#ff6347"/>
+        <path d="M 50 76 L 70 76" stroke="#ffa500" stroke-width="3"/>
+        <text x="60" y="95" font-size="7" fill="#00ff41" text-anchor="middle">MAKE BISSA GREAT</text>`;
+    } else { // GIGACHAD
+      memeFace = `
+        <path d="M 38 45 Q 42 30 60 30 Q 78 30 82 45 L 82 80 Q 70 90 60 90 Q 50 90 38 80 Z" 
+              fill="#d4a373" stroke="#00ff41" stroke-width="2"/>
+        <rect x="48" y="50" width="5" height="4" fill="black"/>
+        <rect x="67" y="50" width="5" height="4" fill="black"/>
+        <rect x="44" y="44" width="14" height="4" fill="#2c1810"/>
+        <rect x="62" y="44" width="14" height="4" fill="#2c1810"/>
+        <path d="M 48 70 L 72 70" stroke="black" stroke-width="3"/>
+        <polygon points="52,70 50,75 54,75" fill="white"/>
+        <polygon points="68,70 66,75 70,75" fill="white"/>
+        <path d="M 50 82 Q 60 85 70 82" stroke="#2c1810" fill="none" stroke-width="2"/>
+        <text x="60" y="100" font-size="7" fill="#00ff41" text-anchor="middle">⚡ ULTRA BASED ⚡</text>`;
+    }
+    
+    document.getElementById("avatar").innerHTML=`
+      <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+        <rect width="120" height="120" fill="black"/>
+        <defs>
+          <pattern id="grid${seed}" width="8" height="8" patternUnits="userSpaceOnUse">
+            <circle cx="4" cy="4" r="0.5" fill="#00ff41" opacity="0.1"/>
+          </pattern>
+        </defs>
+        <rect width="120" height="120" fill="url(#grid${seed})"/>
+        ${memeFace}
+        ${isBissomane ? `<rect x="20" y="50" width="80" height="3" fill="#ff0041" opacity="0.7"/>
+                         <text x="65" y="60" font-size="16" fill="#ff0041" opacity="0.5">Ω</text>` : ''}
+      </svg>`;
+    return;
+  }
+  
+  // NORMALE CHARACTER CON DETTAGLI ESTREMI
+  const faceWidth = 38 + (avatarSeed % 8);
+  const faceHeight = 48 + (avatarSeed % 12);
+  
+  // COLORE CAPELLI
+  const hairColors = ['#00ff41','#ff0041','#00d4ff','#ff00ff','#ffff00','#ff6600','#ffffff','#8b00ff'];
+  const hairColor = hairColors[(avatarSeed * 3) % hairColors.length];
+  
+  // ESPRESSIONI FACCIALI
+  const expression = (avatarSeed * 11) % 6;
+  let expressionOverlay = '';
+  if(expression === 0) { // Felice/ride
+    expressionOverlay = `<text x="40" y="52" font-size="8" opacity="0.6">^</text>
+                         <text x="75" y="52" font-size="8" opacity="0.6">^</text>`;
+  } else if(expression === 1) { // Triste
+    expressionOverlay = `<path d="M 45 48 L 48 45" stroke="#00ff41" opacity="0.4" stroke-width="1"/>
+                         <path d="M 75 48 L 72 45" stroke="#00ff41" opacity="0.4" stroke-width="1"/>`;
+  } else if(expression === 2) { // Arrabbiato
+    expressionOverlay = `<line x1="42" y1="43" x2="48" y2="46" stroke="#ff0041" stroke-width="2" opacity="0.6"/>
+                         <line x1="78" y1="43" x2="72" y2="46" stroke="#ff0041" stroke-width="2" opacity="0.6"/>`;
+  }
+  
+  // SIGARETTA - 20% chance
+  const smoking = (avatarSeed % 5) === 0;
+  let cigarette = '';
+  if(smoking) {
+    cigarette = `
+      <rect x="72" y="68" width="12" height="2" fill="white" stroke="#00ff41" stroke-width="0.5"/>
+      <rect x="84" y="67.5" width="2" height="3" fill="#ff6600"/>
+      <circle cx="86" cy="69" r="1" fill="#ffff00" opacity="0.8"/>
+      <path d="M 87 68 Q 90 65 92 67" stroke="#666" stroke-width="0.5" opacity="0.5"/>
+      <circle cx="90" cy="66" r="0.5" fill="#999" opacity="0.4"/>`;
+  }
+  
+  // PIERCING multipli
+  const piercingStyle = (avatarSeed * 13) % 8;
+  let piercings = '';
+  if(piercingStyle === 0) { // Naso
+    piercings = `<circle cx="60" cy="60" r="1.5" fill="none" stroke="#00ff41" stroke-width="1"/>`;
+  } else if(piercingStyle === 1) { // Labbro
+    piercings = `<circle cx="60" cy="72" r="1.5" fill="silver" stroke="#00ff41" stroke-width="0.5"/>`;
+  } else if(piercingStyle === 2) { // Sopracciglio
+    piercings = `<rect x="47" y="41" width="3" height="1" fill="silver"/>
+                 <circle cx="48" cy="41" r="0.8" fill="silver"/>`;
+  } else if(piercingStyle === 3) { // Septum
+    piercings = `<path d="M 58 62 Q 60 64 62 62" fill="none" stroke="silver" stroke-width="1.5"/>
+                 <circle cx="58" cy="62" r="1" fill="silver"/>
+                 <circle cx="62" cy="62" r="1" fill="silver"/>`;
+  } else if(piercingStyle === 4) { // Multipli
+    piercings = `<circle cx="54" cy="58" r="1" fill="silver"/>
+                 <circle cx="66" cy="58" r="1" fill="silver"/>
+                 <circle cx="60" cy="72" r="1.5" fill="silver"/>
+                 <rect x="47" y="41" width="2" height="1" fill="silver"/>`;
+  } else if(piercingStyle === 5) { // Snake bites
+    piercings = `<circle cx="55" cy="74" r="1.5" fill="silver"/>
+                 <circle cx="65" cy="74" r="1.5" fill="silver"/>`;
+  } else if(piercingStyle === 6) { // Bridge
+    piercings = `<rect x="52" y="47" width="2" height="1" fill="silver"/>
+                 <rect x="66" y="47" width="2" height="1" fill="silver"/>`;
+  } else { // Orecchini grandi
+    piercings = `<circle cx="35" cy="56" r="3" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+                 <circle cx="85" cy="56" r="3" fill="none" stroke="#00ff41" stroke-width="1.5"/>`;
+  }
+  
+  // BUSTO/CORPO
+  const bustStyle = (avatarSeed * 19) % 5;
+  let bust = '';
+  if(bustStyle === 0) { // T-shirt
+    bust = `<rect x="42" y="85" width="36" height="25" fill="none" stroke="#00ff41" stroke-width="2"/>
+            <line x1="42" y1="85" x2="50" y2="95" stroke="#00ff41" stroke-width="2"/>
+            <line x1="78" y1="85" x2="70" y2="95" stroke="#00ff41" stroke-width="2"/>`;
+  } else if(bustStyle === 1) { // Hoodie
+    bust = `<path d="M 40 85 L 35 90 L 35 110 L 60 110 L 60 95 Z" fill="none" stroke="#00ff41" stroke-width="2"/>
+            <path d="M 80 85 L 85 90 L 85 110 L 60 110 L 60 95 Z" fill="none" stroke="#00ff41" stroke-width="2"/>
+            <rect x="48" y="88" width="24" height="22" fill="none" stroke="#00ff41" stroke-width="1.5"/>`;
+  } else if(bustStyle === 2) { // Tank top
+    bust = `<line x1="48" y1="85" x2="48" y2="110" stroke="#00ff41" stroke-width="3"/>
+            <line x1="72" y1="85" x2="72" y2="110" stroke="#00ff41" stroke-width="3"/>
+            <line x1="48" y1="110" x2="72" y2="110" stroke="#00ff41" stroke-width="2"/>`;
+  } else if(bustStyle === 3) { // Collana/choker
+    bust = `<ellipse cx="60" cy="82" rx="18" ry="3" fill="none" stroke="#00ff41" stroke-width="2"/>
+            <circle cx="60" cy="82" r="3" fill="#ff0041"/>`;
+  } else { // Giacca
+    bust = `<path d="M 38 85 L 30 90 L 30 110 L 50 110" fill="none" stroke="#00ff41" stroke-width="2"/>
+            <path d="M 82 85 L 90 90 L 90 110 L 70 110" fill="none" stroke="#00ff41" stroke-width="2"/>
+            <line x1="50" y1="85" x2="50" y2="110" stroke="#00ff41" stroke-width="2"/>
+            <line x1="70" y1="85" x2="70" y2="110" stroke="#00ff41" stroke-width="2"/>`;
+  }
+  
+  // Naso
+  const noseStyle = (avatarSeed * 11) % 4;
+  let nose = '';
+  const noseY = 58;
+  if(noseStyle === 0) {
+    nose = `<line x1="60" y1="${noseY-3}" x2="60" y2="${noseY+3}" stroke="#00ff41" stroke-width="2"/>`;
+  } else if(noseStyle === 1) {
+    nose = `<polygon points="60,${noseY-2} 58,${noseY+2} 62,${noseY+2}" fill="none" stroke="#00ff41" stroke-width="1.5"/>`;
+  } else if(noseStyle === 2) {
+    nose = `<path d="M 58 ${noseY} L 60 ${noseY+3} L 62 ${noseY}" fill="none" stroke="#00ff41" stroke-width="1.5"/>`;
+  } else {
+    nose = `<circle cx="60" cy="${noseY}" r="2" fill="none" stroke="#00ff41" stroke-width="1.5"/>`;
+  }
+  
+  // Sopracciglia
+  const browStyle = (avatarSeed * 13) % 5;
+  let brows = '';
+  const browY = 42;
+  if(browStyle === 0) {
+    brows = `<line x1="45" y1="${browY}" x2="53" y2="${browY}" stroke="${hairColor}" stroke-width="2"/>
+             <line x1="67" y1="${browY}" x2="75" y2="${browY}" stroke="${hairColor}" stroke-width="2"/>`;
+  } else if(browStyle === 1) {
+    brows = `<line x1="45" y1="${browY+2}" x2="53" y2="${browY-1}" stroke="${hairColor}" stroke-width="2"/>
+             <line x1="67" y1="${browY-1}" x2="75" y2="${browY+2}" stroke="${hairColor}" stroke-width="2"/>`;
+  } else if(browStyle === 2) {
+    brows = `<path d="M 45 ${browY} Q 49 ${browY-2} 53 ${browY}" fill="none" stroke="${hairColor}" stroke-width="2"/>
+             <path d="M 67 ${browY} Q 71 ${browY-2} 75 ${browY}" fill="none" stroke="${hairColor}" stroke-width="2"/>`;
+  } else if(browStyle === 3) {
+    brows = `<rect x="45" y="${browY-1}" width="8" height="3" fill="${hairColor}"/>
+             <rect x="67" y="${browY-1}" width="8" height="3" fill="${hairColor}"/>`;
+  } else {
+    brows = `<circle cx="49" cy="${browY}" r="2" fill="${hairColor}"/>
+             <circle cx="71" cy="${browY}" r="2" fill="${hairColor}"/>`;
+  }
+  
+  // Occhi dettagliati
+  const eyeStyle = avatarSeed % 7;
+  let eyes = '';
+  const eyeY = 50;
+  const eyeSpacing = 12;
+  
+  if(eyeStyle === 0) {
+    eyes = `<circle cx="${60-eyeSpacing}" cy="${eyeY}" r="4" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+            <circle cx="${60-eyeSpacing}" cy="${eyeY}" r="2" fill="#00ff41"/>
+            <circle cx="${60+eyeSpacing}" cy="${eyeY}" r="4" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+            <circle cx="${60+eyeSpacing}" cy="${eyeY}" r="2" fill="#00ff41"/>`;
+  } else if(eyeStyle === 1) {
+    eyes = `<text x="${60-eyeSpacing}" y="${eyeY+4}" font-size="10" fill="#00ff41" text-anchor="middle" font-weight="bold">×</text>
+            <text x="${60+eyeSpacing}" y="${eyeY+4}" font-size="10" fill="#00ff41" text-anchor="middle" font-weight="bold">×</text>`;
+  } else if(eyeStyle === 2) {
+    eyes = `<rect x="${60-eyeSpacing-3}" y="${eyeY-3}" width="6" height="6" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+            <circle cx="${60-eyeSpacing}" cy="${eyeY}" r="1.5" fill="#00ff41"/>
+            <rect x="${60+eyeSpacing-3}" y="${eyeY-3}" width="6" height="6" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+            <circle cx="${60+eyeSpacing}" cy="${eyeY}" r="1.5" fill="#00ff41"/>`;
+  } else if(eyeStyle === 3) {
+    eyes = `<polygon points="${60-eyeSpacing},${eyeY-4} ${60-eyeSpacing+3},${eyeY} ${60-eyeSpacing},${eyeY+4} ${60-eyeSpacing-3},${eyeY}" 
+                     fill="none" stroke="#00ff41" stroke-width="1.5"/>
+            <polygon points="${60+eyeSpacing},${eyeY-4} ${60+eyeSpacing+3},${eyeY} ${60+eyeSpacing},${eyeY+4} ${60+eyeSpacing-3},${eyeY}" 
+                     fill="none" stroke="#00ff41" stroke-width="1.5"/>`;
+  } else if(eyeStyle === 4) {
+    eyes = `<text x="${60-eyeSpacing}" y="${eyeY+4}" font-size="12" fill="#00ff41" text-anchor="middle" font-weight="bold">@</text>
+            <text x="${60+eyeSpacing}" y="${eyeY+4}" font-size="12" fill="#00ff41" text-anchor="middle" font-weight="bold">@</text>`;
+  } else if(eyeStyle === 5) {
+    eyes = `<line x1="${60-eyeSpacing-4}" y1="${eyeY}" x2="${60-eyeSpacing+4}" y2="${eyeY}" stroke="#00ff41" stroke-width="2"/>
+            <circle cx="${60-eyeSpacing}" cy="${eyeY}" r="1" fill="#00ff41"/>
+            <line x1="${60+eyeSpacing-4}" y1="${eyeY}" x2="${60+eyeSpacing+4}" y2="${eyeY}" stroke="#00ff41" stroke-width="2"/>
+            <circle cx="${60+eyeSpacing}" cy="${eyeY}" r="1" fill="#00ff41"/>`;
+  } else {
+    eyes = `<text x="${60-eyeSpacing}" y="${eyeY+4}" font-size="12" fill="#00ff41" text-anchor="middle">★</text>
+            <text x="${60+eyeSpacing}" y="${eyeY+4}" font-size="12" fill="#00ff41" text-anchor="middle">★</text>`;
+  }
+  
+  // OCCHIALI - 30% chance
+  const hasGlasses = (avatarSeed % 10) < 3;
+  let glasses = '';
+  if(hasGlasses) {
+    const glassStyle = (avatarSeed * 17) % 5;
+    if(glassStyle === 0) { // Rotondi
+      glasses = `<circle cx="${60-eyeSpacing}" cy="${eyeY}" r="6" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+                 <circle cx="${60+eyeSpacing}" cy="${eyeY}" r="6" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+                 <line x1="${60-eyeSpacing+6}" y1="${eyeY}" x2="${60+eyeSpacing-6}" y2="${eyeY}" stroke="#00ff41" stroke-width="1.5"/>`;
+    } else if(glassStyle === 1) { // Quadrati
+      glasses = `<rect x="${60-eyeSpacing-6}" y="${eyeY-5}" width="12" height="10" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+                 <rect x="${60+eyeSpacing-6}" y="${eyeY-5}" width="12" height="10" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+                 <line x1="${60-eyeSpacing+6}" y1="${eyeY}" x2="${60+eyeSpacing-6}" y2="${eyeY}" stroke="#00ff41" stroke-width="1.5"/>`;
+    } else if(glassStyle === 2) { // Da sole
+      glasses = `<rect x="${60-eyeSpacing-6}" y="${eyeY-4}" width="12" height="8" fill="#00ff41" opacity="0.3" stroke="#00ff41" stroke-width="1.5"/>
+                 <rect x="${60+eyeSpacing-6}" y="${eyeY-4}" width="12" height="8" fill="#00ff41" opacity="0.3" stroke="#00ff41" stroke-width="1.5"/>
+                 <line x1="${60-eyeSpacing+6}" y1="${eyeY}" x2="${60+eyeSpacing-6}" y2="${eyeY}" stroke="#00ff41" stroke-width="1.5"/>`;
+    } else if(glassStyle === 3) { // Cat-eye
+      glasses = `<path d="M ${60-eyeSpacing-7} ${eyeY} L ${60-eyeSpacing+7} ${eyeY-2} L ${60-eyeSpacing+7} ${eyeY+4} Z" 
+                       fill="none" stroke="#00ff41" stroke-width="1.5"/>
+                 <path d="M ${60+eyeSpacing+7} ${eyeY} L ${60+eyeSpacing-7} ${eyeY-2} L ${60+eyeSpacing-7} ${eyeY+4} Z" 
+                       fill="none" stroke="#00ff41" stroke-width="1.5"/>
+                 <line x1="${60-eyeSpacing+7}" y1="${eyeY}" x2="${60+eyeSpacing-7}" y2="${eyeY}" stroke="#00ff41" stroke-width="1.5"/>`;
+    } else { // Cyber/visore
+      glasses = `<rect x="42" y="${eyeY-4}" width="36" height="10" fill="#00ff41" opacity="0.2" stroke="#00ff41" stroke-width="2"/>
+                 <line x1="44" y1="${eyeY}" x2="76" y2="${eyeY}" stroke="#00ff41" stroke-width="0.5"/>`;
+    }
+  }
+  
+  // Bocca con espressioni
+  const mouthStyle = (avatarSeed * 7) % 8;
+  let mouth = '';
+  const mouthY = 70;
+  
+  if(mouthStyle === 0) {
+    mouth = `<path d="M 48 ${mouthY} Q 60 ${mouthY+6} 72 ${mouthY}" stroke="#00ff41" fill="none" stroke-width="2"/>`;
+  } else if(mouthStyle === 1) {
+    mouth = `<line x1="48" y1="${mouthY}" x2="72" y2="${mouthY}" stroke="#00ff41" stroke-width="2"/>`;
+  } else if(mouthStyle === 2) {
+    mouth = `<text x="60" y="${mouthY+4}" font-size="10" fill="#00ff41" text-anchor="middle" font-weight="bold">?</text>`;
+  } else if(mouthStyle === 3) {
+    mouth = `<polygon points="60,${mouthY-3} 66,${mouthY+4} 54,${mouthY+4}" fill="none" stroke="#00ff41" stroke-width="1.5"/>`;
+  } else if(mouthStyle === 4) {
+    mouth = `<rect x="52" y="${mouthY-2}" width="16" height="6" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+             <line x1="56" y1="${mouthY-2}" x2="56" y2="${mouthY+4}" stroke="#00ff41"/>
+             <line x1="60" y1="${mouthY-2}" x2="60" y2="${mouthY+4}" stroke="#00ff41"/>
+             <line x1="64" y1="${mouthY-2}" x2="64" y2="${mouthY+4}" stroke="#00ff41"/>`;
+  } else if(mouthStyle === 5) {
+    mouth = `<path d="M 45 ${mouthY} Q 60 ${mouthY+8} 75 ${mouthY}" stroke="#00ff41" fill="none" stroke-width="2"/>
+             <line x1="48" y1="${mouthY-2}" x2="52" y2="${mouthY+2}" stroke="#00ff41" stroke-width="1.5"/>
+             <line x1="68" y1="${mouthY+2}" x2="72" y2="${mouthY-2}" stroke="#00ff41" stroke-width="1.5"/>`;
+  } else if(mouthStyle === 6) {
+    mouth = `<rect x="50" y="${mouthY-1}" width="20" height="3" fill="none" stroke="#00ff41" stroke-width="1"/>
+             <line x1="54" y1="${mouthY-1}" x2="54" y2="${mouthY+2}" stroke="#00ff41"/>
+             <line x1="58" y1="${mouthY-1}" x2="58" y2="${mouthY+2}" stroke="#00ff41"/>
+             <line x1="62" y1="${mouthY-1}" x2="62" y2="${mouthY+2}" stroke="#00ff41"/>
+             <line x1="66" y1="${mouthY-1}" x2="66" y2="${mouthY+2}" stroke="#00ff41"/>`;
+  } else {
+    mouth = `<path d="M 48 ${mouthY} Q 52 ${mouthY-3} 56 ${mouthY} T 64 ${mouthY} T 72 ${mouthY}" 
+             stroke="#00ff41" fill="none" stroke-width="2"/>`;
+  }
+  
+  // Capelli colorati e dettagliati
+  const hairStyle = (avatarSeed * 3) % 8;
+  let hair = '';
+  
+  if(hairStyle === 0) {
+    hair = `<polygon points="50,32 53,25 56,30 60,22 64,30 67,25 70,32" fill="none" stroke="${hairColor}" stroke-width="2"/>
+            <line x1="53" y1="25" x2="53" y2="20" stroke="${hairColor}" stroke-width="1.5"/>
+            <line x1="60" y1="22" x2="60" y2="15" stroke="${hairColor}" stroke-width="1.5"/>
+            <line x1="67" y1="25" x2="67" y2="20" stroke="${hairColor}" stroke-width="1.5"/>`;
+  } else if(hairStyle === 1) {
+    hair = `<path d="M 42 35 Q 45 25 48 35" fill="none" stroke="${hairColor}" stroke-width="2"/>
+            <path d="M 48 35 Q 52 20 56 35" fill="none" stroke="${hairColor}" stroke-width="2"/>
+            <path d="M 56 35 Q 60 18 64 35" fill="none" stroke="${hairColor}" stroke-width="2"/>
+            <path d="M 64 35 Q 68 20 72 35" fill="none" stroke="${hairColor}" stroke-width="2"/>
+            <path d="M 72 35 Q 75 25 78 35" fill="none" stroke="${hairColor}" stroke-width="2"/>`;
+  } else if(hairStyle === 2) {
+    hair = `<rect x="42" y="24" width="36" height="10" fill="none" stroke="${hairColor}" stroke-width="2" rx="2"/>
+            <line x1="42" y1="34" x2="42" y2="42" stroke="${hairColor}" stroke-width="1.5"/>
+            <line x1="78" y1="34" x2="78" y2="42" stroke="${hairColor}" stroke-width="1.5"/>
+            <circle cx="50" cy="28" r="2" fill="${hairColor}"/>
+            <circle cx="70" cy="28" r="2" fill="${hairColor}"/>
+            <line x1="54" y1="26" x2="66" y2="26" stroke="${hairColor}" stroke-width="1"/>`;
+  } else if(hairStyle === 3) {
+    hair = `<line x1="60" y1="22" x2="60" y2="10" stroke="${hairColor}" stroke-width="2"/>
+            <circle cx="60" cy="10" r="3" fill="none" stroke="${hairColor}" stroke-width="1.5"/>
+            <circle cx="60" cy="10" r="1" fill="${hairColor}"/>
+            <line x1="57" y1="12" x2="55" y2="14" stroke="${hairColor}" stroke-width="1"/>
+            <line x1="63" y1="12" x2="65" y2="14" stroke="${hairColor}" stroke-width="1"/>`;
+  } else if(hairStyle === 4) {
+    hair = `<rect x="56" y="15" width="8" height="18" fill="${hairColor}" opacity="0.3" stroke="${hairColor}" stroke-width="2"/>
+            <line x1="56" y1="20" x2="64" y2="20" stroke="${hairColor}" stroke-width="1"/>
+            <line x1="56" y1="25" x2="64" y2="25" stroke="${hairColor}" stroke-width="1"/>
+            <line x1="56" y1="30" x2="64" y2="30" stroke="${hairColor}" stroke-width="1"/>`;
+  } else if(hairStyle === 5) {
+    hair = `<path d="M 40 35 Q 60 15 80 35" fill="none" stroke="${hairColor}" stroke-width="2"/>
+            <line x1="40" y1="35" x2="45" y2="50" stroke="${hairColor}" stroke-width="2"/>
+            <line x1="80" y1="35" x2="75" y2="50" stroke="${hairColor}" stroke-width="2"/>`;
+  } else if(hairStyle === 6) {
+    hair = `<line x1="46" y1="32" x2="44" y2="18" stroke="${hairColor}" stroke-width="2"/>
+            <line x1="52" y1="30" x2="50" y2="15" stroke="${hairColor}" stroke-width="2"/>
+            <line x1="60" y1="28" x2="60" y2="12" stroke="${hairColor}" stroke-width="2"/>
+            <line x1="68" y1="30" x2="70" y2="15" stroke="${hairColor}" stroke-width="2"/>
+            <line x1="74" y1="32" x2="76" y2="18" stroke="${hairColor}" stroke-width="2"/>
+            <circle cx="44" cy="18" r="2" fill="none" stroke="${hairColor}"/>
+            <circle cx="76" cy="18" r="2" fill="none" stroke="${hairColor}"/>`;
+  } else {
+    hair = `<polygon points="45,32 50,25 55,32" fill="${hairColor}" opacity="0.5" stroke="${hairColor}" stroke-width="2"/>
+            <polygon points="55,32 60,22 65,32" fill="${hairColor}" opacity="0.5" stroke="${hairColor}" stroke-width="2"/>
+            <polygon points="65,32 70,25 75,32" fill="${hairColor}" opacity="0.5" stroke="${hairColor}" stroke-width="2"/>`;
+  }
+  
+  // Glitch per BISSOMANE
+  const glitch = isBissomane ? `
+    <rect x="30" y="${eyeY-8}" width="60" height="3" fill="#ff0041" opacity="0.7"/>
+    <rect x="35" y="${eyeY+15}" width="50" height="2" fill="#ff0041" opacity="0.6"/>
+    <rect x="40" y="${mouthY+5}" width="40" height="1" fill="#00ff41" opacity="0.5"/>
+    <text x="65" y="70" font-size="14" fill="#ff0041" opacity="0.4" font-weight="bold">Ω</text>
+    <circle cx="60" cy="60" r="50" stroke="#ff0041" fill="none" stroke-width="1.5" opacity="0.4" stroke-dasharray="8 4"/>
+    <polygon points="60,25 65,30 55,30" fill="#ff0041" opacity="0.3"/>
+  ` : '';
+  
+  // Orecchie
+  const ears = `
+    <ellipse cx="35" cy="55" rx="4" ry="8" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+    <ellipse cx="85" cy="55" rx="4" ry="8" fill="none" stroke="#00ff41" stroke-width="1.5"/>
+  `;
+  
+  // Pattern di sfondo
+  const bgPattern = `
+    <defs>
+      <pattern id="grid${seed}" width="6" height="6" patternUnits="userSpaceOnUse">
+        <circle cx="3" cy="3" r="0.5" fill="#00ff41" opacity="0.08"/>
+        <path d="M 0 0 L 6 6 M 6 0 L 0 6" stroke="#00ff41" stroke-width="0.3" opacity="0.05"/>
+      </pattern>
+    </defs>
+    <rect width="120" height="120" fill="url(#grid${seed})"/>
+  `;
+  
+  const symbol = isBissomane ? "Ω" : "Σ";
+  const symbolBadge = `<text x="8" y="112" font-size="10" fill="#00ff41" opacity="0.5" font-weight="bold">${symbol}</text>`;
+  
   document.getElementById("avatar").innerHTML=
   `<svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
     <rect width="120" height="120" fill="black"/>
-    <circle cx="60" cy="60" r="${20+Math.random()*30}" stroke="#00ff41" fill="none" stroke-width="2"/>
-    <text x="60" y="68" font-size="22" fill="#00ff41" text-anchor="middle" font-family="monospace">${symbol}</text>
+    ${bgPattern}
+    
+    <!-- Busto -->
+    ${bust}
+    
+    <!-- Orecchie -->
+    ${ears}
+    
+    <!-- Viso -->
+    <ellipse cx="60" cy="60" rx="${faceWidth/2}" ry="${faceHeight/2}" fill="none" stroke="#00ff41" stroke-width="2.5"/>
+    
+    <!-- Capelli -->
+    ${hair}
+    
+    <!-- Sopracciglia -->
+    ${brows}
+    
+    <!-- Occhi -->
+    ${eyes}
+    
+    <!-- Occhiali -->
+    ${glasses}
+    
+    <!-- Naso -->
+    ${nose}
+    
+    <!-- Bocca -->
+    ${mouth}
+    
+    <!-- Sigaretta -->
+    ${cigarette}
+    
+    <!-- Piercing -->
+    ${piercings}
+    
+    <!-- Espressioni -->
+    ${expressionOverlay}
+    
+    <!-- Glitch BISSOMANE -->
+    ${glitch}
+    
+    <!-- Badge -->
+    ${symbolBadge}
    </svg>`;
 }
 
@@ -364,7 +942,7 @@ function drawSigillo(seed){
   }
 }
 
-function download(){
+async function download(){
   const btn = document.getElementById("downloadBtn");
   
   // Verifica se html2canvas è disponibile
@@ -376,28 +954,49 @@ function download(){
   btn.disabled = true;
   btn.textContent = "ESPORTAZIONE...";
   
-  html2canvas(document.getElementById("card"),{
-    backgroundColor:"#000",
-    scale: 2,
-    logging: false
-  }).then(canvas => {
-    try {
-      const a = document.createElement("a");
-      a.href = canvas.toDataURL("image/png");
-      a.download = `BISSA_${document.getElementById("id").textContent}.png`;
-      a.click();
-    } catch(e) {
-      showError("Errore durante l'esportazione: " + e.message);
-    } finally {
-      btn.disabled = false;
-      btn.textContent = "ESPORTA PNG";
-    }
-  }).catch(err => {
-    showError("Errore durante la creazione dell'immagine");
-    console.error(err);
+  try {
+    // Salva i canvas originali
+    const sigilloCanvas = document.getElementById("sigillo");
+    const sigilloData = sigilloCanvas.toDataURL();
+    
+    // Sostituisci temporaneamente i canvas con immagini
+    const sigilloImg = document.createElement("img");
+    sigilloImg.src = sigilloData;
+    sigilloImg.width = 100;
+    sigilloImg.height = 100;
+    sigilloImg.style.filter = "drop-shadow(0 0 25px rgba(0,255,65,.6))";
+    sigilloCanvas.style.display = "none";
+    sigilloCanvas.parentNode.insertBefore(sigilloImg, sigilloCanvas);
+    
+    // Aspetta che le immagini si carichino
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    // Cattura con html2canvas
+    const canvas = await html2canvas(document.getElementById("card"),{
+      backgroundColor:"#000",
+      scale: 2,
+      logging: false,
+      useCORS: true,
+      allowTaint: false
+    });
+    
+    // Ripristina i canvas
+    sigilloCanvas.style.display = "block";
+    sigilloImg.remove();
+    
+    // Scarica
+    const a = document.createElement("a");
+    a.href = canvas.toDataURL("image/png");
+    a.download = `BISSA_${document.getElementById("id").textContent}.png`;
+    a.click();
+    
+  } catch(e) {
+    showError("Errore durante l'esportazione: " + e.message);
+    console.error(e);
+  } finally {
     btn.disabled = false;
     btn.textContent = "ESPORTA PNG";
-  });
+  }
 }
 
 // Genera il primo personaggio al caricamento
