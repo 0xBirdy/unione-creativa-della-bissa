@@ -3,269 +3,295 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Archivio Bissa - Terminale Smeraldo</title>
+<title>Tessera Ufficiale della Bissa</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --neon-green: #00ff41; 
-  --neon-glow: rgba(0, 255, 65, 0.5);
-  --bg-dark: #020502;
+:root{
+  --green:#00ff41;
+  --glow:0 0 25px rgba(0,255,65,.6);
+  --bg:#020402;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
-
-* { box-sizing: border-box; }
-
-body {
-  background-color: black;
-  color: var(--neon-green);
-  font-family: 'Fira Code', monospace;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-  overflow-x: hidden;
+*{box-sizing:border-box}
+body{
+  background:black;
+  color:var(--green);
+  font-family:'Fira Code',monospace;
+  margin:0;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
-/* Animazione di sfarfallio e scanlines per rendere la UI "viva" */
-body::after {
-  content: " ";
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 255, 65, 0.03) 50%);
-  background-size: 100% 4px;
-  z-index: 1000;
-  pointer-events: none;
+h1{
+  text-shadow:var(--glow);
+  margin-bottom:20px;
 }
 
-@keyframes pulse-border {
-  0% { box-shadow: 0 0 15px var(--neon-glow); }
-  100% { box-shadow: 0 0 35px var(--neon-glow), inset 0 0 15px var(--neon-glow); }
+.card{
+  width:100%;
+  max-width:680px;
+  border:2px solid var(--green);
+  padding:25px;
+  background:rgba(0,15,0,.9);
+  box-shadow:var(--glow);
+  position:relative;
 }
 
-.card-container {
-  width: 100%;
-  max-width: 600px;
-  margin-top: 20px;
+.header{
+  display:flex;
+  justify-content:space-between;
+  font-size:.75rem;
+  border-bottom:1px solid var(--green);
+  padding-bottom:8px;
+  margin-bottom:15px;
 }
 
-.card {
-  background: rgba(0, 10, 0, 0.9);
-  border: 2px solid var(--neon-green);
-  border-radius: 10px;
-  padding: 30px;
-  animation: pulse-border 2s infinite alternate;
-  position: relative;
+.profile{
+  display:flex;
+  gap:20px;
 }
 
-/* Header stile terminale */
-.header {
-  border-bottom: 1px solid var(--neon-green);
-  padding-bottom: 10px;
-  margin-bottom: 25px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  letter-spacing: 2px;
+.avatar{
+  width:140px;
+  height:140px;
+  border:1px solid var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.profile-area {
-  display: flex;
-  gap: 25px;
-  margin-bottom: 25px;
+.info{flex:1}
+
+.value{
+  font-size:1.2rem;
+  font-weight:bold;
+  color:#fff;
+  margin-bottom:6px;
 }
 
-/* Avatar generato casualmente */
-.avatar-box {
-  width: 140px;
-  height: 140px;
-  border: 1px solid var(--neon-green);
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 10px var(--neon-glow);
+.label{
+  font-size:.7rem;
+  opacity:.6;
 }
 
-.details { flex-grow: 1; }
-.label { font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; display: block; }
-.value { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; display: block; color: #fff; text-shadow: 0 0 5px var(--neon-green); }
-
-.backstory-box {
-  background: rgba(0, 255, 65, 0.05);
-  border: 1px dashed var(--neon-green);
-  padding: 15px;
-  margin-bottom: 20px;
-  font-size: 0.85rem;
-  line-height: 1.4;
+.box{
+  border:1px dashed var(--green);
+  padding:12px;
+  margin-top:15px;
+  font-size:.8rem;
+  line-height:1.4;
 }
 
-.bonus-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-bottom: 20px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:15px;
+  font-size:.8rem;
 }
 
-.stat-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  background: rgba(0, 255, 65, 0.1);
-  padding: 10px;
-  text-align: center;
-  font-size: 0.75rem;
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+  margin-top:15px;
+  text-align:center;
+  font-size:.7rem;
 }
 
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 25px;
+.stat{background:rgba(0,255,65,.08);padding:6px}
+
+.footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:20px;
 }
 
-canvas#sigillo { width: 90px; height: 90px; filter: drop-shadow(0 0 5px var(--neon-green)); }
-img#qr { width: 90px; filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%); }
+canvas{filter:drop-shadow(var(--glow))}
+img{width:90px}
 
-.btn-group {
-  margin-top: 30px;
-  display: flex;
-  gap: 15px;
+button{
+  margin-top:20px;
+  background:transparent;
+  border:1px solid var(--green);
+  color:var(--green);
+  padding:10px 20px;
+  font-family:inherit;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:hover{
+  background:var(--green);
+  color:black;
+  box-shadow:var(--glow);
 }
 
-button {
-  background: transparent;
-  border: 1px solid var(--neon-green);
-  color: var(--neon-green);
-  padding: 12px 25px;
-  font-family: inherit;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-  text-transform: uppercase;
+.warning{
+  color:#39ff14;
+  text-shadow:0 0 10px #39ff14;
 }
-
-button:hover {
-  background: var(--neon-green);
-  color: black;
-  box-shadow: 0 0 20px var(--neon-green);
-}
-
-#status { height: 20px; margin-top: 15px; font-size: 0.8rem; }
 </style>
 </head>
+
 <body>
 
-<h1 style="text-shadow: 0 0 20px var(--neon-green);">> ARCHIVIO_BISSA.EXE</h1>
+<h1>> ARCHIVIO_BISSA</h1>
 
-<div class="card-container">
-  <div class="card" id="card">
-    <div class="header">
-      <span>SYSTEM_ID: <span id="id-val">#0000</span></span>
-      <span>STATUS: OPERATIVO</span>
+<div class="card" id="card">
+  <div class="header">
+    <span>ID: <span id="id"></span></span>
+    <span id="status">OPERATIVO</span>
+  </div>
+
+  <div class="profile">
+    <div class="avatar" id="avatar"></div>
+    <div class="info">
+      <div class="label">Identità</div>
+      <div class="value" id="nome"></div>
+      <div class="label">Classe</div>
+      <div class="value" id="ruolo"></div>
+      <div class="label">Rarità</div>
+      <div class="value" id="rarita"></div>
     </div>
+  </div>
 
-    <div class="profile-area">
-      <div class="avatar-box" id="avatar-container"></div>
-      <div class="details">
-        <span class="label">Identità</span>
-        <span class="value" id="nome-val">...</span>
-        <span class="label">Ruolo Gerarchico</span>
-        <span class="value" id="ruolo-val" style="color: var(--neon-green);">...</span>
-      </div>
-    </div>
+  <div class="box" id="dossier"></div>
 
-    <div class="backstory-box" id="backstory-val"></div>
+  <div class="grid">
+    <div><b>Peccato:</b> <span id="peccato"></span></div>
+    <div><b>Cavaliere:</b> <span id="cavaliere"></span></div>
+    <div style="grid-column:span 2"><b>Comandamento:</b> <span id="verbo"></span></div>
+  </div>
 
-    <div class="bonus-section">
-      <div><span class="label">Vizio:</span><br><span id="peccato-val"></span></div>
-      <div><span class="label">Presagio:</span><br><span id="cavaliere-val"></span></div>
-      <div style="grid-column: span 2;"><span class="label">Codice Condotta:</span><br><span id="verbo-val"></span></div>
-    </div>
+  <div class="stats" id="stats"></div>
 
-    <div class="stat-row" id="stats-val"></div>
-
-    <div class="footer">
-      <canvas id="sigillo" width="100" height="100"></canvas>
-      <img id="qr">
-    </div>
+  <div class="footer">
+    <canvas id="sigillo" width="100" height="100"></canvas>
+    <img id="qr">
   </div>
 </div>
 
-<div id="status"></div>
-
-<div class="btn-group">
-  <button onclick="generate()">GENERA_PG</button>
-  <button onclick="download()">ESPORTA_DATI</button>
-</div>
+<button onclick="generate()">GENERA NUOVO PG</button>
+<button onclick="download()">ESPORTA PNG</button>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
-const nomi = ["Fratello","Custode","Errante","Adepto","Testimone","Archivista"];
-const essenze = ["Nebbia","Fumo","Cenere","Radice","Eco","Spirale"];
-const titoli = ["della Bissa","del Faro","del Collasso","della Veglia"];
-const backstories = [
-  "Nato in un glitch temporale, ride del vuoto cosmico mentre compila file corrotti.",
-  "Un tempo serviva l'ordine, ora vaga cercando la frequenza della Bissa Suprema.",
-  "Custode di segreti che farebbero impazzire un processore quantistico.",
-  "Ha trasformato la propria noia in un'arma di distorsione della realtà."
+const nomi=["Fratello","Errante","Custode","Archivista","Testimone","Vegliatore"];
+const essenze=["Fumo","Nebbia","Cenere","Eco","Radice","Spirale","Vuoto","Nodo"];
+const titoli=["della Bissa","del Faro","del Collasso","della Veglia","del Rallentamento"];
+
+const origini=[
+"Infrastruttura collassata",
+"Forum dimenticato",
+"Zona grigia algoritmica",
+"Militanza ironica",
+"Errore di sistema",
+"Archivio mai chiuso"
 ];
-const peccati = ["Superbia", "Avarizia", "Lussuria", "Invidia", "Gola", "Ira", "Accidia"];
-const cavalieri = ["Morte", "Guerra", "Carestia", "Conquista"];
 
-function r(a){ return a[Math.floor(Math.random()*a.length)]; }
+const eventi=[
+"Blackout comunicativo",
+"Moderazione totale",
+"Silenzio imposto",
+"Meme proibito",
+"Reset di identità",
+"Fuga dal feed"
+];
 
-function generate() {
-  const isBissomane = Math.random() < 0.05;
-  const seed = Math.random().toString(16).slice(2, 6).toUpperCase();
-  
-  // Immagine Casuale Astratta Verde
-  const svg = `<svg width="140" height="140" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <rect width="100" height="100" fill="black"/>
-    <circle cx="50" cy="50" r="${r([15,25,35])}" stroke="#00ff41" stroke-width="1" fill="none" opacity="0.6"/>
-    <path d="M${r([10,40])} ${r([10,40])} L${r([60,90])} ${r([60,90])} M10 90 L90 10" stroke="#00ff41" stroke-width="1"/>
-    <text x="50" y="55" font-family="monospace" font-size="20" fill="#00ff41" text-anchor="middle" opacity="0.8">${isBissomane?'Ω':'Σ'}</text>
-  </svg>`;
+const visioni=[
+"Lentezza come atto politico",
+"Il fumo chiarisce",
+"Nessuna opinione è urgente",
+"Il caos va osservato",
+"Ridurre è resistere",
+"Il meme è verità compressa"
+];
 
-  document.getElementById("avatar-container").innerHTML = svg;
-  document.getElementById("id-val").textContent = "#" + seed;
-  document.getElementById("nome-val").textContent = `${r(nomi)} ${r(essenze)} ${r(titoli)}`;
-  document.getElementById("ruolo-val").textContent = isBissomane ? "!!! IL BISSOMANE !!!" : r(["Osservatore", "Mediatore", "Agitatore"]);
-  document.getElementById("backstory-val").textContent = `"${r(backstories)}"`;
-  document.getElementById("peccato-val").textContent = r(peccati);
-  document.getElementById("cavaliere-val").textContent = "Cavaliere della " + r(cavalieri);
-  document.getElementById("verbo-val").textContent = r(["Non avrai altra Bissa", "Onora il silenzio", "Santifica la pausa"]);
-  
-  document.getElementById("stats-val").innerHTML = `
-    <div>SAG:${r([6,7,8,9,10])}</div><div>ELO:${r([6,7,8,9,10])}</div>
-    <div>IRO:${r([6,7,8,9,10])}</div><div>TOL:${r([6,7,8,9,10])}</div>
-  `;
+const peccati=["Superbia","Avarizia","Lussuria","Invidia","Gola","Ira","Accidia"];
+const cavalieri=["Morte","Guerra","Carestia","Conquista"];
+const comandamenti=[
+"Non accelerare",
+"Non urlare",
+"Non convincere",
+"Non salvare tutto",
+"Onora il silenzio",
+"Santifica la pausa",
+"Lascia decadere",
+"Non reagire subito",
+"Non spiegare tutto",
+"Sii ambiguo"
+];
+
+function r(a){return a[Math.floor(Math.random()*a.length)]}
+
+function generate(){
+  const seed=Math.random().toString(16).slice(2,8).toUpperCase();
+  const bissomane=Math.random()<0.06;
+
+  document.getElementById("id").textContent=seed;
+  document.getElementById("nome").textContent=`${r(nomi)} ${r(essenze)} ${r(titoli)}`;
+  document.getElementById("ruolo").textContent=bissomane?"BISSOMANE":"Osservatore Laterale";
+  document.getElementById("rarita").textContent=bissomane?"0.6%":"Comune";
+
+  document.getElementById("status").textContent=bissomane?"!!! ANOMALIA !!!":"OPERATIVO";
+  document.getElementById("status").className=bissomane?"warning":"";
+
+  document.getElementById("dossier").innerHTML=
+  `<b>ORIGINE:</b> ${r(origini)}<br>
+   <b>EVENTO:</b> ${r(eventi)}<br>
+   <b>VISIONE:</b> ${r(visioni)}<br>
+   <b>ESITO:</b> Influenza senza esposizione`;
+
+  document.getElementById("peccato").textContent=r(peccati);
+  document.getElementById("cavaliere").textContent=r(cavalieri);
+  document.getElementById("verbo").textContent=r(comandamenti);
+
+  document.getElementById("stats").innerHTML=`
+    <div class="stat">SAG<br>${6+Math.random()*5|0}</div>
+    <div class="stat">ELO<br>${6+Math.random()*5|0}</div>
+    <div class="stat">RES<br>${6+Math.random()*5|0}</div>
+    <div class="stat">IRO<br>${6+Math.random()*5|0}</div>
+    <div class="stat">TOL<br>${6+Math.random()*5|0}</div>`;
 
   drawSigillo(seed);
-  document.getElementById("qr").src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=BISSA-${seed}&color=00ff41&bgcolor=000000`;
+  document.getElementById("qr").src=`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=BISSA-${seed}&color=00ff41&bgcolor=000000`;
+
+  document.getElementById("avatar").innerHTML=
+  `<svg width="120" height="120">
+    <rect width="120" height="120" fill="black"/>
+    <circle cx="60" cy="60" r="${20+Math.random()*30}" stroke="#00ff41" fill="none"/>
+    <text x="60" y="68" font-size="22" fill="#00ff41" text-anchor="middle">${bissomane?"Ω":"Σ"}</text>
+   </svg>`;
 }
 
-function drawSigillo(seed) {
-  const ctx = document.getElementById("sigillo").getContext("2d");
-  ctx.clearRect(0,0,100,100); ctx.strokeStyle = "#00ff41";
-  for(let i=0; i<8; i++) {
-    ctx.beginPath(); ctx.arc(50, 50, 5 + i*5, 0, Math.PI * (i%2?1.2:2)); ctx.stroke();
+function drawSigillo(seed){
+  const c=document.getElementById("sigillo").getContext("2d");
+  c.clearRect(0,0,100,100);
+  c.strokeStyle="#00ff41";
+  for(let i=0;i<6;i++){
+    c.beginPath();
+    c.arc(50,50,10+i*8,0,Math.PI*(i%2?1.2:2));
+    c.stroke();
   }
 }
 
-function download() {
-  html2canvas(document.getElementById("card"), {backgroundColor: '#000'}).then(canvas => {
-    const a = document.createElement("a");
-    a.href = canvas.toDataURL();
-    a.download = "Bissa_Log.png";
+function download(){
+  html2canvas(document.getElementById("card"),{backgroundColor:"#000"}).then(c=>{
+    const a=document.createElement("a");
+    a.href=c.toDataURL();
+    a.download=`BISSA_${document.getElementById("id").textContent}.png`;
     a.click();
   });
 }
 
 generate();
 </script>
+
 </body>
 </html>
