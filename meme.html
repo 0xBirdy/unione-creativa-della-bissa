@@ -8,6 +8,10 @@
 </head>
 <body>
 
+    <div id="bissa-overlay">
+        <h1 id="bissa-text">BISSA TUTTO</h1>
+    </div>
+
     <nav class="navbar">
         <a href="index.html">Home</a>
         <a href="meme.html" style="color: #fff; text-shadow: 0 0 15px #0f0;">Meme Sacri</a>
@@ -23,32 +27,32 @@
     <main class="main-content">
         <section class="cards">
             
-            <div class="card">
+            <div class="card" onclick="triggerBissa()">
                 <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM25tdHI0dDh4dDQzdHNrdzM2cTU2OHlpNXdyMjB5eTFodDI0aTFmdSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oEjHGr1Fhz0kyv8Ig/giphy.gif" alt="Meme 1">
                 <p>Collasso totale</p>
             </div>
 
-            <div class="card">
+            <div class="card" onclick="triggerBissa()">
                 <img src="https://media.giphy.com/media/l0HlSNOxJB956qwfK/giphy.gif" alt="Meme 2">
                 <p>Quando il fumo è potente</p>
             </div>
 
-            <div class="card">
+            <div class="card" onclick="triggerBissa()">
                 <img src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif" alt="Meme 3">
                 <p>Effetto bissa</p>
             </div>
 
-            <div class="card">
+            <div class="card" onclick="triggerBissa()">
                 <img src="https://media.giphy.com/media/3o6ZtpxSZbQRRnwCKQ/giphy.gif" alt="Meme 4">
                 <p>Esplosione mentale</p>
             </div>
 
-            <div class="card">
+            <div class="card" onclick="triggerBissa()">
                 <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Meme 5">
                 <p>Bissa mode on</p>
             </div>
 
-            <div class="card">
+            <div class="card" onclick="triggerBissa()">
                 <img src="https://media.giphy.com/media/3o7TKLq1H0S5FX6o6Q/giphy.gif" alt="Meme 6">
                 <p>Risate sacre</p>
             </div>
@@ -59,6 +63,20 @@
     <footer>
         <p>&copy; 2026 Unione Creativa della Bissa</p>
     </footer>
+
+    <script>
+        function triggerBissa() {
+            const overlay = document.getElementById('bissa-overlay');
+            
+            // 1. Mostra l'overlay
+            overlay.style.display = 'flex';
+            
+            // 2. Aspetta 1.5 secondi e poi nascondilo
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 1500);
+        }
+    </script>
 
 </body>
 </html>
