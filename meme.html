@@ -1,346 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tessera Ufficiale della Bissa</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
-
-
-
-
-
-
-
-<style>
-:root{
-  --green:#00ff41;
-  --glow:0 0 25px rgba(0,255,65,.6);
-  --bg:#020402;
-
-
-
-
-
-
-
-
-
-
-}
-
-*{box-sizing:border-box}
-body{
-  background:black;
-  color:var(--green);
-  font-family:'Fira Code',monospace;
-  margin:0;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-h1{
-  text-shadow:var(--glow);
-  margin-bottom:20px;
-
-
-
-
-
-
-}
-
-.card{
-  width:100%;
-  max-width:680px;
-  border:2px solid var(--green);
-  padding:25px;
-  background:rgba(0,15,0,.9);
-  box-shadow:var(--glow);
-  position:relative;
-}
-
-.header{
-  display:flex;
-  justify-content:space-between;
-  font-size:.75rem;
-  border-bottom:1px solid var(--green);
-  padding-bottom:8px;
-  margin-bottom:15px;
-
-}
-
-.profile{
-  display:flex;
-  gap:20px;
-
-
-}
-
-.avatar{
-  width:140px;
-  height:140px;
-  border:1px solid var(--green);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.info{flex:1}
-
-
-
-
-
-.value{
-  font-size:1.2rem;
-  font-weight:bold;
-  color:#fff;
-  margin-bottom:6px;
-
-
-
-
-}
-
-.label{
-  font-size:.7rem;
-  opacity:.6;
-
-
-
-
-
-
-
-
-}
-
-.box{
-  border:1px dashed var(--green);
-  padding:12px;
-  margin-top:15px;
-  font-size:.8rem;
-  line-height:1.4;
-
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  margin-top:15px;
-  font-size:.8rem;
-
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:6px;
-  margin-top:15px;
-  text-align:center;
-  font-size:.7rem;
-}
-
-.stat{background:rgba(0,255,65,.08);padding:6px}
-
-
-.footer{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-top:20px;
-}
-
-canvas{filter:drop-shadow(var(--glow))}
-img{width:90px}
-
-button{
-  margin-top:20px;
-  background:transparent;
-  border:1px solid var(--green);
-  color:var(--green);
-  padding:10px 20px;
-  font-family:inherit;
-  font-weight:bold;
-  cursor:pointer;
-}
-button:hover{
-  background:var(--green);
-  color:black;
-  box-shadow:var(--glow);
-
-}
-
-.warning{
-  color:#39ff14;
-  text-shadow:0 0 10px #39ff14;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meme Sacri – Unione Creativa della Bissa</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<h1>> ARCHIVIO_BISSA</h1>
+  <header>
+    <h1 class="glow">Meme Sacri 🌀</h1>
+    <p class="subtitle">Collasso, fumo e cannabis in forma sacra</p>
+  </header>
 
-<div class="card" id="card">
-  <div class="header">
-    <span>ID: <span id="id"></span></span>
-    <span id="status">OPERATIVO</span>
-  </div>
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="meme.html" class="active">Meme Sacri</a>
+    <a href="tessera.html">Genera Tessera</a>
+  </nav>
 
+  <main>
+    <section class="cards">
+      <div class="card">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM25tdHI0dDh4dDQzdHNrdzM2cTU2OHlpNXdyMjB5eTFodDI0aTFmdSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oEjHGr1Fhz0kyv8Ig/giphy.gif" alt="Meme 1">
+        <p>Collasso totale</p>
+      </div>
+      <div class="card">
+        <img src="https://media.giphy.com/media/l0HlSNOxJB956qwfK/giphy.gif" alt="Meme 2">
+        <p>Quando il fumo è troppo potente</p>
+      </div>
+      <div class="card">
+        <img src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif" alt="Meme 3">
+        <p>Effetto bissa</p>
+      </div>
+      <div class="card">
+        <img src="https://media.giphy.com/media/3o6ZtpxSZbQRRnwCKQ/giphy.gif" alt="Meme 4">
+        <p>Quando esplode la mente</p>
+      </div>
+      <div class="card">
+        <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Meme 5">
+        <p>Bissa mode attivata</p>
+      </div>
+      <div class="card">
+        <img src="https://media.giphy.com/media/3o7TKLq1H0S5FX6o6Q/giphy.gif" alt="Meme 6">
+        <p>Risate incontrollabili</p>
+      </div>
+      <div class="card">
+        <img src="https://media.giphy.com/media/3ohhwf2cPLZ5fAkN6k/giphy.gif" alt="Meme 7">
+        <p>Quando tutto va in tilt</p>
+      </div>
+      <div class="card">
+        <img src="https://media.giphy.com/media/l0MYwONBGDS7aPGOk/giphy.gif" alt="Meme 8">
+        <p>Collasso leggero</p>
+      </div>
+      <div class="card">
+        <img src="https://media.giphy.com/media/xUPGcguWZHRC2HyBRS/giphy.gif" alt="Meme 9">
+        <p>Fumo sacro</p>
+      </div>
+      <div class="card">
+        <img src="https://media.giphy.com/media/3oEjHCWdU7F4k7AcUE/giphy.gif" alt="Meme 10">
+        <p>Bissa finale</p>
+      </div>
+    </section>
+  </main>
 
-  <div class="profile">
-    <div class="avatar" id="avatar"></div>
-    <div class="info">
-      <div class="label">Identità</div>
-      <div class="value" id="nome"></div>
-      <div class="label">Classe</div>
-      <div class="value" id="ruolo"></div>
-      <div class="label">Rarità</div>
-      <div class="value" id="rarita"></div>
-    </div>
-  </div>
-
-  <div class="box" id="dossier"></div>
-
-  <div class="grid">
-    <div><b>Peccato:</b> <span id="peccato"></span></div>
-    <div><b>Cavaliere:</b> <span id="cavaliere"></span></div>
-    <div style="grid-column:span 2"><b>Comandamento:</b> <span id="verbo"></span></div>
-  </div>
-
-  <div class="stats" id="stats"></div>
-
-  <div class="footer">
-    <canvas id="sigillo" width="100" height="100"></canvas>
-    <img id="qr">
-
-  </div>
-</div>
-
-<button onclick="generate()">GENERA NUOVO PG</button>
-<button onclick="download()">ESPORTA PNG</button>
-
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
-<script>
-const nomi=["Fratello","Errante","Custode","Archivista","Testimone","Vegliatore"];
-const essenze=["Fumo","Nebbia","Cenere","Eco","Radice","Spirale","Vuoto","Nodo"];
-const titoli=["della Bissa","del Faro","del Collasso","della Veglia","del Rallentamento"];
-
-const origini=[
-"Infrastruttura collassata",
-"Forum dimenticato",
-"Zona grigia algoritmica",
-"Militanza ironica",
-"Errore di sistema",
-"Archivio mai chiuso"
-];
-
-const eventi=[
-"Blackout comunicativo",
-"Moderazione totale",
-"Silenzio imposto",
-"Meme proibito",
-"Reset di identità",
-"Fuga dal feed"
-];
-
-const visioni=[
-"Lentezza come atto politico",
-"Il fumo chiarisce",
-"Nessuna opinione è urgente",
-"Il caos va osservato",
-"Ridurre è resistere",
-"Il meme è verità compressa"
-];
-
-const peccati=["Superbia","Avarizia","Lussuria","Invidia","Gola","Ira","Accidia"];
-const cavalieri=["Morte","Guerra","Carestia","Conquista"];
-const comandamenti=[
-"Non accelerare",
-"Non urlare",
-"Non convincere",
-"Non salvare tutto",
-"Onora il silenzio",
-"Santifica la pausa",
-"Lascia decadere",
-"Non reagire subito",
-"Non spiegare tutto",
-"Sii ambiguo"
-];
-
-function r(a){return a[Math.floor(Math.random()*a.length)]}
-
-function generate(){
-  const seed=Math.random().toString(16).slice(2,8).toUpperCase();
-  const bissomane=Math.random()<0.06;
-
-  document.getElementById("id").textContent=seed;
-  document.getElementById("nome").textContent=`${r(nomi)} ${r(essenze)} ${r(titoli)}`;
-  document.getElementById("ruolo").textContent=bissomane?"BISSOMANE":"Osservatore Laterale";
-  document.getElementById("rarita").textContent=bissomane?"0.6%":"Comune";
-
-  document.getElementById("status").textContent=bissomane?"!!! ANOMALIA !!!":"OPERATIVO";
-  document.getElementById("status").className=bissomane?"warning":"";
-
-  document.getElementById("dossier").innerHTML=
-  `<b>ORIGINE:</b> ${r(origini)}<br>
-   <b>EVENTO:</b> ${r(eventi)}<br>
-   <b>VISIONE:</b> ${r(visioni)}<br>
-   <b>ESITO:</b> Influenza senza esposizione`;
-
-  document.getElementById("peccato").textContent=r(peccati);
-  document.getElementById("cavaliere").textContent=r(cavalieri);
-  document.getElementById("verbo").textContent=r(comandamenti);
-
-  document.getElementById("stats").innerHTML=`
-    <div class="stat">SAG<br>${6+Math.random()*5|0}</div>
-    <div class="stat">ELO<br>${6+Math.random()*5|0}</div>
-    <div class="stat">RES<br>${6+Math.random()*5|0}</div>
-    <div class="stat">IRO<br>${6+Math.random()*5|0}</div>
-    <div class="stat">TOL<br>${6+Math.random()*5|0}</div>`;
-
-  drawSigillo(seed);
-  document.getElementById("qr").src=`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=BISSA-${seed}&color=00ff41&bgcolor=000000`;
-
-  document.getElementById("avatar").innerHTML=
-  `<svg width="120" height="120">
-    <rect width="120" height="120" fill="black"/>
-    <circle cx="60" cy="60" r="${20+Math.random()*30}" stroke="#00ff41" fill="none"/>
-    <text x="60" y="68" font-size="22" fill="#00ff41" text-anchor="middle">${bissomane?"Ω":"Σ"}</text>
-   </svg>`;
-}
-
-function drawSigillo(seed){
-  const c=document.getElementById("sigillo").getContext("2d");
-  c.clearRect(0,0,100,100);
-  c.strokeStyle="#00ff41";
-  for(let i=0;i<6;i++){
-    c.beginPath();
-    c.arc(50,50,10+i*8,0,Math.PI*(i%2?1.2:2));
-    c.stroke();
-  }
-}
-
-function download(){
-  html2canvas(document.getElementById("card"),{backgroundColor:"#000"}).then(c=>{
-    const a=document.createElement("a");
-    a.href=c.toDataURL();
-    a.download=`BISSA_${document.getElementById("id").textContent}.png`;
-    a.click();
-  });
-}
-
-generate();
-</script>
+  <footer>
+    <p>&copy; 2026 Unione Creativa della Bissa</p>
+  </footer>
 
 </body>
-</ht
+</html>
