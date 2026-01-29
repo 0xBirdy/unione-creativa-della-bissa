@@ -201,3 +201,14 @@ footer { text-align: center; padding: 5rem; color: #222; font-size: 0.7rem; text
     .hero { padding: 4rem 1rem; }
     .navbar { gap: 1rem; }
 }
+.hero-small {
+    padding: 4rem 1rem 2rem;
+    text-align: center;
+}
+.divider {
+    height: 2px; 
+    width: 80px; 
+    background: #0f0; 
+    margin: 20px auto; 
+    box-shadow: 0 0 10px #0f0;
+}
