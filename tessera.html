@@ -6,63 +6,44 @@
 
 <style>
 body{
-  background:radial-gradient(circle at top, #0a0f0a, #000);
+  background:radial-gradient(circle at top,#0b130b,#000);
   color:#9aff9a;
-  font-family: 'Courier New', monospace;
+  font-family: monospace;
   display:flex;
   flex-direction:column;
   align-items:center;
   padding:30px;
 }
 
-h1{
-  margin-bottom:20px;
-  text-shadow:0 0 15px #0f0;
-}
+h1{ text-shadow:0 0 15px #0f0; }
 
 .card{
-  width:360px;
+  width:380px;
   padding:20px;
-  border-radius:16px;
+  border-radius:18px;
   background:linear-gradient(145deg,#020,#010);
   border:2px solid #0f0;
-  box-shadow:0 0 25px rgba(0,255,0,0.4);
-  animation:glow 2.5s infinite alternate;
+  box-shadow:0 0 30px rgba(0,255,0,.6);
 }
 
-@keyframes glow{
-  from{ box-shadow:0 0 15px rgba(0,255,0,0.3); }
-  to{ box-shadow:0 0 35px rgba(0,255,0,0.8); }
-}
+canvas{ display:block; margin:12px auto; }
 
-.row{ margin-bottom:6px; }
-
-label{ opacity:0.7; }
-
-canvas{
-  display:block;
-  margin:15px auto;
-  border-radius:50%;
-  border:2px solid #0f0;
-  background:#000;
-}
+.row{ margin:6px 0; }
 
 button{
-  margin-top:25px;
-  padding:12px 20px;
-  font-size:16px;
+  margin-top:14px;
+  padding:10px 18px;
   background:#020;
-  color:#0f0;
   border:2px solid #0f0;
+  color:#0f0;
   border-radius:8px;
   cursor:pointer;
-  transition:0.2s;
 }
+button:hover{ background:#0f0; color:#000; }
 
-button:hover{
-  background:#0f0;
-  color:#000;
-}
+#slot{ font-style:italic; opacity:.7; height:18px; }
+
+img{ display:block; margin:10px auto; }
 </style>
 </head>
 
@@ -73,82 +54,113 @@ button:hover{
 <div class="card" id="card">
   <canvas id="sigillo" width="160" height="160"></canvas>
   <div id="info"></div>
+  <div id="slot"></div>
+  <img id="qr" />
 </div>
 
-<button onclick="generate()">🎲 Genera Tessera</button>
+<button onclick="startGeneration()">🎲 Genera Tessera</button>
+<button onclick="downloadPNG()">⬇️ Scarica PNG</button>
 
 <script>
-const prefissi = ["Fratello", "Sorella", "Custode", "Errante", "Adepto"];
-const nomi = ["Nebbia", "Cenere", "Faro", "Radice", "Eco", "Fumo"];
-const titoli = ["della Bissa", "del Collasso", "del Silenzio", "della Lentezza"];
-const ruoli = ["Fumatore Mistico", "Archivista", "Guardiano", "Sovversivo"];
-const allineamenti = ["Caotico Lucido", "Neutrale Ironico", "Mistico Disilluso"];
-const luoghi = ["Il Faro", "La Cantina", "Il Bosco Umido", "Il Balcone Sacro"];
-const rarita = ["Comune","Rara","Epica","Leggendaria"];
+// DATA
+const nomi=["Fratello","Custode","Errante","Adepto"];
+const essenze=["Nebbia","Fumo","Cenere","Radice","Eco"];
+const titoli=["della Bissa","del Collasso","del Faro"];
+const ruoli=["Osservatore","Archivista","Guardiano","Agitatore"];
+const tratti=[
+  "incline alla riflessione lenta",
+  "ironico sotto pressione",
+  "ostinato nel dialogo",
+  "lucido nel caos",
+  "mutevole ma coerente"
+];
+const ambienti=[
+  "ambienti saturi di discussione",
+  "luoghi densi di fumo",
+  "cerchi informali",
+  "situazioni di collasso leggero"
+];
 
-function rand(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function r(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+// SLOT ANIMATION
+function startGeneration(){
+  let i=0;
+  const slot=document.getElementById("slot");
+  const t=setInterval(()=>{
+    slot.textContent=`Invocazione: ${r(nomi)} ${r(essenze)}...`;
+    i++;
+    if(i>12){ clearInterval(t); generate(); }
+  },80);
+}
 
 function generate(){
-  const seed = crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
+  const seed=crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
 
-  const tessera = {
-    nome: `${rand(prefissi)} ${rand(nomi)} ${rand(titoli)}`,
-    ruolo: rand(ruoli),
-    allineamento: rand(allineamenti),
-    luogo: rand(luoghi),
-    livello: Math.floor(Math.random()*12)+1,
-    rarita: rand(rarita),
-    sigillo: seed,
-    data: new Date().toLocaleDateString()
+  const data={
+    nome:`${r(nomi)} ${r(essenze)} ${r(titoli)}`,
+    ruolo:r(ruoli),
+    descrizione:`Soggetto ${r(tratti)}, attivo in ${r(ambienti)}.`,
+    sigillo:seed,
+    data:new Date().toLocaleDateString()
   };
 
-  localStorage.setItem("tesseraBissa", JSON.stringify(tessera));
-  render(tessera);
+  localStorage.setItem("tesseraBissa",JSON.stringify(data));
+  render(data);
   drawSigillo(seed);
+  drawQR(seed);
 }
 
 function render(t){
-  document.getElementById("info").innerHTML = `
-    <div class="row"><label>Nome:</label> ${t.nome}</div>
-    <div class="row"><label>Ruolo:</label> ${t.ruolo}</div>
-    <div class="row"><label>Allineamento:</label> ${t.allineamento}</div>
-    <div class="row"><label>Luogo:</label> ${t.luogo}</div>
-    <div class="row"><label>Livello:</label> ${t.livello}</div>
-    <div class="row"><label>Rarità:</label> ${t.rarita}</div>
-    <div class="row"><label>Sigillo:</label> #${t.sigillo}</div>
-    <div class="row"><label>Emessa:</label> ${t.data}</div>
+  document.getElementById("info").innerHTML=`
+    <div class="row"><b>Nome:</b> ${t.nome}</div>
+    <div class="row"><b>Ruolo:</b> ${t.ruolo}</div>
+    <div class="row"><b>Descrizione:</b><br>${t.descrizione}</div>
+    <div class="row"><b>Sigillo:</b> #${t.sigillo}</div>
+    <div class="row"><b>Emessa:</b> ${t.data}</div>
   `;
 }
 
+// SIGILLO
 function drawSigillo(seed){
-  const c = document.getElementById("sigillo");
-  const ctx = c.getContext("2d");
-  ctx.clearRect(0,0,c.width,c.height);
-
-  const n = parseInt(seed.slice(0,6),16);
-
-  for(let i=0;i<12;i++){
-    ctx.beginPath();
-    ctx.strokeStyle = `hsl(${(n+i*30)%360},100%,50%)`;
-    ctx.lineWidth = 3;
-    ctx.arc(80,80,20+i*4,0,Math.PI*2*(i%2?1:0.7));
-    ctx.stroke();
+  const c=document.getElementById("sigillo");
+  const x=c.getContext("2d");
+  x.clearRect(0,0,160,160);
+  for(let i=0;i<10;i++){
+    x.strokeStyle=`hsl(${(parseInt(seed,16)+i*40)%360},100%,50%)`;
+    x.beginPath();
+    x.arc(80,80,20+i*5,0,Math.PI*(i%2?2:1));
+    x.stroke();
   }
-
-  ctx.beginPath();
-  ctx.fillStyle="#0f0";
-  ctx.arc(80,80,8,0,Math.PI*2);
-  ctx.fill();
 }
 
-// carica se esiste
-const saved = localStorage.getItem("tesseraBissa");
+// QR
+function drawQR(seed){
+  const data=`BISSA://sigillo=${seed}`;
+  document.getElementById("qr").src=
+    `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(data)}`;
+}
+
+// DOWNLOAD
+function downloadPNG(){
+  html2canvas(document.getElementById("card")).then(c=>{
+    const a=document.createElement("a");
+    a.href=c.toDataURL();
+    a.download="tessera_bissa.png";
+    a.click();
+  });
+}
+
+// LOAD
+const saved=localStorage.getItem("tesseraBissa");
 if(saved){
-  const t = JSON.parse(saved);
-  render(t);
-  drawSigillo(t.sigillo);
+  const t=JSON.parse(saved);
+  render(t); drawSigillo(t.sigillo); drawQR(t.sigillo);
 }
 </script>
+
+<!-- lib per download PNG -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 </body>
 </html>
