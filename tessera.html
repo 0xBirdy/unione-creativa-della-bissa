@@ -1,53 +1,153 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Tessera della Bissa</title>
-  <style>
-    body { background:#111; color:#0f0; font-family: monospace; }
-    .card { border:2px solid #0f0; padding:20px; width:300px; }
-    button { margin-top:10px; }
-  </style>
+<meta charset="UTF-8">
+<title>Tessera della Bissa</title>
+
+<style>
+body{
+  background:radial-gradient(circle at top, #0a0f0a, #000);
+  color:#9aff9a;
+  font-family: 'Courier New', monospace;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:30px;
+}
+
+h1{
+  margin-bottom:20px;
+  text-shadow:0 0 15px #0f0;
+}
+
+.card{
+  width:360px;
+  padding:20px;
+  border-radius:16px;
+  background:linear-gradient(145deg,#020,#010);
+  border:2px solid #0f0;
+  box-shadow:0 0 25px rgba(0,255,0,0.4);
+  animation:glow 2.5s infinite alternate;
+}
+
+@keyframes glow{
+  from{ box-shadow:0 0 15px rgba(0,255,0,0.3); }
+  to{ box-shadow:0 0 35px rgba(0,255,0,0.8); }
+}
+
+.row{ margin-bottom:6px; }
+
+label{ opacity:0.7; }
+
+canvas{
+  display:block;
+  margin:15px auto;
+  border-radius:50%;
+  border:2px solid #0f0;
+  background:#000;
+}
+
+button{
+  margin-top:25px;
+  padding:12px 20px;
+  font-size:16px;
+  background:#020;
+  color:#0f0;
+  border:2px solid #0f0;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+button:hover{
+  background:#0f0;
+  color:#000;
+}
+</style>
 </head>
+
 <body>
 
 <h1>🎴 Tessera Ufficiale della Bissa</h1>
 
-<div class="card" id="card"></div>
+<div class="card" id="card">
+  <canvas id="sigillo" width="160" height="160"></canvas>
+  <div id="info"></div>
+</div>
 
 <button onclick="generate()">🎲 Genera Tessera</button>
 
 <script>
-const nomi = ["Fratello", "Custode", "Adepto", "Maestro", "Errante"];
-const titoli = ["della Nebbia", "del Faro", "della Bissa Sacra", "della Cenere"];
-const ruoli = ["Fumatore Mistico", "Scriba", "Guardiano", "Predicatore"];
-const livelli = ["I", "II", "III", "IV", "V", "X"];
+const prefissi = ["Fratello", "Sorella", "Custode", "Errante", "Adepto"];
+const nomi = ["Nebbia", "Cenere", "Faro", "Radice", "Eco", "Fumo"];
+const titoli = ["della Bissa", "del Collasso", "del Silenzio", "della Lentezza"];
+const ruoli = ["Fumatore Mistico", "Archivista", "Guardiano", "Sovversivo"];
+const allineamenti = ["Caotico Lucido", "Neutrale Ironico", "Mistico Disilluso"];
+const luoghi = ["Il Faro", "La Cantina", "Il Bosco Umido", "Il Balcone Sacro"];
+const rarita = ["Comune","Rara","Epica","Leggendaria"];
 
-function generate() {
+function rand(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+function generate(){
+  const seed = crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
+
   const tessera = {
-    nome: nomi[rand(nomi)] + " " + titoli[rand(titoli)],
-    ruolo: ruoli[rand(ruoli)],
-    livello: livelli[rand(livelli)],
-    sigillo: Math.floor(Math.random() * 9999)
+    nome: `${rand(prefissi)} ${rand(nomi)} ${rand(titoli)}`,
+    ruolo: rand(ruoli),
+    allineamento: rand(allineamenti),
+    luogo: rand(luoghi),
+    livello: Math.floor(Math.random()*12)+1,
+    rarita: rand(rarita),
+    sigillo: seed,
+    data: new Date().toLocaleDateString()
   };
 
   localStorage.setItem("tesseraBissa", JSON.stringify(tessera));
   render(tessera);
+  drawSigillo(seed);
 }
 
-function render(t) {
-  document.getElementById("card").innerHTML = `
-    <strong>Nome:</strong> ${t.nome}<br>
-    <strong>Ruolo:</strong> ${t.ruolo}<br>
-    <strong>Livello:</strong> ${t.livello}<br>
-    <strong>Sigillo:</strong> #${t.sigillo}
+function render(t){
+  document.getElementById("info").innerHTML = `
+    <div class="row"><label>Nome:</label> ${t.nome}</div>
+    <div class="row"><label>Ruolo:</label> ${t.ruolo}</div>
+    <div class="row"><label>Allineamento:</label> ${t.allineamento}</div>
+    <div class="row"><label>Luogo:</label> ${t.luogo}</div>
+    <div class="row"><label>Livello:</label> ${t.livello}</div>
+    <div class="row"><label>Rarità:</label> ${t.rarita}</div>
+    <div class="row"><label>Sigillo:</label> #${t.sigillo}</div>
+    <div class="row"><label>Emessa:</label> ${t.data}</div>
   `;
 }
 
-function rand(arr){ return Math.floor(Math.random() * arr.length); }
+function drawSigillo(seed){
+  const c = document.getElementById("sigillo");
+  const ctx = c.getContext("2d");
+  ctx.clearRect(0,0,c.width,c.height);
 
+  const n = parseInt(seed.slice(0,6),16);
+
+  for(let i=0;i<12;i++){
+    ctx.beginPath();
+    ctx.strokeStyle = `hsl(${(n+i*30)%360},100%,50%)`;
+    ctx.lineWidth = 3;
+    ctx.arc(80,80,20+i*4,0,Math.PI*2*(i%2?1:0.7));
+    ctx.stroke();
+  }
+
+  ctx.beginPath();
+  ctx.fillStyle="#0f0";
+  ctx.arc(80,80,8,0,Math.PI*2);
+  ctx.fill();
+}
+
+// carica se esiste
 const saved = localStorage.getItem("tesseraBissa");
-if (saved) render(JSON.parse(saved));
+if(saved){
+  const t = JSON.parse(saved);
+  render(t);
+  drawSigillo(t.sigillo);
+}
 </script>
 
 </body>
