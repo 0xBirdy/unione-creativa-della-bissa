@@ -8,6 +8,35 @@
 </head>
 <body>
 
+<div id="bissa-popup">
+        <h1 id="bissa-text">⚠️ BISSA TUTTO ⚠️</h1>
+    </div>
+
+    <nav class="navbar">
+    ```
+
+**Sostituisci lo Script alla fine (prima di `</body>`):**
+
+```html
+    <footer>
+        <p>&copy; 2026 Unione Creativa della Bissa</p>
+    </footer>
+
+    <script>
+        function triggerBissa() {
+            const popup = document.getElementById('bissa-popup');
+            
+            // 1. Aggiunge la classe che fa partire l'animazione di zoom-in
+            popup.classList.add('active');
+            
+            // 2. Aspetta 1.8 secondi e rimuove la classe (zoom-out)
+            setTimeout(() => {
+                popup.classList.remove('active');
+            }, 1800);
+        }
+    </script>
+    
+
     <div id="bissa-overlay">
         <h1 id="bissa-text">BISSA TUTTO</h1>
     </div>
