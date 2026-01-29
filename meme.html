@@ -8,25 +8,28 @@
 </head>
 <body>
 
+    <!-- POPUP BISSA -->
     <div id="bissa-popup">
         <h1 id="bissa-text">⚠️ BISSA TUTTO ⚠️</h1>
     </div>
 
+    <!-- NAVBAR -->
     <nav class="navbar">
         <a href="index.html">Home</a>
-        <a href="meme.html" style="color: #fff; text-shadow: 0 0 15px #0f0;">Meme Sacri</a>
+        <a href="meme.html" class="active">Meme Sacri</a>
         <a href="tessera.html">Genera Tessera</a>
     </nav>
 
+    <!-- HERO -->
     <header class="hero-small">
         <h1 class="glow-title"><span class="highlight">ARCHIVIO</span> SACRO</h1>
-        <div class="divider"></div>
         <p class="subtitle">20 LIVELLI DI COSCIENZA ALTERATA</p>
     </header>
 
+    <!-- GRID MEME -->
     <main class="main-content">
         <section class="cards">
-            
+
             <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM25tdHI0dDh4dDQzdHNrdzM2cTU2OHlpNXdyMjB5eTFodDI0aTFmdSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oEjHGr1Fhz0kyv8Ig/giphy.gif"><p>01. Collasso Totale</p></div>
             <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/l0HlSNOxJB956qwfK/giphy.gif"><p>02. Fumo Potente</p></div>
             <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif"><p>03. Effetto Bissa</p></div>
@@ -47,7 +50,8 @@
             <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/3o7TKV8sN6S3S7uO8M/giphy.gif"><p>18. Frequenza Sacra</p></div>
             <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/l0HlD4v7p2u1m7g4w/giphy.gif"><p>19. Etere Liquido</p></div>
             <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/3o7TKV56p78S6V6o6M/giphy.gif"><p>20. BISSA SUPREMA</p></div>
-            </section>
+
+        </section>
     </main>
 
     <footer>
@@ -58,9 +62,7 @@
         function triggerBissa() {
             const popup = document.getElementById('bissa-popup');
             popup.classList.add('active');
-            setTimeout(() => {
-                popup.classList.remove('active');
-            }, 1400);
+            setTimeout(() => popup.classList.remove('active'), 1400);
         }
     </script>
 
