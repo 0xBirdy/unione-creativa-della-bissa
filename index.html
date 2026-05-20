@@ -1,621 +1,326 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unione Creativa della Bissa</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; place-items: center; text-align: center;
+      padding: 8rem 2rem 5rem;
+      position: relative;
+      background: radial-gradient(ellipse 90% 60% at 50% 40%, rgba(63,168,101,0.08) 0%, transparent 70%);
+    }
+    .hero-inner { max-width: 840px; position: relative; z-index: 1; }
 
-    <title>Unione Creativa della Bissa</title>
+    .hero-eyebrow {
+      font-size: 0.68rem; letter-spacing: 0.45em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp 1s ease 0.3s forwards;
+    }
+    .hero-title {
+      font-family: var(--serif); font-size: clamp(3.8rem, 9vw, 7.5rem);
+      font-weight: 300; line-height: 1.02; color: var(--cream);
+      margin-bottom: 1.8rem;
+      opacity: 0; animation: fadeUp 1s ease 0.6s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--green-bright); }
 
-    <style>
+    .hero-motto {
+      font-family: var(--serif); font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+      font-style: italic; color: var(--muted);
+      margin-bottom: 1rem;
+      opacity: 0; animation: fadeUp 1s ease 0.85s forwards;
+    }
+    .hero-motto strong { color: var(--green-bright); font-style: normal; font-weight: 400; }
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+    .hero-sub {
+      font-size: 0.92rem; color: var(--muted);
+      max-width: 480px; margin: 0 auto 3rem;
+      opacity: 0; animation: fadeUp 1s ease 1.05s forwards;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 1s ease 1.25s forwards;
+    }
 
-        html{
-            scroll-behavior:smooth;
-        }
+    /* snake SVG bg decoration */
+    .hero-bg-symbol {
+      position: absolute; bottom: -80px; right: -60px;
+      font-size: 30vw; color: rgba(63,168,101,0.03);
+      font-family: var(--serif); line-height: 1; pointer-events: none;
+      user-select: none; animation: pulse 8s ease-in-out infinite;
+    }
 
-        body{
-            background:
-            radial-gradient(circle at top, rgba(0,255,120,0.15), transparent 35%),
-            radial-gradient(circle at bottom, rgba(0,120,255,0.08), transparent 40%),
-            linear-gradient(to bottom, #050505, #090909, #050505);
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: var(--muted); font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      opacity: 0; animation: fadeUp 1s ease 1.8s forwards;
+    }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--green), transparent); animation: scrollPulse 2s ease-in-out infinite; }
 
-            color:white;
-            font-family:Arial, Helvetica, sans-serif;
-            overflow-x:hidden;
-        }
+    /* ── MANIFESTO ── */
+    .manifesto-wrap { padding: 7rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .manifesto-intro {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: start; margin-bottom: 6rem;
+    }
+    .manifesto-text p { color: var(--muted); font-size: 0.93rem; margin-bottom: 1.2rem; }
+    .manifesto-text p span { color: var(--cream); }
+    .manifesto-text p em { color: var(--green-bright); font-style: normal; }
 
-        /* SCROLLBAR */
+    .quote-block {
+      border-left: 2px solid var(--green);
+      padding-left: 2rem;
+    }
+    .quote-block blockquote {
+      font-family: var(--serif); font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-style: italic; font-weight: 300; line-height: 1.5;
+      color: var(--cream); margin-bottom: 1rem;
+    }
+    .quote-block cite { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-dim); }
 
-        ::-webkit-scrollbar{
-            width:10px;
-        }
+    /* TEMI GRID */
+    .temi-label { margin-bottom: 1rem; }
+    .temi-intro-title {
+      font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 300; margin-bottom: 3rem; color: var(--cream);
+    }
+    .temi-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px; background: var(--border);
+    }
+    .tema {
+      background: var(--bg); padding: 2.5rem;
+      position: relative; overflow: hidden; transition: background 0.3s;
+    }
+    .tema::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--green);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+    }
+    .tema:hover { background: var(--surface); }
+    .tema:hover::after { transform: scaleX(1); }
 
-        ::-webkit-scrollbar-thumb{
-            background:#00ff88;
-            border-radius:20px;
-        }
+    .tema-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+    .tema-title { font-family: var(--serif); font-size: 1.2rem; color: var(--green-bright); margin-bottom: 0.6rem; }
+    .tema-desc { font-size: 0.87rem; color: var(--muted); margin-bottom: 1.2rem; line-height: 1.7; }
+    .tema-analogia {
+      font-size: 0.8rem; color: var(--green-dim);
+      border-top: 1px solid var(--border); padding-top: 0.9rem; font-style: italic;
+    }
+    .tema-analogia strong { color: var(--green); font-style: normal; }
 
-        ::-webkit-scrollbar-track{
-            background:#111;
-        }
+    /* ── PRINCIPI ── */
+    .principi-bg {
+      background: var(--bg2);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .principi-inner { max-width: 1100px; margin: 0 auto; padding: 7rem 2rem; }
+    .principi-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0;
+    }
+    .principio {
+      padding: 2.8rem; border: 1px solid var(--border); margin: -1px 0 0 -1px;
+      transition: background 0.3s; position: relative; overflow: hidden;
+    }
+    .principio::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 2px; height: 0; background: var(--green); transition: height 0.4s ease;
+    }
+    .principio:hover::before { height: 100%; }
+    .principio:hover { background: var(--surface); }
+    .principio-num { font-family: var(--serif); font-size: 2.8rem; font-weight: 300; color: var(--border); line-height: 1; margin-bottom: 0.8rem; }
+    .principio-title { font-size: 0.67rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--green); margin-bottom: 0.7rem; }
+    .principio-body { font-size: 0.87rem; color: var(--muted); line-height: 1.7; }
 
-        /* NAVBAR */
+    /* ── CTA FARO ── */
+    .faro-cta {
+      background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 8rem 4rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .faro-cta::before {
+      content: '🐍'; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 38vw; opacity: 0.025; pointer-events: none; line-height: 1;
+      animation: spinSlow 120s linear infinite;
+    }
+    .faro-cta .section-title { margin: 0 auto 1rem; max-width: 640px; }
+    .faro-cta .section-body { margin: 0 auto 2.8rem; }
+    .faro-cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-        .navbar{
-            position:fixed;
-            top:0;
-            width:100%;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            gap:40px;
-            padding:22px;
-            background:rgba(0,0,0,0.45);
-            backdrop-filter:blur(12px);
-            border-bottom:1px solid rgba(0,255,100,0.12);
-            z-index:999;
-        }
-
-        .navbar a{
-            color:#888;
-            text-decoration:none;
-            font-weight:bold;
-            letter-spacing:1px;
-            transition:0.3s;
-            position:relative;
-        }
-
-        .navbar a:hover,
-        .navbar .active{
-            color:#00ff88;
-            text-shadow:0 0 10px #00ff88;
-        }
-
-        .navbar a::after{
-            content:"";
-            position:absolute;
-            left:0;
-            bottom:-6px;
-            width:0%;
-            height:2px;
-            background:#00ff88;
-            transition:0.3s;
-        }
-
-        .navbar a:hover::after{
-            width:100%;
-        }
-
-        /* HERO */
-
-        .hero{
-            min-height:100vh;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            padding:120px 20px 60px;
-            position:relative;
-        }
-
-        .hero::before{
-            content:"";
-            position:absolute;
-            width:700px;
-            height:700px;
-            background:#00ff88;
-            border-radius:50%;
-            filter:blur(220px);
-            opacity:0.08;
-            z-index:-1;
-            animation:pulse 8s infinite alternate;
-        }
-
-        @keyframes pulse{
-            from{
-                transform:scale(0.9);
-            }
-            to{
-                transform:scale(1.1);
-            }
-        }
-
-        .hero h1{
-            font-size:6rem;
-            line-height:0.95;
-            font-weight:900;
-            text-transform:uppercase;
-            letter-spacing:2px;
-        }
-
-        .hero h1 span{
-            color:#00ff88;
-            text-shadow:
-            0 0 10px #00ff88,
-            0 0 30px #00ff88,
-            0 0 60px rgba(0,255,100,0.5);
-        }
-
-        .hero-sub{
-            margin-top:25px;
-            color:#bbb;
-            font-size:1.2rem;
-            letter-spacing:5px;
-        }
-
-        .hero-description{
-            max-width:850px;
-            margin-top:40px;
-            color:#ccc;
-            line-height:2;
-            font-size:1.1rem;
-        }
-
-        .hero-buttons{
-            margin-top:50px;
-            display:flex;
-            gap:20px;
-            flex-wrap:wrap;
-            justify-content:center;
-        }
-
-        .hero-buttons a{
-            text-decoration:none;
-            padding:16px 32px;
-            border-radius:60px;
-            font-weight:bold;
-            transition:0.3s;
-            letter-spacing:1px;
-        }
-
-        .hero-buttons a:first-child{
-            background:#00ff88;
-            color:black;
-            box-shadow:0 0 30px rgba(0,255,100,0.3);
-        }
-
-        .hero-buttons a:last-child{
-            border:1px solid rgba(0,255,100,0.4);
-            color:#00ff88;
-        }
-
-        .hero-buttons a:hover{
-            transform:translateY(-5px) scale(1.05);
-        }
-
-        /* MAIN */
-
-        .main-content{
-            width:100%;
-            max-width:1400px;
-            margin:auto;
-            padding:40px 25px 120px;
-        }
-
-        /* TITLES */
-
-        .section-title{
-            text-align:center;
-            font-size:3rem;
-            margin-bottom:60px;
-            color:#00ff88;
-            text-transform:uppercase;
-            text-shadow:
-            0 0 10px rgba(0,255,100,0.5),
-            0 0 40px rgba(0,255,100,0.2);
-        }
-
-        /* MANIFESTO */
-
-        .manifesto-box{
-            background:rgba(255,255,255,0.03);
-            border:1px solid rgba(0,255,100,0.12);
-            border-radius:35px;
-            padding:60px;
-            line-height:2.2;
-            color:#ddd;
-            font-size:1.08rem;
-            backdrop-filter:blur(10px);
-            box-shadow:0 0 50px rgba(0,255,100,0.08);
-            position:relative;
-            overflow:hidden;
-            margin-bottom:120px;
-        }
-
-        .manifesto-box::before{
-            content:"";
-            position:absolute;
-            inset:0;
-            background:
-            linear-gradient(
-                135deg,
-                rgba(0,255,100,0.05),
-                transparent 40%
-            );
-            pointer-events:none;
-        }
-
-        .manifesto-box p{
-            margin-bottom:28px;
-        }
-
-        .highlight{
-            color:#00ff88;
-            font-weight:bold;
-        }
-
-        .quote{
-            text-align:center;
-            font-size:1.5rem;
-            margin-top:50px;
-            color:#00ff88;
-            font-weight:bold;
-            text-shadow:0 0 20px rgba(0,255,100,0.5);
-        }
-
-        /* PRINCIPI */
-
-        .pilastri-grid{
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-            gap:35px;
-        }
-
-        .pilastro-box{
-            position:relative;
-            background:rgba(255,255,255,0.03);
-            border:1px solid rgba(0,255,100,0.12);
-            border-radius:30px;
-            padding:40px;
-            overflow:hidden;
-            transition:0.35s;
-            backdrop-filter:blur(10px);
-            box-shadow:0 0 35px rgba(0,255,100,0.05);
-        }
-
-        .pilastro-box::before{
-            content:"";
-            position:absolute;
-            inset:0;
-            background:
-            linear-gradient(
-                135deg,
-                rgba(0,255,100,0.08),
-                transparent 50%
-            );
-            opacity:0;
-            transition:0.3s;
-        }
-
-        .pilastro-box:hover::before{
-            opacity:1;
-        }
-
-        .pilastro-box:hover{
-            transform:translateY(-12px);
-            border-color:#00ff88;
-            box-shadow:0 0 45px rgba(0,255,100,0.18);
-        }
-
-        .pilastro-box strong{
-            display:block;
-            margin-bottom:20px;
-            font-size:1.3rem;
-            color:#00ff88;
-            line-height:1.5;
-        }
-
-        .pilastro-box p{
-            line-height:2;
-            color:#d7d7d7;
-        }
-
-        /* FOOTER */
-
-        footer{
-            text-align:center;
-            padding:50px 20px;
-            border-top:1px solid rgba(255,255,255,0.06);
-            color:#666;
-            letter-spacing:2px;
-        }
-
-        /* MOBILE */
-
-        @media(max-width:900px){
-
-            .hero h1{
-                font-size:3.5rem;
-            }
-
-            .hero-sub{
-                letter-spacing:2px;
-                font-size:1rem;
-            }
-
-            .manifesto-box{
-                padding:35px;
-            }
-
-            .section-title{
-                font-size:2rem;
-            }
-
-        }
-
-    </style>
-
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .manifesto-intro { grid-template-columns: 1fr; gap: 3rem; }
+      .faro-cta { padding: 5rem 1.5rem; }
+    }
+  </style>
 </head>
-
 <body>
 
-    <nav class="navbar">
-        <a href="#" class="active">HOME</a>
-        <a href="#">MEME SACRI</a>
-        <a href="#">TESSERA</a>
-        <a href="#">IL FARO</a>
+  <nav class="site-nav">
+    <a href="index.html" class="nav-logo">U.C.B.</a>
+    <ul class="nav-links">
+      <li><a href="#manifesto">Manifesto</a></li>
+      <li><a href="#principi">Principi</a></li>
+      <li><a href="citazioni.html">Citazioni</a></li>
+      <li><a href="tessera.html">Tessera</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Unione Creativa della Bissa &nbsp;·&nbsp; Est. 2026</p>
+      <h1 class="hero-title">Lucidità<br><em>nel caos.</em></h1>
+      <p class="hero-motto"><strong>Soli siamo deboli.</strong> Ma insieme invincibili.</p>
+      <p class="hero-sub">Un framework filosofico per chi vuole reggere la realtà moderna senza perdere l'anima — e non farlo da solo.</p>
+      <div class="hero-actions">
+        <a href="#manifesto" class="btn btn-primary">Leggi il Manifesto</a>
+        <a href="tessera.html" class="btn btn-ghost">Ottieni la Tessera</a>
+      </div>
+    </div>
+    <div class="hero-bg-symbol">🐍</div>
+    <div class="scroll-hint">
+      <span>Scorri</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+
+  <!-- MOTTO BAND -->
+  <div class="motto-band">
+    <p>Soli siamo deboli &nbsp;·&nbsp; Ma insieme invincibili &nbsp;·&nbsp; Coscienza · Libertà · Connessione · Resistenza</p>
+  </div>
+
+  <!-- MANIFESTO -->
+  <div class="manifesto-wrap" id="manifesto">
+    <span class="section-label reveal">Il Manifesto</span>
+    <h2 class="section-title reveal">Non una fuga.<br>Un modo per reggere.</h2>
+    <div class="divider reveal"></div>
+
+    <div class="manifesto-intro">
+      <div class="reveal">
+        <p>L'essere umano moderno è <span>isolato mentalmente</span>. Internet amplifica confusione, ego e perdita di significato. Le persone hanno bisogno di connessione reale e confronto autentico.</p>
+        <p>Il dolore e il caos sono <span>inevitabili</span>. Non eliminabili. L'obiettivo non è la felicità facile — è la resilienza mentale e la lucidità nel caos.</p>
+        <p>La Bissa nasce per questo: non per fuggire dal mondo, ma per <em>sopravvivergli senza perdere l'anima.</em></p>
+      </div>
+      <div class="quote-block reveal">
+        <blockquote>"Dove esiste il Faro, nessuno combatte da solo."</blockquote>
+        <cite>— Principio fondante, U.C.B.</cite>
+      </div>
+    </div>
+
+    <!-- TEMI CON ANALOGIE -->
+    <span class="section-label temi-label reveal">I Temi Fondanti</span>
+    <p class="temi-intro-title reveal">Concetti chiave, spiegati con analogie.</p>
+
+    <div class="temi-grid">
+      <div class="tema reveal">
+        <div class="tema-icon">🌑</div>
+        <div class="tema-title">L'Isolamento Moderno</div>
+        <div class="tema-desc">L'uomo moderno è circondato da migliaia di persone ma si sente profondamente solo. I social amplificano l'ego, non la connessione reale.</div>
+        <div class="tema-analogia"><strong>Analogia:</strong> Come un astronauta nello spazio — circondato da tecnologia avanzata, ma in un vuoto assoluto. La tuta protegge ma isola da tutto.</div>
+      </div>
+      <div class="tema reveal">
+        <div class="tema-icon">🌊</div>
+        <div class="tema-title">Il Caos come Condizione</div>
+        <div class="tema-desc">Il caos non è un nemico da eliminare. È l'oceano in cui nuotiamo tutti. Imparare a nuotare è più utile di sperare che il mare si asciughi.</div>
+        <div class="tema-analogia"><strong>Analogia:</strong> Un marinaio non controlla le tempeste. Ma impara a leggere il vento, reggere le onde e non perdere la rotta.</div>
+      </div>
+      <div class="tema reveal">
+        <div class="tema-icon">🎋</div>
+        <div class="tema-title">Resilienza, Non Resistenza</div>
+        <div class="tema-desc">Resistere al dolore ti spezza. La resilienza è piegarsi senza rompersi — assorbire, adattarsi, rialzarsi.</div>
+        <div class="tema-analogia"><strong>Analogia:</strong> Il bambù sopravvive ai tifoni perché si piega fino a terra. Il rovere vecchio si spezza. La flessibilità è forza vera.</div>
+      </div>
+      <div class="tema reveal">
+        <div class="tema-icon">🕯️</div>
+        <div class="tema-title">Il Faro nel Buio</div>
+        <div class="tema-desc">Il Faro non elimina la tempesta. Indica una direzione. La comunità non risolve i tuoi problemi — ti aiuta a non perderti nel mezzo.</div>
+        <div class="tema-analogia"><strong>Analogia:</strong> Un faro non salva le navi dalla tempesta. Le aiuta a non andare sugli scogli. La differenza è vitale.</div>
+      </div>
+      <div class="tema reveal">
+        <div class="tema-icon">🧠</div>
+        <div class="tema-title">Coscienza vs Ego</div>
+        <div class="tema-desc">L'ego reagisce. La coscienza osserva. Chi vive solo di ego è schiavo delle proprie emozioni — non un uomo libero.</div>
+        <div class="tema-analogia"><strong>Analogia:</strong> L'ego è il cavallo selvaggio. La coscienza è il cavaliere. Senza guida, il cavallo corre a caso — spesso verso il precipizio.</div>
+      </div>
+      <div class="tema reveal">
+        <div class="tema-icon">🐍</div>
+        <div class="tema-title">Il Grande Bissa</div>
+        <div class="tema-desc">Uno stato mentale collettivo: quando persone ferite, stanche o perse riescono comunque a creare connessione, ironia e significato insieme.</div>
+        <div class="tema-analogia"><strong>Analogia:</strong> Un coro stonato che suona insieme è più bello del silenzio perfetto. Non servono individui perfetti — serve unione.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRINCIPI -->
+  <div class="principi-bg" id="principi">
+    <div class="principi-inner">
+      <span class="section-label reveal">I Sei Principi</span>
+      <h2 class="section-title reveal">Le fondamenta.</h2>
+      <div class="divider reveal"></div>
+      <div class="principi-grid">
+        <div class="principio reveal">
+          <div class="principio-num">01</div>
+          <div class="principio-title">Coscienza prima dell'ego</div>
+          <div class="principio-body">Pensare è sacro. Mettersi in dubbio è forza. Chi smette di ragionare diventa schiavo del rumore del mondo.</div>
+        </div>
+        <div class="principio reveal">
+          <div class="principio-num">02</div>
+          <div class="principio-title">Nessuno si salva da solo</div>
+          <div class="principio-body">L'isolamento distrugge la mente. La connessione la ricostruisce. Il Bissa Salami non domina — aiuta a rialzarsi.</div>
+        </div>
+        <div class="principio reveal">
+          <div class="principio-num">03</div>
+          <div class="principio-title">Il Faro nel caos</div>
+          <div class="principio-body">Il Faro crea pace mentale dentro il caos, non lontano da esso. Non si scappa dalla realtà — si impara a starci.</div>
+        </div>
+        <div class="principio reveal">
+          <div class="principio-num">04</div>
+          <div class="principio-title">Libertà è controllo</div>
+          <div class="principio-body">Essere liberi non significa autodistruggersi. La vera forza è mantenere lucidità e dignità anche nei momenti peggiori.</div>
+        </div>
+        <div class="principio reveal">
+          <div class="principio-num">05</div>
+          <div class="principio-title">Il Grande Bissa</div>
+          <div class="principio-body">Lo stato mentale in cui, nonostante tutto, gli esseri umani riescono ancora a creare amore, ironia, energia e significato insieme.</div>
+        </div>
+        <div class="principio reveal">
+          <div class="principio-num">06</div>
+          <div class="principio-title">Ridere nel buio</div>
+          <div class="principio-body">L'umorismo è resistenza mentale. Ridere nel caos significa rifiutarsi di essere spezzati. L'anima deve restare viva.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA FARO -->
+  <div class="faro-cta">
+    <span class="section-label reveal">Entra</span>
+    <h2 class="section-title reveal">Soli siamo deboli.<br><em style="font-family:var(--serif); font-style:italic; color:var(--green-bright)">Ma insieme invincibili.</em></h2>
+    <p class="section-body reveal">La Bissa non è per chi cerca risposte facili. È per chi vuole affrontare il caos con lucidità, ironia e connessione reale.</p>
+    <div class="faro-cta-actions reveal">
+      <a href="tessera.html" class="btn btn-primary">Ottieni la Tessera</a>
+      <a href="citazioni.html" class="btn btn-ghost">Citazioni & Significati</a>
+      <a href="meme.html" class="btn btn-ghost">Meme Sacri</a>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <span class="footer-logo">Unione Creativa della Bissa</span>
+    <nav class="footer-links">
+      <a href="citazioni.html">Citazioni</a>
+      <a href="tessera.html">Tessera</a>
+      <a href="meme.html">Meme</a>
     </nav>
+    <span class="footer-copy">© 2026 · COSCIENZA · LIBERTÀ · CONNESSIONE · RESISTENZA</span>
+  </footer>
 
-    <header class="hero">
-
-        <h1>
-            UNIONE CREATIVA<br>
-            <span>DELLA BISSA</span>
-        </h1>
-
-        <p class="hero-sub">
-            COSCIENZA • LIBERTÀ • CONNESSIONE • RESISTENZA
-        </p>
-
-        <div class="hero-description">
-
-            <p>
-                La Bissa non nasce per fuggire dal mondo.
-                Nasce per sopravvivergli senza perdere l’anima.
-            </p>
-
-            <p>
-                In un’epoca di isolamento,
-                ego,
-                pressione mentale
-                e rumore continuo,
-                il Faro esiste per ricordare che gli esseri umani
-                hanno ancora bisogno di connessione reale.
-            </p>
-
-        </div>
-
-        <div class="hero-buttons">
-            <a href="#">ENTRA NEL FARO</a>
-            <a href="#">OTTIENI LA TESSERA</a>
-        </div>
-
-    </header>
-
-    <main class="main-content">
-
-        <!-- MANIFESTO -->
-
-        <section>
-
-            <h2 class="section-title">
-                IL MANIFESTO
-            </h2>
-
-            <div class="manifesto-box">
-
-                <p>
-                    L’essere umano è una creatura sociale.
-                    La psicologia,
-                    la neuroscienza
-                    e l’evoluzione mostrano che la mente
-                    cresce attraverso connessione,
-                    confronto
-                    e appartenenza.
-                </p>
-
-                <p>
-                    La Bissa è un movimento creativo e filosofico
-                    fondato sul rispetto,
-                    sulla discussione libera,
-                    sull’ironia,
-                    sulla fratellanza
-                    e sulla ricerca di equilibrio mentale.
-                </p>
-
-                <p>
-                    Il ruolo del <span class="highlight">Bissa Salami</span>
-                    è guidare le persone verso il
-                    <span class="highlight">Grande Bissa</span>:
-                    uno stato mentale dove anche individui feriti,
-                    stanchi o persi
-                    riescono comunque
-                    a creare connessione,
-                    significato,
-                    creatività
-                    e pace.
-                </p>
-
-                <p>
-                    Noi non glorifichiamo la distruzione personale,
-                    la dipendenza,
-                    l’abuso
-                    o la perdita di controllo.
-                </p>
-
-                <p>
-                    La vera libertà
-                    non è fare qualunque cosa.
-                    La vera libertà
-                    è riuscire a dominare sé stessi
-                    anche nel caos.
-                </p>
-
-                <p>
-                    Il dolore esisterà sempre.
-                    La vita colpirà tutti.
-                    Nessuno uscirà completamente illeso dall’esistenza.
-                </p>
-
-                <p>
-                    Ma anche nel mezzo dell’inferno,
-                    costruiremo il nostro paradiso:
-                    con umorismo,
-                    rispetto,
-                    lucidità,
-                    spirito libero
-                    e anime unite.
-                </p>
-
-                <p class="quote">
-                    “Dove esiste il Faro,<br>
-                    nessuno combatte da solo.”
-                </p>
-
-            </div>
-
-        </section>
-
-        <!-- PRINCIPI -->
-
-        <section>
-
-            <h2 class="section-title">
-                I PRINCIPI DELLA BISSA
-            </h2>
-
-            <div class="pilastri-grid">
-
-                <div class="pilastro-box">
-
-                    <p>
-                        <strong>
-                            🧠 COSCIENZA PRIMA DELL’EGO
-                        </strong>
-
-                        Pensare è sacro.
-                        Mettersi in dubbio è forza.
-                        Discutere significa evolversi.
-
-                        Chi smette di ragionare
-                        diventa schiavo del rumore del mondo.
-                    </p>
-
-                </div>
-
-                <div class="pilastro-box">
-
-                    <p>
-                        <strong>
-                            🤝 NESSUNO SI SALVA DA SOLO
-                        </strong>
-
-                        L’isolamento distrugge la mente.
-                        La connessione umana la ricostruisce.
-
-                        Il Bissa Salami non domina gli altri:
-                        li aiuta a rialzarsi.
-                    </p>
-
-                </div>
-
-                <div class="pilastro-box">
-
-                    <p>
-                        <strong>
-                            🔥 IL FARO NEL CAOS
-                        </strong>
-
-                        Il mondo sarà sempre crudele,
-                        veloce
-                        e pieno di pressione.
-
-                        Il Faro esiste per creare pace mentale
-                        dentro il caos,
-                        non lontano da esso.
-                    </p>
-
-                </div>
-
-                <div class="pilastro-box">
-
-                    <p>
-                        <strong>
-                            ⚖️ LIBERTÀ È CONTROLLO
-                        </strong>
-
-                        Essere liberi
-                        non significa autodistruggersi.
-
-                        La vera forza
-                        è mantenere lucidità,
-                        dignità
-                        e controllo mentale
-                        anche nei momenti peggiori.
-                    </p>
-
-                </div>
-
-                <div class="pilastro-box">
-
-                    <p>
-                        <strong>
-                            🌌 IL GRANDE BISSA
-                        </strong>
-
-                        Tutti combattono qualcosa:
-                        dolore,
-                        paura,
-                        fallimenti,
-                        vuoto,
-                        solitudine.
-
-                        Il Grande Bissa
-                        è il momento in cui,
-                        nonostante tutto,
-                        gli esseri umani riescono ancora
-                        a creare amore,
-                        ironia,
-                        energia
-                        e significato insieme.
-                    </p>
-
-                </div>
-
-                <div class="pilastro-box">
-
-                    <p>
-                        <strong>
-                            💨 RIDERE NEL BUIO
-                        </strong>
-
-                        L’umorismo è resistenza mentale.
-                        Ridere nel caos
-                        significa rifiutarsi di essere spezzati.
-
-                        Anche nel buio,
-                        l’anima deve restare viva.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-    <footer>
-        UNIONE CREATIVA DELLA BISSA © 2026
-    </footer>
-
+  <script src="script.js"></script>
 </body>
-
 </html>
