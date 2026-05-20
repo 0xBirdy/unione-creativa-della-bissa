@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Citazioni — U.C.B.</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page-hero {
+      padding: 10rem 2rem 4rem; text-align: center;
+      background: radial-gradient(ellipse 70% 50% at 50% 30%, rgba(63,168,101,0.07) 0%, transparent 70%);
+    }
+    .page-hero p { color: var(--muted); font-size: 0.92rem; max-width: 500px; margin: 1rem auto 0; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 0;
+      display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;
+    }
+    .filter-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-right: 0.5rem; }
+    .filter-btn {
+      padding: 0.45rem 1rem; background: transparent;
+      border: 1px solid var(--border); color: var(--muted);
+      font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; cursor: pointer; transition: all 0.25s;
+    }
+    .filter-btn:hover { border-color: var(--green); color: var(--cream); }
+    .filter-btn.active { background: var(--green-dim); border-color: var(--green); color: var(--green-bright); }
+
+    /* ── CITAZIONI GRID ── */
+    .citazioni-wrap { max-width: 1100px; margin: 3rem auto 0; padding: 0 2rem 7rem; }
+    .citazioni-masonry {
+      columns: 2; column-gap: 2px;
+    }
+
+    .cita-card {
+      break-inside: avoid;
+      background: var(--bg2); border: 1px solid var(--border);
+      padding: 2.5rem; margin-bottom: 2px;
+      position: relative; transition: background 0.3s;
+      display: block;
+    }
+    .cita-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px; background: var(--green);
+      transform: scaleY(0); transform-origin: top; transition: transform 0.4s ease;
+    }
+    .cita-card:hover { background: var(--surface); }
+    .cita-card:hover::before { transform: scaleY(1); }
+    .cita-card.hidden { display: none; }
+
+    .cita-tag {
+      font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 1.2rem; display: block;
+    }
+
+    .cita-quote {
+      font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-style: italic; font-weight: 300; color: var(--cream);
+      line-height: 1.5; margin-bottom: 1rem;
+    }
+    .cita-quote::before { content: '\201C'; }
+    .cita-quote::after  { content: '\201D'; }
+
+    .cita-autore {
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--green-dim); margin-bottom: 1.6rem;
+    }
+
+    /* Significato accordion */
+    .cita-toggle {
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted); transition: color 0.3s;
+      padding: 0;
+    }
+    .cita-toggle:hover { color: var(--green); }
+    .cita-toggle .arrow { transition: transform 0.3s; display: inline-block; }
+    .cita-toggle.open .arrow { transform: rotate(90deg); }
+
+    .cita-significato {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+    }
+    .cita-significato.open {
+      max-height: 400px;
+      padding-top: 1.2rem;
+    }
+    .cita-significato p {
+      font-size: 0.87rem; color: var(--muted); line-height: 1.75;
+      border-top: 1px solid var(--border); padding-top: 1.2rem;
+    }
+    .cita-significato .cita-tema {
+      margin-top: 0.8rem; font-size: 0.75rem; color: var(--green);
+      font-style: italic;
+    }
+
+    /* FEATURED quote */
+    .cita-featured {
+      background: var(--surface2);
+      border-color: var(--green-dim);
+      border-width: 1px;
+    }
+    .cita-featured .cita-quote { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+
+    /* ── MOTTO SECTION ── */
+    .motto-section {
+      background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 6rem 2rem; text-align: center;
+    }
+    .motto-section blockquote {
+      font-family: var(--serif); font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300; font-style: italic; color: var(--cream); line-height: 1.3;
+      max-width: 700px; margin: 0 auto 1.5rem;
+    }
+    .motto-section blockquote em { color: var(--green-bright); font-style: normal; }
+    .motto-section cite { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--green-dim); }
+
+    @media (max-width: 768px) {
+      .citazioni-masonry { columns: 1; }
+      .motto-section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="index.html" class="nav-logo">U.C.B.</a>
+    <ul class="nav-links">
+      <li><a href="index.html#manifesto">Manifesto</a></li>
+      <li><a href="index.html#principi">Principi</a></li>
+      <li><a href="citazioni.html">Citazioni</a></li>
+      <li><a href="tessera.html">Tessera</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <span class="section-label reveal">Archivio</span>
+    <h1 class="section-title reveal">Citazioni<br><em style="font-style:italic; color:var(--green-bright)">& Significati.</em></h1>
+    <p class="reveal">Parole che tagliano il rumore. Ogni citazione ha un significato profondo legato ai temi della Bissa.</p>
+  </div>
+
+  <div class="motto-band"><p>Soli siamo deboli · Ma insieme invincibili</p></div>
+
+  <!-- FILTER -->
+  <div class="filter-bar reveal">
+    <span class="filter-label">Filtra per:</span>
+    <button class="filter-btn active" data-filter="all">Tutte</button>
+    <button class="filter-btn" data-filter="caos">Caos</button>
+    <button class="filter-btn" data-filter="connessione">Connessione</button>
+    <button class="filter-btn" data-filter="resilienza">Resilienza</button>
+    <button class="filter-btn" data-filter="coscienza">Coscienza</button>
+    <button class="filter-btn" data-filter="liberta">Libertà</button>
+    <button class="filter-btn" data-filter="bissa">Bissa</button>
+  </div>
+
+  <!-- CITAZIONI -->
+  <div class="citazioni-wrap">
+    <div class="citazioni-masonry" id="citazioni-grid">
+
+      <!-- MOTTO ORIGINALE -->
+      <div class="cita-card cita-featured reveal" data-cat="bissa connessione">
+        <span class="cita-tag">🐍 Motto della Bissa</span>
+        <p class="cita-quote">Soli siamo deboli. Ma insieme invincibili.</p>
+        <p class="cita-autore">— Unione Creativa della Bissa</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>Il motto fondante. Non è ottimismo vuoto — è una dichiarazione di struttura. Un individuo isolato, per quanto forte, è vulnerabile. La comunità non elimina le debolezze individuali: le compensa, le distribuisce, le trasforma in forza collettiva. È matematica sociale.</p>
+          <p class="cita-tema">Tema: Connessione · Il Grande Bissa</p>
+        </div>
+      </div>
+
+      <div class="cita-card reveal" data-cat="resilienza caos">
+        <span class="cita-tag">Stoicismo</span>
+        <p class="cita-quote">Non chiedere che le cose accadano come vuoi, ma desidera che accadano come accadono, e sarai felice.</p>
+        <p class="cita-autore">— Epitteto</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>Epitteto — ex schiavo, stoico — capisce il caos meglio di chiunque. Non si tratta di rassegnazione: si tratta di smettere di sprecare energia su ciò che non controlli. La Bissa non combatte il mare — impara a navigarlo.</p>
+          <p class="cita-tema">Tema: Resilienza · Il Caos come Condizione</p>
+        </div>
+      </div>
+
+      <div class="cita-card reveal" data-cat="connessione">
+        <span class="cita-tag">Psicologia sociale</span>
+        <p class="cita-quote">L'uomo è un animale sociale. Chi vive senza comunità è o una bestia o un dio.</p>
+        <p class="cita-autore">— Aristotele, Politica</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>Aristotele lo scrive 2400 anni fa, la neuroscienza lo conferma oggi: l'isolamento cronico è patologico. Non siamo costruiti per stare soli. La Bissa parte da qui — non come romanticismo, ma come biologia.</p>
+          <p class="cita-tema">Tema: Connessione · L'Isolamento Moderno</p>
+        </div>
+      </div>
+
+      <div class="cita-card reveal" data-cat="caos resilienza">
+        <span class="cita-tag">Filosofia moderna</span>
+        <p class="cita-quote">Ciò che non mi uccide mi fortifica.</p>
+        <p class="cita-autore">— Friedrich Nietzsche</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>Spesso citata male. Nietzsche non glorifica la sofferenza — dice che la sofferenza superata diventa struttura. Come l'osso che si consolida dove si è fratturato. La Bissa non romanticizza il dolore: lo usa come materiale da costruzione.</p>
+          <p class="cita-tema">Tema: Resilienza · Il Caos come Condizione</p>
+        </div>
+      </div>
+
+      <div class="cita-card reveal" data-cat="coscienza liberta">
+        <span class="cita-tag">Stoicismo</span>
+        <p class="cita-quote">La libertà non è avere ciò che vuoi. È non volere ciò che non hai.</p>
+        <p class="cita-autore">— Marco Aurelio, Meditazioni</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>Marco Aurelio era imperatore — poteva avere tutto. Eppure capisce che il desiderio illimitato è la vera prigione. La libertà della Bissa non è fare qualunque cosa: è non essere schiavi dei propri impulsi. Controllo = libertà.</p>
+          <p class="cita-tema">Tema: Libertà · Coscienza vs Ego</p>
+        </div>
+      </div>
+
+      <div class="cita-card reveal" data-cat="connessione resilienza">
+        <span class="cita-tag">Letteratura</span>
+        <p class="cita-quote">Se vuoi andare veloce, vai da solo. Se vuoi andare lontano, vai insieme agli altri.</p>
+        <p class="cita-autore">— Proverbio africano</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>Il principio della Bissa in forma di proverbio. La velocità individuale è reale — ma è corta. La distanza collettiva è lenta ma duratura. Chi costruisce comunità costruisce qualcosa che sopravvive all'individuo.</p>
+          <p class="cita-tema">Tema: Connessione · Il Grande Bissa</p>
+        </div>
+      </div>
+
+      <div class="cita-card reveal" data-cat="caos coscienza">
+        <span class="cita-tag">Psicologia</span>
+        <p class="cita-quote">Tra lo stimolo e la risposta c'è uno spazio. In quello spazio sta la nostra libertà.</p>
+        <p class="cita-autore">— Viktor Frankl</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>Frankl sopravvissuto ai lager nazisti. Questo spazio tra stimolo e risposta è esattamente il confine tra ego e coscienza. L'ego reagisce. La coscienza osserva, poi sceglie. La Bissa allena quell'osservazione.</p>
+          <p class="cita-tema">Tema: Coscienza · Libertà</p>
+        </div>
+      </div>
+
+      <div class="cita-card reveal" data-cat="liberta coscienza">
+        <span class="cita-tag">Filosofia orientale</span>
+        <p class="cita-quote">Conoscere gli altri è intelligenza. Conoscere sé stessi è illuminazione.</p>
+        <p class="cita-autore">— Lao Tzu, Tao Te Ching</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>La gerarchia della conoscenza nella filosofia taoista: capire il mondo esterno è utile, ma capire sé stessi è trasformativo. Senza autoconoscenza, si reagisce agli altri senza capire perché. La coscienza parte dall'interno.</p>
+          <p class="cita-tema">Tema: Coscienza vs Ego</p>
+        </div>
+      </div>
+
+      <div class="cita-card reveal" data-cat="bissa resilienza">
+        <span class="cita-tag">🕯️ Dal Faro</span>
+        <p class="cita-quote">Dove esiste il Faro, nessuno combatte da solo.</p>
+        <p class="cita-autore">— Principio fondante, U.C.B.</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>Il Faro non elimina la battaglia — garantisce che non sia solitaria. La solitudine nel dolore è il fattore che trasforma una difficoltà normale in un crollo. La comunità non risolve: ridistribuisce il peso.</p>
+          <p class="cita-tema">Tema: Il Faro · Connessione</p>
+        </div>
+      </div>
+
+      <div class="cita-card reveal" data-cat="caos resilienza">
+        <span class="cita-tag">Letteratura</span>
+        <p class="cita-quote">Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura, ché la diritta via era smarrita.</p>
+        <p class="cita-autore">— Dante Alighieri, Inferno I</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>700 anni fa, Dante descrive perfettamente l'esperienza della crisi di mezza vita — e di qualsiasi perdita di direzione. La selva oscura non è una punizione: è il punto di partenza. Il viaggio inizia solo quando ci si perde davvero.</p>
+          <p class="cita-tema">Tema: Caos · Resilienza · Il Faro</p>
+        </div>
+      </div>
+
+      <div class="cita-card reveal" data-cat="connessione bissa">
+        <span class="cita-tag">Neuroscienza</span>
+        <p class="cita-quote">Il cervello umano è fondamentalmente un organo sociale. Non è stato progettato per l'isolamento.</p>
+        <p class="cita-autore">— John Cacioppo, La solitudine</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>Cacioppo è il più grande ricercatore sull'isolamento sociale. I suoi dati mostrano che la solitudine cronica ha effetti comparabili al fumo sulla salute fisica. La Bissa è anche questo: una risposta scientificamente fondata a un bisogno biologico reale.</p>
+          <p class="cita-tema">Tema: Connessione · L'Isolamento Moderno</p>
+        </div>
+      </div>
+
+      <div class="cita-card reveal" data-cat="liberta coscienza caos">
+        <span class="cita-tag">Esistenzialismo</span>
+        <p class="cita-quote">L'uomo è condannato ad essere libero.</p>
+        <p class="cita-autore">— Jean-Paul Sartre</p>
+        <button class="cita-toggle" onclick="toggleSignificato(this)">
+          <span class="arrow">▶</span> Significato
+        </button>
+        <div class="cita-significato">
+          <p>La libertà come peso, non come dono. Sartre dice che non possiamo non scegliere — anche non scegliere è una scelta. La Bissa accetta questo: il caos non ha via d'uscita, ma ha una risposta. Scegliere consapevolmente dentro il caos, non fuggire da esso.</p>
+          <p class="cita-tema">Tema: Libertà · Coscienza · Caos</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MOTTO GRANDE -->
+  <div class="motto-section">
+    <blockquote>"Soli siamo deboli. Ma <em>insieme invincibili.</em>"</blockquote>
+    <cite>— Unione Creativa della Bissa, 2026</cite>
+  </div>
+
+  <footer class="site-footer">
+    <span class="footer-logo">Unione Creativa della Bissa</span>
+    <nav class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="tessera.html">Tessera</a>
+      <a href="meme.html">Meme</a>
+    </nav>
+    <span class="footer-copy">© 2026 · COSCIENZA · LIBERTÀ · CONNESSIONE · RESISTENZA</span>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        document.querySelectorAll('.cita-card').forEach(card => {
+          if (f === 'all' || card.dataset.cat.includes(f)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Accordion
+    function toggleSignificato(btn) {
+      const sig = btn.nextElementSibling;
+      btn.classList.toggle('open');
+      sig.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
