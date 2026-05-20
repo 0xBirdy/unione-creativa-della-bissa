@@ -1,70 +1,91 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meme Sacri – Unione Creativa della Bissa</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meme Sacri — U.C.B.</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page-hero {
+      padding: 10rem 2rem 5rem; text-align: center;
+      background: radial-gradient(ellipse 70% 50% at 50% 30%, rgba(63,168,101,0.07) 0%, transparent 70%);
+    }
+    .page-hero p { color: var(--muted); font-size: 0.92rem; max-width: 500px; margin: 1rem auto 0; }
+
+    .meme-intro {
+      max-width: 700px; margin: 5rem auto; padding: 0 2rem;
+      text-align: center;
+    }
+    .meme-intro p { color: var(--muted); font-size: 0.93rem; margin-bottom: 1.2rem; }
+    .meme-intro blockquote {
+      font-family: var(--serif); font-size: 1.5rem; font-style: italic;
+      color: var(--green-bright); border-left: 2px solid var(--green);
+      padding-left: 1.5rem; text-align: left; margin: 3rem 0;
+    }
+
+    .meme-placeholder {
+      max-width: 1100px; margin: 0 auto; padding: 0 2rem 7rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2px;
+    }
+    .meme-slot {
+      background: var(--bg2); border: 1px solid var(--border);
+      aspect-ratio: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1rem;
+      transition: background 0.3s; cursor: default;
+    }
+    .meme-slot:hover { background: var(--surface); }
+    .meme-slot .slot-icon { font-size: 2rem; opacity: 0.4; }
+    .meme-slot .slot-text { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  </style>
 </head>
 <body>
 
-    <!-- POPUP BISSA -->
-    <div id="bissa-popup">
-        <h1 id="bissa-text">⚠️ BISSA TUTTO ⚠️</h1>
-    </div>
+  <nav class="site-nav">
+    <a href="index.html" class="nav-logo">U.C.B.</a>
+    <ul class="nav-links">
+      <li><a href="index.html#manifesto">Manifesto</a></li>
+      <li><a href="index.html#principi">Principi</a></li>
+      <li><a href="citazioni.html">Citazioni</a></li>
+      <li><a href="tessera.html">Tessera</a></li>
+    </ul>
+  </nav>
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <a href="index.html">Home</a>
-        <a href="meme.html" class="active">Meme Sacri</a>
-        <a href="tessera.html">Genera Tessera</a>
+  <div class="page-hero">
+    <span class="section-label reveal">Archivio Sacro</span>
+    <h1 class="section-title reveal">Meme<br><em style="font-style:italic; color:var(--green-bright)">Sacri.</em></h1>
+    <p class="reveal">L'ironia come resistenza. Il meme come linguaggio. La cultura come arma del lucido.</p>
+  </div>
+
+  <div class="motto-band"><p>Soli siamo deboli · Ma insieme invincibili</p></div>
+
+  <div class="meme-intro reveal">
+    <p>L'ironia non è la negazione della filosofia. È la sua forma più accessibile. Ridere del caos non significa ignorarlo — significa rifiutarsi di esserne spezzati.</p>
+    <blockquote>"Ridere nel buio significa rifiutarsi di essere spezzati."</blockquote>
+    <p>Questa sezione è il lato umano della Bissa. Qui arriva il contenuto visivo, i meme, le battute che nascondono verità.</p>
+    <a href="index.html" class="btn btn-ghost" style="margin-top:1rem">← Torna al Manifesto</a>
+  </div>
+
+  <div class="meme-placeholder">
+    <div class="meme-slot reveal"><span class="slot-icon">🐍</span><span class="slot-text">In arrivo</span></div>
+    <div class="meme-slot reveal"><span class="slot-icon">🕯️</span><span class="slot-text">In arrivo</span></div>
+    <div class="meme-slot reveal"><span class="slot-icon">🃏</span><span class="slot-text">In arrivo</span></div>
+    <div class="meme-slot reveal"><span class="slot-icon">🌊</span><span class="slot-text">In arrivo</span></div>
+    <div class="meme-slot reveal"><span class="slot-icon">🎋</span><span class="slot-text">In arrivo</span></div>
+    <div class="meme-slot reveal"><span class="slot-icon">🧠</span><span class="slot-text">In arrivo</span></div>
+    <div class="meme-slot reveal"><span class="slot-icon">⚓</span><span class="slot-text">In arrivo</span></div>
+    <div class="meme-slot reveal"><span class="slot-icon">🗡️</span><span class="slot-text">In arrivo</span></div>
+  </div>
+
+  <footer class="site-footer">
+    <span class="footer-logo">Unione Creativa della Bissa</span>
+    <nav class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="citazioni.html">Citazioni</a>
+      <a href="tessera.html">Tessera</a>
     </nav>
+    <span class="footer-copy">© 2026 · COSCIENZA · LIBERTÀ · CONNESSIONE · RESISTENZA</span>
+  </footer>
 
-    <!-- HERO -->
-    <header class="hero-small">
-        <h1 class="glow-title"><span class="highlight">ARCHIVIO</span> SACRO</h1>
-        <p class="subtitle">20 LIVELLI DI COSCIENZA ALTERATA</p>
-    </header>
-
-    <!-- GRID MEME -->
-    <main class="main-content">
-        <section class="cards">
-
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM25tdHI0dDh4dDQzdHNrdzM2cTU2OHlpNXdyMjB5eTFodDI0aTFmdSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oEjHGr1Fhz0kyv8Ig/giphy.gif"><p>01. Collasso Totale</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/l0HlSNOxJB956qwfK/giphy.gif"><p>02. Fumo Potente</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif"><p>03. Effetto Bissa</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/3o6ZtpxSZbQRRnwCKQ/giphy.gif"><p>04. Mente Esplosa</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif"><p>05. Bissa Mode On</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/3o7TKLq1H0S5FX6o6Q/giphy.gif"><p>06. Risate Sacre</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa3AxOHgxMnpkNnZtb2VscmUzbW05YmdyZjlybGFvNHhqazlhdm5tYyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/M9OcF34bF3bbNGaRc0/giphy.gif"><p>07. Visione Distorta</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHA3d2FsNDY0dmtyOXZ4YXc5YW81d2FzbGthbGg0NDc2Ymlqa3VxeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JmU4YMO9eHUL4n1T5J/giphy.gif"><p>08. Loop Infinito</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3cTVmeHBvNmQ0Y3c2azBicndkNmRseGk1dXFzdDI5eTlhY3BjbnY0OSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l36kU80xPf0ojG0Erg/giphy.gif"><p>09. Distorsione Temporale</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXZ1ZHkzbWdmOWJ1dDZtNGVvZTF1N2x3bHk1dmYzemFwdTE2MmhobSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kg2Qb3JPON4eyz6QTd/giphy.gif"><p>10. Connessione Astrale</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHRwMWtwaWZhNWxtcWFxZ2JzeDJ1ZG1oamhjdDZqZjN5anhrcG5tcSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/4oMoIbIQrvCjm/giphy.gif"><p>11. Deep Web Vibes</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/3o7TKVpx7TPr6uI7Fm/giphy.gif"><p>12. Glitch Mentale</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/l0HlPtb9SNoLYHgrC/giphy.gif"><p>13. Oltre il Velo</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/3o7TKVf78l3O4fF676/giphy.gif"><p>14. Paranoia Digitale</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/l0HlR8p0I5SDA6eD6/giphy.gif"><p>15. Codice Sorgente</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/3o7TKVUeBshM9XW7zO/giphy.gif"><p>16. Sistema Critico</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/l0HlJ8qVq4oXoV0YQ/giphy.gif"><p>17. Bio-Hacking</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/3o7TKV8sN6S3S7uO8M/giphy.gif"><p>18. Frequenza Sacra</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/l0HlD4v7p2u1m7g4w/giphy.gif"><p>19. Etere Liquido</p></div>
-            <div class="card" onclick="triggerBissa()"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpZGRsZ3h4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4ZzR0eXh4JmFjdD1n/3o7TKV56p78S6V6o6M/giphy.gif"><p>20. BISSA SUPREMA</p></div>
-
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Unione Creativa della Bissa</p>
-    </footer>
-
-    <script>
-        function triggerBissa() {
-            const popup = document.getElementById('bissa-popup');
-            popup.classList.add('active');
-            setTimeout(() => popup.classList.remove('active'), 1400);
-        }
-    </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
