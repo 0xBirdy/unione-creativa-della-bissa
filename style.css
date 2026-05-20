@@ -91,11 +91,15 @@ nav.site-nav {
 .divider { width: 48px; height: 1px; background: var(--green-dim); margin: 0 0 2.5rem; }
 
 /* ── REVEAL ANIMATION ── */
-.reveal {
+/* Default: tutto visibile (nessun JS, browser vecchi, fallback) */
+.reveal { opacity: 1; transform: none; transition: none; }
+
+/* Solo se JS è attivo: animazione reveal */
+html.js-loaded .reveal {
   opacity: 0; transform: translateY(28px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+html.js-loaded .reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ── MOTTO BAND ── */
 .motto-band {
